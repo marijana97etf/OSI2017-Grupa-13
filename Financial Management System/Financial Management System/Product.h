@@ -2,8 +2,8 @@
 #include<string>
 class Product
 {
-	std::string sifra;
-	double kolicina, cijena_po_jedinici_mjere, ukupno;
+	std::string code;
+	double quantity, price_per_unit, total;
 public:
 	Product();
 	Product(const std::string, double, double, double);

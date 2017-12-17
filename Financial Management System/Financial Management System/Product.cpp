@@ -2,11 +2,11 @@
 
 
 
-Product::Product():sifra(nullptr),cijena_po_jedinici_mjere(0.0),kolicina(0.0),ukupno(0.0)
+Product::Product():code(nullptr), quantity(0.0), price_per_unit(0.0), total(0.0)
 {
 }
 
-Product::Product(const std::string sifra, double kolicina, double cijena_po_jedinici_mjere, double ukupno):sifra(sifra),kolicina(kolicina),cijena_po_jedinici_mjere(cijena_po_jedinici_mjere),ukupno(ukupno)
+Product::Product(const std::string code, double quantity, double price_per_unit, double total):code(code),quantity(quantity),price_per_unit(price_per_unit),total(total)
 {
 }
 
