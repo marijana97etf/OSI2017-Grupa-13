@@ -3,7 +3,7 @@
 class Product
 {
 	std::string code;
-	double quantity, price_per_unit, total;
+	double quantity, pricePerUnit, total;
 public:
 	Product();
 	Product(const std::string, double, double, double);
