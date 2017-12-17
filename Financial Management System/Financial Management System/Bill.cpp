@@ -6,7 +6,21 @@ Bill::Bill(): head(nullptr), tail(nullptr), nameOfBill(nullptr), date(Date(0,0,0
 {}
 
 Bill::~Bill()
-{}
+{
+	if (head != nullptr)
+	{
+		Node *del = head;
+		for (Node *temp = head->next; temp; temp = temp->next)
+		{
+			delete del;
+			del = temp;
+		}
+		delete del;
+		head = tail = nullptr;
+	}
+	else
+		tail = nullptr;
+}
 
 Bill::Node::Node(const Product& product): product(product), next(nullptr)
 {}
