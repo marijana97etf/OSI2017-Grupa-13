@@ -24,6 +24,8 @@ public:
 
 private:
 	void ignoreElementsUntil(std::ifstream &, char);
+	friend std::ostream& operator<<(std::ostream&, const Account&);
+	friend std::istream& operator>>(std::istream&, Account&);
 
 };
 

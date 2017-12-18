@@ -22,7 +22,7 @@ Account Account::getNextUser(std::ifstream &inputf)
 	getline(inputf,username,' ');
 
 	ignoreElementsUntil(inputf, SEPARATOR);
-	getline(inputf,pin);
+	getline(inputf,pin,' ');
 
 	ignoreElementsUntil(inputf, SEPARATOR);
 	getline(inputf,type, ' ');
@@ -51,3 +51,12 @@ void Account::ignoreElementsUntil(std::ifstream& inputf, char boundary)
 	return;
 }
 
+std::ostream & operator<<(std::ostream &output,const Account &other)
+{
+	return output << other.username << " " << other.pin << " " << other.type << std::endl;
+}
+
+std::istream & operator>>(std::istream &input, Account &other)
+{
+	return input >> other.username >> other.pin >> other.type;
+}
