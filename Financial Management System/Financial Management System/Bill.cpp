@@ -75,7 +75,7 @@ std::vector<std::string> returnVectorOfNotProcessedBills(std::string directory)
 			std::string file = fileData.cFileName;
 			if (file.length() > 4 && (file.substr(file.length() - 4, 4) == ".txt" || file.substr(file.length() - 4, 4) == ".csv"))
 			{
-				if (file != log && file != logError && isProcessed(file) == false)
+				if (file != log && file != logError && isProcessedBill(file) == false)
 					files.push_back(file);
 			}
 		}
