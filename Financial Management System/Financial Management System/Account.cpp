@@ -17,18 +17,18 @@ Account Account::getNextUser(std::ifstream &inputf)
 		ignoreElementsUntil(inputf, END_OF_LINE);
 		ignoreElementsUntil(inputf, END_OF_LINE);
 	}
-	char username[MAX_LENGTH_OF_NAME], pin[LENGTH_OF_PIN], type[MAX_LENGTH_OF_TYPE];
 
 	ignoreElementsUntil(inputf, '.');
-	inputf.getline(username, MAX_LENGTH_OF_NAME, ' ');
+	getline(inputf,username,' ');
 
 	ignoreElementsUntil(inputf, SEPARATOR);
-	inputf.getline(pin, LENGTH_OF_PIN);
+	getline(inputf,pin);
 
 	ignoreElementsUntil(inputf, SEPARATOR);
-	inputf.getline(type, MAX_LENGTH_OF_TYPE, ' ');
+	getline(inputf,type, ' ');
 
-	return Account(username, pin, type);//da li podrazumijevani move konstruktor dobro kopira stringove
+
+	return *this;
 }
 
 int Account::checkTypeOfUser()
