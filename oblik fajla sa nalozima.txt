@@ -1,0 +1,5 @@
+ Username     PIN     Type
+----------------------------
+1.User1      |1234   |analyst
+2.User2      |3456   |admin
+3.User3      |ad13   |analyst
