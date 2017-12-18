@@ -28,7 +28,7 @@ Bill::Node::Node(const Product& product): product(product), next(nullptr)
 Bill::Date::Date(const int day, const int month, const int year): day(day), month(month), year(year)
 {}
 
-bool isProcessed(std::string file)
+bool isProcessedBill(std::string file)
 {
 	std::ifstream inputFileLog(log);
 	std::ifstream inputFileLogError(logError);

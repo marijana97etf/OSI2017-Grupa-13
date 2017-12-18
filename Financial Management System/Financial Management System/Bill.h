@@ -8,7 +8,7 @@
 #define log "Log.txt"
 #define logError "logError.txt"
 
-bool isProcessed(std::string);
+bool isProcessedBill(std::string);
 std::vector<std::string> returnVectorOfNotProcessedBills(std::string directory);
 
 class Bill
