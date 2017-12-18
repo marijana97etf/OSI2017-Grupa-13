@@ -92,43 +92,77 @@ bool checkFormat1(const std::string file)
 		std::string tmp;
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Kupac:")
+		{
+			inputFile.close();
 			return false;
+		}
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Datum:")
+		{
+			inputFile.close();
 			return false;
+		}
 		getline(inputFile, tmp);
 		inputFile >> tmp;
 		if (tmp.substr(0, 5) != "Racun")
+		{
+			inputFile.close();
 			return false;
+		}
 		getline(inputFile, tmp);
 		getline(inputFile, tmp);
 		inputFile >> tmp;
 		if (tmp != "Proizvod")
+		{
+			inputFile.close();
 			return false;
+		}
 		inputFile >> tmp;
 		if (tmp != "-")
+		{
+			inputFile.close();
 			return false;
+		}
 		inputFile >> tmp;
 		if (tmp != "kolicina")
+		{
+			inputFile.close();
 			return false;
+		}
 		inputFile >> tmp;
 		if (tmp != "-")
+		{
+			inputFile.close();
 			return false;
+		}
 		inputFile >> tmp;
 		if (tmp != "cijena")
+		{
+			inputFile.close();
 			return false;
+		}
 		inputFile >> tmp;
 		if (tmp != "-")
+		{
+			inputFile.close();
 			return false;
+		}
 		inputFile >> tmp;
 		if (tmp != "ukupno")
+		{
+			inputFile.close();
 			return false;
+		}
 		inputFile >> tmp;
 		int size = tmp.length();
 		std::string tmp1 = "";
 		for (int i = 0; i < size; i++, tmp1 += '-');
 		if (tmp == tmp1)
+		{
+			inputFile.close();
 			return false;
+		}
+		inputFile.close();
 		return true;
 	}
 	return false;
