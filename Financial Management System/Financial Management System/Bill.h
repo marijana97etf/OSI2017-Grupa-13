@@ -1,5 +1,16 @@
 #pragma once
 #include "Product.h"
+#include <Windows.h>
+#include <vector>
+#include <iostream>
+#include <string>
+#include <fstream>
+#define log "Log.txt"
+#define logError "logError.txt"
+
+bool isProcessed(std::string);
+std::vector<std::string> returnVectorOfNotProcessedBills(std::string directory);
+
 class Bill
 {
 	struct Node
