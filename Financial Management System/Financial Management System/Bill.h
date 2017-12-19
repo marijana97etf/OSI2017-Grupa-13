@@ -34,10 +34,10 @@ public:
 	Bill();
 	Bill(const std::string &);//daje se ime .txt ili .csv koji se treba obraditi
 	void procces();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
-	void Validate();//izvrsava validaciju podataka
-	bool checkTotalOfEveryProduct();
-	bool checkTotalofAllproducts();
-	bool checkTotalPlusPDV();
+	bool Validate();//izvrsava validaciju podataka
+	  bool checkTotalOfEveryProduct();
+	  bool checkTotalofAllproducts();
+	  bool checkTotalPlusPDV();
 	~Bill();
 };
 
