@@ -28,6 +28,7 @@ class Bill
 	};
 	Node* head,*tail;
 	std::string nameOfBill;
+	int totalSumOfProducts, pdv, totalSumOfBill;
 	Date date;
 public:
 	Bill();
