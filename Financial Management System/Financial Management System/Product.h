@@ -7,6 +7,9 @@ class Product
 public:
 	Product();
 	Product(const std::string, double, double, double);
-	~Product();
+    ~Product();
+	inline double const getQuantity() { return quantity; }
+	inline double const getPricePerUnit() { return pricePerUnit; }
+	inline double const getTotal() { return total; }
 };
 

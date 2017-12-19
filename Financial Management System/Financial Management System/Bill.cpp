@@ -5,6 +5,48 @@
 Bill::Bill(): head(nullptr), tail(nullptr), nameOfBill(nullptr), date(Date(0,0,0))
 {}
 
+bool Bill::Validate()
+{
+	if (!(checkTotalOfEveryProduct() && checkTotalofAllproducts() && checkTotalPlusPDV() && checkPDV()))
+		return false;
+	return true;
+}
+
+bool Bill::checkTotalOfEveryProduct()
+{
+	for (Node *p = head; p != nullptr; p = p->next)
+		if (p->product.getTotal() != p->product.getPricePerUnit() * p->product.getQuantity()) 
+			return false;
+	return true;
+}
+
+bool Bill::checkTotalofAllproducts()
+{
+	double total=0.0;
+	for (Node *p = head; p != nullptr; p = p->next)
+		total += p->product.getTotal();
+	if (total==totalSumOfProducts)
+		return true;
+	return false;
+}
+
+bool Bill::checkTotalPlusPDV()
+{
+	if (totalSumOfProducts + pdv != totalSumOfBill)
+		return false;
+	return true;
+}
+
+bool Bill::checkPDV()
+{
+	if(pdv==totalSumOfProducts*17/100)
+		return true;
+	return false;
+}
+
+
+
+
 Bill::~Bill()
 {
 	if (head != nullptr)

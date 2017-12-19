@@ -28,16 +28,17 @@ class Bill
 	};
 	Node* head,*tail;
 	std::string nameOfBill;
-	int totalSumOfProducts, pdv, totalSumOfBill;
+	double totalSumOfProducts, pdv, totalSumOfBill;
 	Date date;
 public:
 	Bill();
 	Bill(const std::string &);//daje se ime .txt ili .csv koji se treba obraditi
 	void procces();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
-	void Validate();//izvrsava validaciju podataka
-	bool checkTotalOfEveryProduct();
-	bool checkTotalofAllproducts();
-	bool checkTotalPlusPDV();
+	bool Validate();//izvrsava validaciju podataka
+	  bool checkTotalOfEveryProduct();
+	  bool checkTotalofAllproducts();
+	  bool checkTotalPlusPDV();
+	  bool checkPDV();
 	~Bill();
 };
 
