@@ -112,11 +112,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Account.h" />
+    <ClInclude Include="Admin.h" />
     <ClInclude Include="Bill.h" />
     <ClInclude Include="Product.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
+    <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="Product.cpp" />
   </ItemGroup>
