@@ -15,15 +15,15 @@ class Account
 {
 protected:
 	std::string username, pin, type;
+	void ignoreElementsUntil(std::ifstream &, char);
 public:
 	Account();
 	Account(const std::string&, const std::string&, const std::string&);
 
-	Account getNextUser(std::ifstream &);
+	Account getNextUser(std::ifstream &);		
 	int checkTypeOfUser();
 
 private:
-	void ignoreElementsUntil(std::ifstream &, char);
 	friend std::ostream& operator<<(std::ostream&, const Account&);
 	friend std::istream& operator>>(std::istream&, Account&);
 

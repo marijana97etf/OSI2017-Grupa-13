@@ -1,6 +1,11 @@
 #pragma once
 #include "Account.h"
+#include<iostream>
+#include<fstream>
+#include<string>
 #include <locale>
+
+const int LENGHT_OF_HEADER = 38;
 class Admin :
 	public Account
 {
@@ -13,5 +18,9 @@ public:
 	bool changeAccount();
 private:
 	bool isLegit(const std::string,char);
+	void format(std::string&);
+	bool nameExists(std::string);
+	bool is_textfile_empty();
+	bool is_textfile_without_accounts();
 };
 
