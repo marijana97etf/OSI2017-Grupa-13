@@ -28,7 +28,7 @@ class Bill
 	};
 	Node* head,*tail;
 	std::string nameOfBill;
-	int totalSumOfProducts, pdv, totalSumOfBill;
+	double totalSumOfProducts, pdv, totalSumOfBill;
 	Date date;
 public:
 	Bill();
@@ -38,6 +38,7 @@ public:
 	  bool checkTotalOfEveryProduct();
 	  bool checkTotalofAllproducts();
 	  bool checkTotalPlusPDV();
+	  bool checkPDV();
 	~Bill();
 };
 
