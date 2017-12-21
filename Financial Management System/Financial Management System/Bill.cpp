@@ -1,9 +1,23 @@
 #include "Bill.h"
-
+#include "Account.h"
 
 
 Bill::Bill(): nameOfBill(nullptr), date(Date(0,0,0))
 {}
+
+void Bill::process()
+{
+	if (formatCode == isFormat[1])
+		processFormat1();
+}
+
+void Bill::processFormat1()
+{
+	std::ifstream inputfile(inputf);
+	inputfile.ignore(7);
+	inputfile.get()
+
+}
 
 bool Bill::Validate()
 {
