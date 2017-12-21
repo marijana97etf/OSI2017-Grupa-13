@@ -30,8 +30,10 @@ void Admin::addAccount()
 		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar"; std::cin >> type;
 	} while (type != 'D' || type != 'N');
 	
+	accounts_file << _tmpusername;
 	format(_tmpusername);
-	accounts_file << "  " << _tmpusername << SEPARATOR << _tmppin << SEPARATOR << "    " << ((type = 'D') ? "admin" : "analyst") << "\n";
+	accounts_file << SEPARATOR << _tmppin << SEPARATOR << "    " << SEPARATOR << ((type = 'D') ? "admin" : "analyst")<<"\n";
+
 	accounts_file.close();
 }
 
@@ -56,8 +58,8 @@ bool Admin::deleteAccount()
 		}
 		tmp.close();
 		file.close();
-		std::remove(ACCOUNT_FILE_NAME.c_str());
-		std::rename(TMP_FILE, ACCOUNT_FILE_NAME.c_str());
+		std::remove(ACCOUNT_FILE_NAME.c_str);
+		std::rename(TMP_FILE.c_str, ACCOUNT_FILE_NAME.c_str);
 		return true;
 	}
 	return false;
@@ -85,7 +87,7 @@ bool Admin::deleteAccount()
 			do
 			{
 				std::cin >> c;
-			} while (c != 'P' || c != 'U' || c != 'T');
+			} while (c != 'P' && c != 'U' && c != 'T');
 			if (c == 'P')
 			{
 				std::cout << "Unesite novi PIN:\n";
@@ -94,9 +96,9 @@ bool Admin::deleteAccount()
 					std::cin >> _textdiff;
 				} while (isLegit(_textdiff, 'P'));
 				modify(_testline, _tmpusername);
-				std::vector < std::string > _modvector = explode(_testline, SEPARATOR);
+				std::vector < std::string > _modvector = explode(_testline, SEPARATOR);//sta ovo radi
 				std::ofstream accounts(ACCOUNT_FILE_NAME, std::ofstream::app);
-				accounts << _modvector[0] << SEPARATOR << _textdiff << "    " << SEPARATOR << _modvector[2] << "\n";
+				accounts << _modvector[0] << SEPARATOR << _textdiff << "    " << SEPARATOR << _modvector[2] << "\n";//???
 			}
 			if (c == 'U')
 			{
@@ -116,7 +118,7 @@ bool Admin::deleteAccount()
 				do
 				{
 					std::cin >> c;
-				} while (c != 'A' || c != 'D');
+				} while (c != 'A' && c != 'D');
 				modify(_testline, _tmpusername);
 				std::vector < std::string > _modvector = explode(_testline, SEPARATOR);
 				std::ofstream accounts(ACCOUNT_FILE_NAME, std::ofstream::app);
@@ -133,8 +135,8 @@ bool Admin::deleteAccount()
 	int i = 0;
 	if (typeofstring == 'P')
 	{
-		if (tmp.length() > LENGTH_OF_PIN || tmp.empty()) return true;
-		while (i++ <= tmp.length())
+		if (tmp.length() > LENGTH_OF_PIN || tmp.empty()) return true;//pin mora biti tacno duzine cetiri a ne samo vece
+		while (i++ <= tmp.length())                                  //malo nema smisla slati true ako je nesto netacno jer je funkcija isLegit
 			if (!std::isalnum(tmp[i], loc)) 
 				return true;
 		return false;
@@ -151,24 +153,26 @@ bool Admin::deleteAccount()
 
 void Admin::format(std::string &tmp)
 {
-	while (tmp.length() <= MAX_LENGTH_OF_NAME) tmp += " ";
+	while (tmp.length() < MAX_LENGTH_OF_NAME) tmp += " ";
 }
 
 bool Admin::nameExists(std::string testusername)
 {
-	
-	if (is_textfile_empty() || is_textfile_without_accounts())
-		return false;
 	std::ifstream file(ACCOUNT_FILE_NAME);
 	std::string tmpusername;
 	char tmp;
+	if (is_textfile_empty() || is_textfile_without_accounts())
+	{
+		file.close();
+		return false;
+	}
 	ignoreElementsUntil(file, END_OF_LINE);
 	ignoreElementsUntil(file, END_OF_LINE);
-	while(!file.eof())
+	while(file.peek() != std::ifstream::traits_type::eof())
 	{
 		file.get();
 		file.get();
-		std::getline(file, tmpusername, ' ');
+		while ((tmp = file.get()) != ' ') tmpusername += tmp;
 		if (tmpusername == testusername) return true;
 		tmpusername.clear();
 		ignoreElementsUntil(file, END_OF_LINE);
@@ -180,7 +184,7 @@ bool Admin::nameExists(std::string testusername)
 bool Admin::is_textfile_empty()
 {
 	std::ifstream pFile(ACCOUNT_FILE_NAME);
-	return pFile.eof();
+	return pFile.peek() == std::ifstream::traits_type::eof();
 	pFile.close();
 }
 
@@ -190,13 +194,20 @@ bool Admin::is_textfile_without_accounts()
 	std::string firstLine, secondLine;
 	getline(file, firstLine);
 	getline(file, secondLine);
-	if (firstLine == FIRST_LINE_OF_HEADER && secondLine == SECOND_LINE_OF_HEADER && file.eof())
+	if (firstLine == FIRST_LINE_OF_HEADER && secondLine == SECOND_LINE_OF_HEADER && file.peek() == std::ifstream::traits_type::eof())
 	{
 		file.close();
 		return true;
 	}
 	file.close();
 	return false;
+}
+
+void Admin::skip(std::fstream &inputf, char boundary)
+{
+	char tmp;
+	while ((tmp = inputf.get()) != boundary);
+	return;
 }
 
 void Admin::modify(std::string &moddedline, std::string modkey)
@@ -213,21 +224,9 @@ void Admin::modify(std::string &moddedline, std::string modkey)
 	}
 	tmp.close();
 	file.close();
-	std::remove(ACCOUNT_FILE_NAME.c_str());
-	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
+	std::remove(ACCOUNT_FILE_NAME);
+	std::rename(TMP_FILE, ACCOUNT_FILE_NAME);
 }
 
-const std::vector<std::string> Admin::explode(const std::string& s, const char& c)
-{
-	std::string buff{ "" };
-	std::vector<std::string> v;
 
-	for (auto n : s)
-	{
-		if (n != c) buff += n; else
-			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
-	}
-	if (buff != "") v.push_back(buff);
 
-	return v;
-}

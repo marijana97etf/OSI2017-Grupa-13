@@ -1,9 +1,23 @@
 #include "Bill.h"
+#include "Account.h"
 
 
-
-Bill::Bill(): head(nullptr), tail(nullptr), nameOfBill(nullptr), date(Date(0,0,0))
+Bill::Bill(): nameOfBill(nullptr), date(Date(0,0,0))
 {}
+
+void Bill::process()
+{
+	if (formatCode == isFormat[1])
+		processFormat1();
+}
+
+void Bill::processFormat1()
+{
+	std::ifstream inputfile(inputf);
+	inputfile.ignore(7);
+	inputfile.get();
+
+}
 
 bool Bill::Validate()
 {
@@ -14,17 +28,28 @@ bool Bill::Validate()
 
 bool Bill::checkTotalOfEveryProduct()
 {
-	for (Node *p = head; p != nullptr; p = p->next)
-		if (p->product.getTotal() != p->product.getPricePerUnit() * p->product.getQuantity()) 
+	for (auto& product : list)
+		if (product.getTotal() != product.getPricePerUnit() * product.getQuantity())
 			return false;
+	
+	/*      for (Node *p = head; p != nullptr; p = p->next)
+				if (p->product.getTotal() != p->product.getPricePerUnit() * p->product.getQuantity()) 
+					return false; 
+	*/
+	
 	return true;
 }
 
 bool Bill::checkTotalofAllproducts()
 {
 	double total=0.0;
-	for (Node *p = head; p != nullptr; p = p->next)
-		total += p->product.getTotal();
+	for (auto& product : list)
+		total += product.getTotal();
+	
+	/*		for (Node *p = head; p != nullptr; p = p->next)
+				total += p->product.getTotal(); 
+	*/
+	
 	if (total==totalSumOfProducts)
 		return true;
 	return false;
@@ -49,7 +74,7 @@ bool Bill::checkPDV()
 
 Bill::~Bill()
 {
-	if (head != nullptr)
+	/*if (head != nullptr)
 	{
 		Node *del = head;
 		for (Node *temp = head->next; temp; temp = temp->next)
@@ -61,18 +86,15 @@ Bill::~Bill()
 		head = tail = nullptr;
 	}
 	else
-		tail = nullptr;
+		tail = nullptr;*/
 }
-
-Bill::Node::Node(const Product& product): product(product), next(nullptr)
-{}
 
 Bill::Date::Date(const int day, const int month, const int year): day(day), month(month), year(year)
 {}
 
 bool isProcessedBill(const std::string file)
 {
-	std::ifstream inputFileLog(log);
+	std::ifstream inputFileLog(log);//konstante se pretezno pisu velikim slovima
 	std::ifstream inputFileLogError(logError);
 	if (inputFileLog.is_open())
 	{
