@@ -15,7 +15,7 @@ void Bill::processFormat1()
 {
 	std::ifstream inputfile(inputf);
 	inputfile.ignore(7);
-	inputfile.get()
+	inputfile.get();
 
 }
 
@@ -28,17 +28,28 @@ bool Bill::Validate()
 
 bool Bill::checkTotalOfEveryProduct()
 {
-	for (Node *p = head; p != nullptr; p = p->next)
-		if (p->product.getTotal() != p->product.getPricePerUnit() * p->product.getQuantity()) 
+	for (auto& product : list)
+		if (product.getTotal() != product.getPricePerUnit() * product.getQuantity())
 			return false;
+	
+	/*      for (Node *p = head; p != nullptr; p = p->next)
+				if (p->product.getTotal() != p->product.getPricePerUnit() * p->product.getQuantity()) 
+					return false; 
+	*/
+	
 	return true;
 }
 
 bool Bill::checkTotalofAllproducts()
 {
 	double total=0.0;
-	for (Node *p = head; p != nullptr; p = p->next)
-		total += p->product.getTotal();
+	for (auto& product : list)
+		total += product.getTotal();
+	
+	/*		for (Node *p = head; p != nullptr; p = p->next)
+				total += p->product.getTotal(); 
+	*/
+	
 	if (total==totalSumOfProducts)
 		return true;
 	return false;
@@ -63,7 +74,7 @@ bool Bill::checkPDV()
 
 Bill::~Bill()
 {
-	if (head != nullptr)
+	/*if (head != nullptr)
 	{
 		Node *del = head;
 		for (Node *temp = head->next; temp; temp = temp->next)
@@ -75,7 +86,7 @@ Bill::~Bill()
 		head = tail = nullptr;
 	}
 	else
-		tail = nullptr;
+		tail = nullptr;*/
 }
 
 Bill::Date::Date(const int day, const int month, const int year): day(day), month(month), year(year)
