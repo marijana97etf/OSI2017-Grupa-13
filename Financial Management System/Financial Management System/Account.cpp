@@ -18,7 +18,8 @@ Account Account::getNextUser(std::ifstream &inputf)
 		ignoreElementsUntil(inputf, END_OF_LINE);
 	}
 
-	ignoreElementsUntil(inputf, '.');
+	ignoreElementsUntil(inputf, ' ');
+	ignoreElementsUntil(inputf, ' ');
 	getline(inputf,username,' ');
 
 	ignoreElementsUntil(inputf, SEPARATOR);

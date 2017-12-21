@@ -30,8 +30,10 @@ void Admin::addAccount()
 		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar"; std::cin >> type;
 	} while (type != 'D' || type != 'N');
 	
+	accounts_file << _tmpusername;
 	format(_tmpusername);
-	accounts_file << _tmpusername << SEPARATOR << _tmppin << SEPARATOR << "    " << ((type = 'D') ? "admin" : "analyst")<<"\n";
+	accounts_file << SEPARATOR << _tmppin << SEPARATOR << "    " << SEPARATOR << ((type = 'D') ? "admin" : "analyst")<<"\n";
+
 	accounts_file.close();
 }
 
@@ -56,8 +58,8 @@ bool Admin::deleteAccount()
 		}
 		tmp.close();
 		file.close();
-		std::remove(ACCOUNT_FILE_NAME);
-		std::rename(TMP_FILE, ACCOUNT_FILE_NAME);
+		std::remove(ACCOUNT_FILE_NAME.c_str);
+		std::rename(TMP_FILE.c_str, ACCOUNT_FILE_NAME.c_str);
 		return true;
 	}
 	return false;
@@ -94,9 +96,9 @@ bool Admin::deleteAccount()
 					std::cin >> _textdiff;
 				} while (isLegit(_textdiff, 'P'));
 				modify(_testline, _tmpusername);
-				std::vector < std::string > _modvector = explode(_testline, SEPARATOR);
+				std::vector < std::string > _modvector = explode(_testline, SEPARATOR);//sta ovo radi
 				std::ofstream accounts(ACCOUNT_FILE_NAME, std::ofstream::app);
-				accounts << _modvector[0] << SEPARATOR << _textdiff << "    " << SEPARATOR << _modvector[2] << "\n";
+				accounts << _modvector[0] << SEPARATOR << _textdiff << "    " << SEPARATOR << _modvector[2] << "\n";//???
 			}
 			if (c == 'U')
 			{
@@ -133,8 +135,8 @@ bool Admin::deleteAccount()
 	int i = 0;
 	if (typeofstring == 'P')
 	{
-		if (tmp.length() > LENGTH_OF_PIN || tmp.empty()) return true;
-		while (i++ <= tmp.length())
+		if (tmp.length() > LENGTH_OF_PIN || tmp.empty()) return true;//pin mora biti tacno duzine cetiri a ne samo vece
+		while (i++ <= tmp.length())                                  //malo nema smisla slati true ako je nesto netacno jer je funkcija isLegit
 			if (!std::isalnum(tmp[i], loc)) 
 				return true;
 		return false;

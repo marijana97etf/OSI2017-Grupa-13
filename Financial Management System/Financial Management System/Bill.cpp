@@ -2,7 +2,7 @@
 
 
 
-Bill::Bill(): head(nullptr), tail(nullptr), nameOfBill(nullptr), date(Date(0,0,0))
+Bill::Bill(): nameOfBill(nullptr), date(Date(0,0,0))
 {}
 
 bool Bill::Validate()
@@ -64,15 +64,12 @@ Bill::~Bill()
 		tail = nullptr;
 }
 
-Bill::Node::Node(const Product& product): product(product), next(nullptr)
-{}
-
 Bill::Date::Date(const int day, const int month, const int year): day(day), month(month), year(year)
 {}
 
 bool isProcessedBill(const std::string file)
 {
-	std::ifstream inputFileLog(log);
+	std::ifstream inputFileLog(log);//konstante se pretezno pisu velikim slovima
 	std::ifstream inputFileLogError(logError);
 	if (inputFileLog.is_open())
 	{

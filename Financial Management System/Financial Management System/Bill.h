@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include<list>
 #define log "Log.txt"
 #define logError "logError.txt"
 
@@ -14,19 +15,12 @@ bool checkFormat1(const std::string);
 
 class Bill
 {
-	struct Node
-	{
-		Product product;
-		Node *next;
-
-		Node(const Product&);
-	};
 	struct Date
 	{
 		int day, month, year;
 		Date(const int, const int, const int);
 	};
-	Node* head,*tail;
+	std::list <Product> list;
 	std::string nameOfBill;
 	double totalSumOfProducts, pdv, totalSumOfBill;
 	Date date;
