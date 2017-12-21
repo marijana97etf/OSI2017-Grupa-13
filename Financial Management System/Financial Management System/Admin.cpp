@@ -134,12 +134,12 @@ bool Admin::deleteAccount()
 	int i = 0;
 	if (typeofstring == 'P')
 	{
-		if (tmp.length() > LENGTH_OF_PIN || tmp.empty()) return true;//pin mora biti tacno duzine cetiri a ne samo vece
+		if (tmp.length() != LENGTH_OF_PIN || tmp.empty()) return true;//pin mora biti tacno duzine cetiri a ne samo vece
 		while (i++ <= tmp.length())                                  //malo nema smisla slati true ako je nesto netacno jer je funkcija isLegit
 			if (!std::isalnum(tmp[i], loc))							 // cela funkcija ima obruntu logiku
 				return true;									     //vraca true ako je nesto nelegitimno
-		return false;
-	}
+		return false;											     //aha vidim u cemu je greska
+	}																 //sada je dobro?
 	if (typeofstring == 'U')
 	{
 		if (tmp.length() > MAX_LENGTH_OF_NAME || tmp.empty()) return true;
@@ -214,10 +214,9 @@ void Admin::modify(std::string &moddedline, std::string modkey)
 		else
 			moddedline = _testline;
 	}
-	file = std::move(tmp);
+	file.swap(tmp);
 	file.close();
-	tmp.close();	
-}
+	tmp.close();
 
 
 
