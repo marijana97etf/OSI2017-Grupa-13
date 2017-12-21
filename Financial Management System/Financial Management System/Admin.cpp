@@ -56,9 +56,10 @@ bool Admin::deleteAccount()
 			if (_testline.find(_tmpusername, 0) == -1)
 				tmp << _testline << "\n";
 		}
-		file = std::move(tmp);
 		file.close();
 		tmp.close();
+		std::remove(ACCOUNT_FILE_NAME.c_str());
+		std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
 		return true;
 	}
 	return false;
@@ -214,9 +215,8 @@ void Admin::modify(std::string &moddedline, std::string modkey)
 		else
 			moddedline = _testline;
 	}
-	file.swap(tmp);
 	file.close();
 	tmp.close();
-
-
-
+	std::remove(ACCOUNT_FILE_NAME.c_str());
+	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
+}
