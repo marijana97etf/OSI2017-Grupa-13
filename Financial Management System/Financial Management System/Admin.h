@@ -31,6 +31,6 @@ private:
 	bool is_textfile_without_accounts();
 	void skip(std::fstream&, char);
 	void modify(std::string&, std::string);
-	const std::vector<std::string> explode(const std::string& s, const char& c)
+	const std::vector<std::string> explode(const std::string&, const char&)
 };
 

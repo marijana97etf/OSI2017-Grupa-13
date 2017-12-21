@@ -31,7 +31,7 @@ void Admin::addAccount()
 	} while (type != 'D' || type != 'N');
 	
 	format(_tmpusername);
-	accounts_file << _tmpusername << SEPARATOR << _tmppin << SEPARATOR << "    " << ((type = 'D') ? "admin" : "analyst")<<"\n";
+	accounts_file << "  " << _tmpusername << SEPARATOR << _tmppin << SEPARATOR << "    " << ((type = 'D') ? "admin" : "analyst") << "\n";
 	accounts_file.close();
 }
 
@@ -56,8 +56,8 @@ bool Admin::deleteAccount()
 		}
 		tmp.close();
 		file.close();
-		std::remove(ACCOUNT_FILE_NAME);
-		std::rename(TMP_FILE, ACCOUNT_FILE_NAME);
+		std::remove(ACCOUNT_FILE_NAME.c_str());
+		std::rename(TMP_FILE, ACCOUNT_FILE_NAME.c_str());
 		return true;
 	}
 	return false;
@@ -85,7 +85,7 @@ bool Admin::deleteAccount()
 			do
 			{
 				std::cin >> c;
-			} while (c != 'P' && c != 'U' && c != 'T');
+			} while (c != 'P' || c != 'U' || c != 'T');
 			if (c == 'P')
 			{
 				std::cout << "Unesite novi PIN:\n";
@@ -116,7 +116,7 @@ bool Admin::deleteAccount()
 				do
 				{
 					std::cin >> c;
-				} while (c != 'A' && c != 'D');
+				} while (c != 'A' || c != 'D');
 				modify(_testline, _tmpusername);
 				std::vector < std::string > _modvector = explode(_testline, SEPARATOR);
 				std::ofstream accounts(ACCOUNT_FILE_NAME, std::ofstream::app);
@@ -151,26 +151,24 @@ bool Admin::deleteAccount()
 
 void Admin::format(std::string &tmp)
 {
-	while (tmp.length() < MAX_LENGTH_OF_NAME) tmp += " ";
+	while (tmp.length() <= MAX_LENGTH_OF_NAME) tmp += " ";
 }
 
 bool Admin::nameExists(std::string testusername)
 {
+	
+	if (is_textfile_empty() || is_textfile_without_accounts())
+		return false;
 	std::ifstream file(ACCOUNT_FILE_NAME);
 	std::string tmpusername;
 	char tmp;
-	if (is_textfile_empty() || is_textfile_without_accounts())
-	{
-		file.close();
-		return false;
-	}
 	ignoreElementsUntil(file, END_OF_LINE);
 	ignoreElementsUntil(file, END_OF_LINE);
-	while(file.peek() != std::ifstream::traits_type::eof())
+	while(!file.eof())
 	{
 		file.get();
 		file.get();
-		while ((tmp = file.get()) != ' ') tmpusername += tmp;
+		std::getline(file, tmpusername, ' ');
 		if (tmpusername == testusername) return true;
 		tmpusername.clear();
 		ignoreElementsUntil(file, END_OF_LINE);
@@ -182,7 +180,7 @@ bool Admin::nameExists(std::string testusername)
 bool Admin::is_textfile_empty()
 {
 	std::ifstream pFile(ACCOUNT_FILE_NAME);
-	return pFile.peek() == std::ifstream::traits_type::eof();
+	return pFile.eof();
 	pFile.close();
 }
 
@@ -192,7 +190,7 @@ bool Admin::is_textfile_without_accounts()
 	std::string firstLine, secondLine;
 	getline(file, firstLine);
 	getline(file, secondLine);
-	if (firstLine == FIRST_LINE_OF_HEADER && secondLine == SECOND_LINE_OF_HEADER && file.peek() == std::ifstream::traits_type::eof())
+	if (firstLine == FIRST_LINE_OF_HEADER && secondLine == SECOND_LINE_OF_HEADER && file.eof())
 	{
 		file.close();
 		return true;
@@ -222,9 +220,21 @@ void Admin::modify(std::string &moddedline, std::string modkey)
 	}
 	tmp.close();
 	file.close();
-	std::remove(ACCOUNT_FILE_NAME);
-	std::rename(TMP_FILE, ACCOUNT_FILE_NAME);
+	std::remove(ACCOUNT_FILE_NAME.c_str());
+	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
 }
 
+const std::vector<std::string> Admin::explode(const std::string& s, const char& c)
+{
+	std::string buff{ "" };
+	std::vector<std::string> v;
 
+	for (auto n : s)
+	{
+		if (n != c) buff += n; else
+			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
+	}
+	if (buff != "") v.push_back(buff);
 
+	return v;
+}
