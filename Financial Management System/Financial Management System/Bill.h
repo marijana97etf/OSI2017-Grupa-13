@@ -20,6 +20,7 @@ class Bill
 	struct Date
 	{
 		int day, month, year;
+	public:
 		Date(const int, const int, const int);
 	};
 	std::list <Product> list;
@@ -39,5 +40,8 @@ public:
 private:
 	void process();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
 	void processFormat1();
+	void processDate(std::ifstream &);
+	Product processData(std::string &);
+	void ignoreElementsUntil(std::ifstream &, char);
 };
 

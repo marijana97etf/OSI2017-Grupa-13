@@ -13,11 +13,96 @@ void Bill::process()
 
 void Bill::processFormat1()
 {
-	std::ifstream inputfile(inputf);
-	inputfile.ignore(7);
-	inputfile.get()
+	std::ifstream inputf(nameOfBill);
+	std::string tmp;
+	inputf.ignore(7);
+	getline(inputf, nameOfClient);//pretpostavlja se da se ne stavljaju razmaci poslije naziva
+
+	inputf.ignore(7);
+	processDate(inputf);
+
+	for(int i=0;i<4;i++)
+	  ignoreElementsUntil(inputf, END_OF_LINE);
+	
+	getline(inputf,tmp);
+	while (tmp[0] != '-')//radi dok se ne dodlje do linije sa -----------------------------
+	{
+		Product product = processData(tmp);
+		auto iterator = list.begin();
+		for (; iterator != list.end(); iterator++)
+			if (iterator->getCode == product.getCode )
+			{
+				product.setQuantity(product.getQuantity + iterator->getQuantity);
+				product.setTotal(product.getTotal + iterator->getTotal);
+				break;
+			}
+		if (iterator == list.end())
+			list.push_back(product);
+		getline(inputf, tmp);
+	}
+	ignoreElementsUntil(inputf, END_OF_LINE);
+	std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
+
+	inputf.ignore(8);
+	getline(inputf, totalSumOfProducts);
+
+	inputf.ignore(5);
+	getline(inputf, pdv);
+
+	inputf.ignore(20);
+	getline(inputf,totalSumOfBill);
+
+	this->totalSumOfProducts = std::stod(totalSumOfProducts, nullptr);
+	this->pdv = std::stod(pdv, nullptr);
+	this->totalSumOfBill = std::stod(totalSumOfBill, nullptr);
+	inputf.close();
+}
+
+void Bill::processDate(std::ifstream &inputf)
+{
+	std::string day, month, year;
+	for (int i = 0; i < 2; i++)
+		day += inputf.get();
+	inputf.get();
+	for (int i = 0; i < 2; i++)
+		month += inputf.get();
+	inputf.get();
+	for (int i = 0; i < 4; i++)
+		year += inputf.get();
+	inputf.get();
+	date = Date::Date(std::stoi(day, nullptr, 10), std::stoi(month, nullptr, 10), std::stoi(year, nullptr, 10));
+}
+
+Product Bill::processData(std::string &tmp)
+{
+	std::string name;
+	double quantity, pricePerUnit, total;
+	double *productInfoPointers[3] = { &quantity, &pricePerUnit, &total };
+
+	tmp += '-';//da bi bila jednolika obrada svih vrijednosti 
+	int pos = tmp.find("-", 0);
+	while (tmp[--pos] == ' ');//vracaj se unazad
+	name = tmp.substr(0, pos + 1);
+
+	int posOfFirstLine, posOfNextLine = tmp.find("-", 0);
+	for (int i = 0; i < 3; i++)
+	{
+		posOfFirstLine = posOfNextLine;
+		posOfNextLine = tmp.find("-", posOfNextLine+1);//uvecano za jedan jer find trazi i na poziciji posOfNextLine a tu sigurno nalazi znak -
+		while (tmp[++posOfFirstLine] == ' ');
+		while (tmp[--posOfNextLine] == ' ');
+		std::string value = tmp.substr(posOfFirstLine, posOfNextLine - posOfFirstLine + 1);//podstring u kome se nalazi samo broj
+		*productInfoPointers[i] = std::stod(value, nullptr);//std::stod - from string to doubles
+	}
+	return Product::Product(name, quantity, pricePerUnit, total);
 
 }
+
+void Bill::ignoreElementsUntil(std::ifstream &inputf, char boundary)
+{
+	while (inputf.get() != boundary);
+}
+
 
 bool Bill::Validate()
 {
@@ -57,8 +142,6 @@ bool Bill::checkPDV()
 		return true;
 	return false;
 }
-
-
 
 
 Bill::~Bill()
