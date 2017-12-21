@@ -199,13 +199,6 @@ bool Admin::is_textfile_without_accounts()
 	return false;
 }
 
-void Admin::skip(std::fstream &inputf, char boundary)
-{
-	char tmp;
-	while ((tmp = inputf.get()) != boundary);
-	return;
-}
-
 void Admin::modify(std::string &moddedline, std::string modkey)
 {
 	std::fstream file(ACCOUNT_FILE_NAME);
