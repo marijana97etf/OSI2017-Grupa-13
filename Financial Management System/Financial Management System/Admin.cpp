@@ -50,16 +50,15 @@ bool Admin::deleteAccount()
 	} while (isLegit(_tmpusername, 'U'));
 	if (nameExists(_tmpusername))
 	{
-		std::ofstream tmp(TMP_FILE);
+		std::fstream tmp(TMP_FILE, std::fstream::trunc);
 		while (getline(file, _testline))
 		{
 			if (_testline.find(_tmpusername, 0) == -1)
 				tmp << _testline << "\n";
 		}
-		tmp.close();
+		file = std::move(tmp);
 		file.close();
-		std::remove(ACCOUNT_FILE_NAME.c_str);
-		std::rename(TMP_FILE.c_str, ACCOUNT_FILE_NAME.c_str);
+		tmp.close();
 		return true;
 	}
 	return false;
@@ -131,16 +130,16 @@ bool Admin::deleteAccount()
 
 	bool Admin::isLegit(std::string tmp, char typeofstring)
 {
-	std::locale loc;
+		std::locale loc;
 	int i = 0;
 	if (typeofstring == 'P')
 	{
-		if (tmp.length() > LENGTH_OF_PIN || tmp.empty()) return true;//pin mora biti tacno duzine cetiri a ne samo vece
+		if (tmp.length() != LENGTH_OF_PIN || tmp.empty()) return true;//pin mora biti tacno duzine cetiri a ne samo vece
 		while (i++ <= tmp.length())                                  //malo nema smisla slati true ako je nesto netacno jer je funkcija isLegit
-			if (!std::isalnum(tmp[i], loc)) 
-				return true;
-		return false;
-	}
+			if (!std::isalnum(tmp[i], loc))							 // cela funkcija ima obruntu logiku
+				return true;									     //vraca true ako je nesto nelegitimno
+		return false;											     //aha vidim u cemu je greska
+	}																 //sada je dobro?
 	if (typeofstring == 'U')
 	{
 		if (tmp.length() > MAX_LENGTH_OF_NAME || tmp.empty()) return true;
@@ -203,17 +202,10 @@ bool Admin::is_textfile_without_accounts()
 	return false;
 }
 
-void Admin::skip(std::fstream &inputf, char boundary)
-{
-	char tmp;
-	while ((tmp = inputf.get()) != boundary);
-	return;
-}
-
 void Admin::modify(std::string &moddedline, std::string modkey)
 {
 	std::fstream file(ACCOUNT_FILE_NAME);
-	std::ofstream tmp(TMP_FILE);
+	std::fstream tmp(TMP_FILE, std::fstream::trunc);
 	std::string _testline;
 	while (getline(file, _testline))
 	{
@@ -222,11 +214,9 @@ void Admin::modify(std::string &moddedline, std::string modkey)
 		else
 			moddedline = _testline;
 	}
-	tmp.close();
+	file.swap(tmp);
 	file.close();
-	std::remove(ACCOUNT_FILE_NAME);
-	std::rename(TMP_FILE, ACCOUNT_FILE_NAME);
-}
+	tmp.close();
 
 
 
