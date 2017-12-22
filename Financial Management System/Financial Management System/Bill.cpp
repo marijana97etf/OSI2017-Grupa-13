@@ -312,7 +312,7 @@ void exportForCustomer(const Bill& bill)
 		while (tmp.length() != 87)
 			tmp += "-";
 		izlaz << tmp << std::endl;
-		for (auto product : bill.list)
+		for (auto& product : bill.list)
 		{
 			izlaz << std::setw(20) << std::left << bill.date.day << "/" << bill.date.month << "/" << bill.date.year;
 			izlaz << std::setw(20) << std::left << product.getCode();
@@ -403,7 +403,7 @@ void exportForMonth(const Bill& bill)
 		while (tmp.length() != 107)
 			tmp += "-";
 		izlaz << tmp << std::endl;
-		for (auto product : bill.list)
+		for (auto& product : bill.list)
 		{
 			izlaz << std::setw(20) << std::left << bill.nameOfClient;
 			izlaz << std::setw(20) << std::left << bill.date.day << "/" << bill.date.month << "/" << bill.date.year;
