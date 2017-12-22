@@ -386,7 +386,7 @@ void exportForMonth(const Bill& bill)
 {
 	std::ofstream izlaz;
 	std::string directory = "Mjesec\\";
-	directory += month[bill.date.month];
+	directory += month[bill.date.month - 1];
 	directory += ".txt";
 	CreateDirectory("Mjesec", NULL);
 	izlaz.open(directory, std::ios::in);
