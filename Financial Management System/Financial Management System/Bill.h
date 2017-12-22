@@ -7,8 +7,10 @@
 #include <string>
 #include <fstream>
 #include<list>
+#include<iomanip>
 #define log "Log.txt"
 #define logError "logError.txt"
+
 const int isFormat[5] = { 1,2,3,4,5 } ;
 
 bool isProcessedBill(const std::string);
@@ -36,6 +38,7 @@ public:
 	  bool checkTotalofAllproducts();
 	  bool checkTotalPlusPDV();
 	  bool checkPDV();
+	 friend void exportForCustomer(const Bill&);
 	~Bill();
 private:
 	void process();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu

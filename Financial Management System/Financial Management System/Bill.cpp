@@ -291,3 +291,51 @@ bool checkFormat1(const std::string file)
 	}
 	return false;
 }
+
+void exportForCustomer(const Bill& bill)
+{
+	std::ofstream izlaz;
+	std::string directory = "Kupac\\";
+	directory += bill.nameOfClient;
+	CreateDirectory("Kupac", NULL);
+	izlaz.open(directory, std::ios::in);
+	if (!izlaz.is_open())
+	{
+		izlaz.open(directory);
+		izlaz << std::setw(20) << std::left << "Datum:";
+		izlaz << std::setw(20) << std::left << "Sifra:";
+		izlaz << std::setw(20) << std::left << "Kolicina:";
+		izlaz << std::setw(20) << std::left << "Cijena:";
+		izlaz << std::setw(20) << std::left << "Ukupno:" << std::endl;
+		std::string tmp;
+		while (tmp.length() != 87)
+			tmp += "-";
+		izlaz << tmp << std::endl;
+		for (auto product : bill.list)
+		{
+
+			izlaz << std::setw(20) << std::left << bill.date.day << "/" << bill.date.month << "/" << bill.date.year;
+			izlaz << std::setw(20) << std::left << product.getCode();
+			izlaz << std::setw(20) << std::left << product.getQuantity();
+			izlaz << std::setw(20) << std::left << product.getPricePerUnit();
+			izlaz << std::setw(20) << std::left << product.getTotal() << std::endl;
+		}
+		izlaz.close();
+	}
+	else
+	{
+		izlaz.close();
+		izlaz.open(directory, std::ios::app);
+		for (auto product : bill.list)
+		{
+
+			izlaz << std::setw(20) << std::left << bill.date.day << "/" << bill.date.month << "/" << bill.date.year;
+			izlaz << std::setw(20) << std::left << product.getCode();
+			izlaz << std::setw(20) << std::left << product.getQuantity();
+			izlaz << std::setw(20) << std::left << product.getPricePerUnit();
+			izlaz << std::setw(20) << std::left << product.getTotal() << std::endl;
+		}
+		izlaz.close();
+	}
+	getchar();
+}
