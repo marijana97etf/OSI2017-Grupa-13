@@ -12,7 +12,7 @@
 #define LOGERROR "LogError.txt"
 
 const int isFormat[5] = { 1,2,3,4,5 } ;
-const std::string month[12] = { "Januar","Februar","Mart","April","Maj","Jun","Jul","August","Septembar","Oktobar","Decembar" };
+const std::string month[12] = { "Januar","Februar","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar" };
 
 bool isProcessedBill(const std::string);
 std::vector<std::string> returnVectorOfNotProcessedBills(const std::string directory);
