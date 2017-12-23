@@ -1,4 +1,4 @@
-#include "Bill.h"
+/*#include "Bill.h"
 #include "Account.h"
 
 
@@ -430,3 +430,5 @@ void exportForMonth(const Bill& bill)
 		izlaz.close();
 	}
 }
+
+*/

@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include<string>
 class Product
 {
@@ -18,3 +18,4 @@ public:
 	inline void setCode(std::string info) { code = info; }
 };
 
+*/

@@ -25,7 +25,7 @@ public:
 	bool changeAccount();
 private:
 	bool isLegit(const std::string,char);
-	void format(std::string&);
+	void format(std::string&, char);
 	bool nameExists(std::string);
 	bool is_textfile_empty();
 	bool is_textfile_without_accounts();
