@@ -220,3 +220,19 @@ void Admin::modify(std::string &moddedline, std::string modkey)
 	std::remove(ACCOUNT_FILE_NAME.c_str());
 	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
 }
+
+
+const std::vector<std::string> Admin::explode(const std::string& s, const char& c)
+{
+	std::string buff{ "" };
+	std::vector<std::string> v;
+
+	for (auto n : s)
+	{
+		if (n != c) buff += n; else
+			if (n == c && buff != "") { v.push_back(buff); buff = ""; }
+	}
+	if (buff != "") v.push_back(buff);
+
+	return v;
+}
