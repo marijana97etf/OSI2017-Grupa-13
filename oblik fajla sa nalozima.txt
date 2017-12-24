@@ -1,5 +1,5 @@
   Username             PIN      Type    
   --------------------------------------
   David               |dad2    |admin
-  Risto               |nn2m    |admin
+  Risto               |nn2m    |analyst
   Nikola              |ms3d    |admin
