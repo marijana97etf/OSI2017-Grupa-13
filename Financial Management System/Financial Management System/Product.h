@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 #include<string>
 class Product
 {
@@ -17,5 +17,3 @@ public:
 	inline void setTotal(double info) { total = info; }
 	inline void setCode(std::string info) { code = info; }
 };
-
-*/

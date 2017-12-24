@@ -1,4 +1,4 @@
-/*
+
 #include "Product.h"
 
 
@@ -15,4 +15,3 @@ Product::Product(const std::string code, double quantity, double pricePerUnit, d
 Product::~Product()
 {
 }
-*/

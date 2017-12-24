@@ -121,7 +121,6 @@
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="Product.cpp" />
-    <ClCompile Include="testmain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 #include "Product.h"
 #include "Account.h"
 #include <Windows.h>
@@ -50,4 +50,4 @@ private:
 	Product processData(std::string &);
 	void ignoreElementsUntil(std::ifstream &, char);
 };
-*/
+
