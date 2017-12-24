@@ -2,7 +2,7 @@
 
 
 
-Account::Account():username(nullptr),pin(nullptr),type(nullptr)
+Account::Account():username(""),pin(""),type("")
 {}
 
 

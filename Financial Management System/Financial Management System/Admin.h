@@ -29,7 +29,8 @@ private:
 	bool nameExists(std::string);
 	bool is_textfile_empty();
 	bool is_textfile_without_accounts();
-	void modify(std::string&, std::string);
+	const std::vector<std::string> pullFromText(std::string);
 	const std::vector<std::string> explode(const std::string& s, const char& c);
+	void insert(const std::vector<std::string>, std::string&, std::string&, char);
 };
 

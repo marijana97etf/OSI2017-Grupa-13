@@ -3,5 +3,9 @@
 int main()
 {
 	Admin adm;
-	adm.addAccount();
+	adm.changeAccount();
+	getchar();
+	getchar();
+
+	return 0;
 }

@@ -38,7 +38,7 @@ void Admin::addAccount()
 
 	format(_tmpusername, 'U');
 	format(_tmppin, 'P');
-	accounts_file << _tmpusername << _tmppin << ((type = 'D') ? "admin" : "analyst") << "\n";
+	accounts_file << _tmpusername << _tmppin << ((type == 'D') ? "admin" : "analyst") << "\n";
 	accounts_file.close();
 }
 
@@ -81,7 +81,7 @@ void Admin::printAccounts()
 
 bool Admin::changeAccount()
 {
-	std::string _tmpusername, _testline, _textdiff;
+	std::string _tmpusername, _textdiff;
 	char c;
 	do
 	{
@@ -102,11 +102,7 @@ bool Admin::changeAccount()
 			{
 				std::cin >> _textdiff;
 			} while (isLegit(_textdiff, 'P'));
-			modify(_testline, _tmpusername);
-			std::vector < std::string > _modvector = explode(_testline, SEPARATOR);//sta ovo radi
-			std::ofstream accounts(ACCOUNT_FILE_NAME, std::ofstream::app);
-			format(_textdiff, 'P');
-			accounts << _modvector[0] << SEPARATOR << _textdiff << _modvector[2] << "\n";//???
+			insert(pullFromText(_tmpusername), _tmpusername, _textdiff, 'P');
 		}
 		if (c == 'U')
 		{
@@ -115,11 +111,7 @@ bool Admin::changeAccount()
 			{
 				std::cin >> _textdiff;
 			} while (isLegit(_textdiff, 'U'));
-			modify(_testline, _tmpusername);
-			std::vector < std::string > _modvector = explode(_testline, SEPARATOR);
-			std::ofstream accounts(ACCOUNT_FILE_NAME, std::ofstream::app);
-			format(_textdiff);
-			accounts <<  _textdiff << _modvector[1] << SEPARATOR << _modvector[2] << "\n";
+			insert(pullFromText(_tmpusername), _tmpusername, _textdiff, 'U');
 		}
 		if (c == 'T')
 		{
@@ -128,10 +120,12 @@ bool Admin::changeAccount()
 			{
 				std::cin >> c;
 			} while (c != 'A' && c != 'D');
-			modify(_testline, _tmpusername);
-			std::vector < std::string > _modvector = explode(_testline, SEPARATOR);
-			std::ofstream accounts(ACCOUNT_FILE_NAME, std::ofstream::app);
-			accounts << _modvector[0] << SEPARATOR << _modvector[1] << SEPARATOR << ((c == 'A') ? "analyst" : "admin") << "\n";
+			std::string type = (c == 'D') ? "admin" : "analyst";
+			if (c == 'A')
+				insert(pullFromText(_tmpusername), _tmpusername, type , c);
+			else
+				insert(pullFromText(_tmpusername), _tmpusername, type, c);
+
 		}
 		return true;
 	}
@@ -162,12 +156,12 @@ bool Admin::isLegit(std::string tmp, char typeofstring)
 
 void Admin::format(std::string &tmp, char c)
 {
-	if (c == 'P')
+	if (c == 'U')
 	{
 		while (tmp.length() < MAX_LENGTH_OF_NAME) tmp += " ";
-		tmp.insert(0, "  ");
+		tmp = "  " + tmp;
 	}
-	if (c == 'U')
+	if (c == 'P')
 		tmp += "    ";
 	tmp += SEPARATOR;
 }
@@ -176,7 +170,6 @@ bool Admin::nameExists(std::string testusername)
 {
 	std::ifstream file(ACCOUNT_FILE_NAME);
 	std::string tmpline, _tmpdummy;
-	char tmp;
 	if (is_textfile_empty() || is_textfile_without_accounts())
 	{
 		file.close();
@@ -220,26 +213,6 @@ bool Admin::is_textfile_without_accounts()
 	return false;
 }
 
-void Admin::modify(std::string &moddedline, std::string modkey)
-{
-	std::fstream file(ACCOUNT_FILE_NAME);
-	std::ofstream tmp(TMP_FILE, std::fstream::trunc);
-	std::string _testline;
-	while (file.peek() != std::ifstream::traits_type::eof())
-	{
-		getline(file, _testline);
-		if (_testline.find(modkey, 0) == std::string::npos)
-			tmp << _testline << "\n";
-		else moddedline = _testline;
-		_testline.clear();
-	}
-	file.close();
-	tmp.close();
-	std::remove(ACCOUNT_FILE_NAME.c_str());
-	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
-}
-
-
 const std::vector<std::string> Admin::explode(const std::string& s, const char& c)
 {
 	std::string buff{ "" };
@@ -254,3 +227,53 @@ const std::vector<std::string> Admin::explode(const std::string& s, const char& 
 
 	return v;
 }
+
+const std::vector<std::string> Admin::pullFromText(std::string modkey)
+{
+	std::fstream file(ACCOUNT_FILE_NAME);
+	std::string _testline, _line;
+	while (file.peek() != std::ifstream::traits_type::eof())
+	{
+		getline(file, _testline);
+		if (_testline.find(modkey, 0) != std::string::npos)
+		{
+			file.close();
+			return explode(_testline, SEPARATOR);
+		}
+	}
+
+}
+
+void Admin::insert(const std::vector<std::string> _modvec, std:: string &text, std::string &textdiff, char c)
+{
+	std::ifstream accountfile(ACCOUNT_FILE_NAME);
+	std::ofstream tmp(TMP_FILE);
+	std::string _currline;
+	while (accountfile.peek() != std::ifstream::traits_type::eof())
+	{
+		getline(accountfile, _currline);
+		if (_currline.find(text, 0) == std::string::npos)
+			tmp << _currline << "\n";
+		else
+		{
+			if (c == 'P')
+			{
+				format(textdiff, 'P');
+				tmp << _modvec[0] << SEPARATOR << textdiff << _modvec[2] << "\n";
+			}
+			if (c == 'U')
+			{
+				format(textdiff, 'U');
+				tmp << textdiff << _modvec[1] << SEPARATOR << _modvec[2] << "\n";
+			}
+			if (c == 'A' || c == 'D')
+				tmp << _modvec[0] << SEPARATOR << _modvec[1] << SEPARATOR << textdiff << "\n";
+		}
+		_currline.clear();
+	}
+	accountfile.close();
+	tmp.close();
+	std::remove(ACCOUNT_FILE_NAME.c_str());
+	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
+}
+
