@@ -5,14 +5,14 @@
 Bill::Bill(): nameOfBill(nullptr),nameOfClient(nullptr), date(Date(0,0,0))
 {}
 
-Bill::Bill(const std::string &inputFileName,int formatCode):nameOfBill(inputFileName),formatCode()
+Bill::Bill(const std::string &inputFileName,int formatCode):nameOfBill(inputFileName),formatCode(formatCode)
 {
 	process();
 }
 
 void Bill::process()
 {
-	if (formatCode == isFormat[1])
+	if (formatCode == isFormat[0])
 		processFormat1();
 }
 
@@ -37,7 +37,7 @@ void Bill::processFormat1()
 		for (; iterator != list.end(); iterator++)
 			if (iterator->getCode() == product.getCode() )
 			{
-				product.setQuantity(product.getQuantity() +iterator->getQuantity());
+				product.setQuantity(product.getQuantity() + iterator->getQuantity());
 				product.setTotal(product.getTotal() + iterator->getTotal());
 				break;
 			}
@@ -45,7 +45,6 @@ void Bill::processFormat1()
 			list.push_back(product);
 		getline(inputf, tmp,END_OF_LINE);
 	}
-	ignoreElementsUntil(inputf, END_OF_LINE);
 	std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
 
 	inputf.ignore(8);
