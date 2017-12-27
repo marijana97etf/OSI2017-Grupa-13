@@ -18,6 +18,7 @@ Account Account::getNextUser(std::ifstream &inputf)
 		ignoreElementsUntil(inputf, END_OF_LINE);
 	}
 
+	std::string username, pin, type;
 	ignoreElementsUntil(inputf, ' ');
 	ignoreElementsUntil(inputf, ' ');
 	getline(inputf,username,' ');
@@ -26,10 +27,9 @@ Account Account::getNextUser(std::ifstream &inputf)
 	getline(inputf,pin,' ');
 
 	ignoreElementsUntil(inputf, SEPARATOR);
-	getline(inputf,type, ' ');
-
-
-	return *this;
+	getline(inputf,type,END_OF_LINE);
+    
+	return Account(username, pin, type);
 }
 
 int Account::checkTypeOfUser()

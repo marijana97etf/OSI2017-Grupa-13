@@ -2,8 +2,13 @@
 #include "Account.h"
 
 
-Bill::Bill(): nameOfBill(nullptr), date(Date(0,0,0))
+Bill::Bill(): nameOfBill(nullptr),nameOfClient(nullptr), date(Date(0,0,0))
 {}
+
+Bill::Bill(const std::string &inputFileName,int formatCode):nameOfBill(inputFileName),formatCode()
+{
+	process();
+}
 
 void Bill::process()
 {
@@ -16,7 +21,7 @@ void Bill::processFormat1()
 	std::ifstream inputf(nameOfBill);
 	std::string tmp;
 	inputf.ignore(7);
-	getline(inputf, nameOfClient);//pretpostavlja se da se ne stavljaju razmaci poslije naziva
+	getline(inputf, nameOfClient,END_OF_LINE);//pretpostavlja se da se ne stavljaju razmaci poslije naziva
 
 	inputf.ignore(7);
 	processDate(inputf);
@@ -24,33 +29,33 @@ void Bill::processFormat1()
 	for(int i=0;i<4;i++)
 	  ignoreElementsUntil(inputf, END_OF_LINE);
 	
-	getline(inputf,tmp);
+	getline(inputf,tmp,END_OF_LINE);//
 	while (tmp[0] != '-')//radi dok se ne dodlje do linije sa -----------------------------
 	{
 		Product product = processData(tmp);
 		auto iterator = list.begin();
 		for (; iterator != list.end(); iterator++)
-			if (iterator->getCode == product.getCode )
+			if (iterator->getCode() == product.getCode() )
 			{
-				product.setQuantity(product.getQuantity + iterator->getQuantity);
-				product.setTotal(product.getTotal + iterator->getTotal);
+				product.setQuantity(product.getQuantity() +iterator->getQuantity());
+				product.setTotal(product.getTotal() + iterator->getTotal());
 				break;
 			}
 		if (iterator == list.end())
 			list.push_back(product);
-		getline(inputf, tmp);
+		getline(inputf, tmp,END_OF_LINE);
 	}
 	ignoreElementsUntil(inputf, END_OF_LINE);
 	std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
 
 	inputf.ignore(8);
-	getline(inputf, totalSumOfProducts);
+	getline(inputf, totalSumOfProducts,END_OF_LINE);
 
 	inputf.ignore(5);
-	getline(inputf, pdv);
+	getline(inputf, pdv,END_OF_LINE);
 
 	inputf.ignore(20);
-	getline(inputf,totalSumOfBill);
+	getline(inputf,totalSumOfBill,END_OF_LINE);
 
 	this->totalSumOfProducts = std::stod(totalSumOfProducts, nullptr);
 	this->pdv = std::stod(pdv, nullptr);

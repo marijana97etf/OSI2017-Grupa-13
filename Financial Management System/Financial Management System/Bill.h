@@ -24,6 +24,7 @@ class Bill
 	{
 		int day, month, year;
 	public:
+		Date() = default;
 		Date(const int, const int, const int);
 	};
 	std::list <Product> list;
@@ -33,7 +34,7 @@ class Bill
 	Date date;
 public:
 	Bill();
-	Bill(const std::string &);//daje se ime .txt ili .csv koji se treba obraditi
+	Bill(const std::string &,int);//daje se ime .txt ili .csv koji se treba obraditi
 	bool Validate();//izvrsava validaciju podataka
 	  bool checkTotalOfEveryProduct();
 	  bool checkTotalofAllproducts();
