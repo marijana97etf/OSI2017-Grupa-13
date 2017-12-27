@@ -93,9 +93,10 @@ Product Bill::processData(std::string &tmp)
 	{
 		posOfFirstLine = posOfNextLine;
 		posOfNextLine = tmp.find("-", posOfNextLine+1);//uvecano za jedan jer find trazi i na poziciji posOfNextLine a tu sigurno nalazi znak -
-		while (tmp[++posOfFirstLine] == ' ');
-		while (tmp[--posOfNextLine] == ' ');
-		std::string value = tmp.substr(posOfFirstLine, posOfNextLine - posOfFirstLine + 1);//podstring u kome se nalazi samo broj
+		int posOfFirstDigit = posOfFirstLine, posOfLastDigit = posOfNextLine;
+		while (tmp[++posOfFirstDigit] == ' ');
+		while (tmp[--posOfLastDigit] == ' ');
+		std::string value = tmp.substr(posOfFirstDigit, posOfLastDigit - posOfFirstDigit + 1);//podstring u kome se nalazi samo broj
 		*productInfoPointers[i] = std::stod(value, nullptr);//std::stod - from string to doubles
 	}
 	return Product::Product(name, quantity, pricePerUnit, total);
