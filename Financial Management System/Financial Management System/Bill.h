@@ -48,7 +48,8 @@ private:
 	void process();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
 	void processFormat1();
 	void processDate(std::ifstream &);
-	Product processData(std::string &);
+	Product processDataForFormat124(std::string &);
+	void putNewProductInList(const Product&);
 	void ignoreElementsUntil(std::ifstream &, char);
 };
 
