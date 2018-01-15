@@ -457,6 +457,137 @@ bool checkFormat2(const std::string file)
 	return false;
 }
 
+bool checkFormat3(const std::string file)
+{
+	std::ifstream inputFile(file);
+	if (inputFile.is_open())
+	{
+		std::string tmp;
+		getline(inputFile, tmp);
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 11) != "Poslovnica:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 6) != "Kupac:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 6) != "Datum:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		inputFile >> tmp;
+		if (tmp.substr(0, 12) != "Maloprodajni")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp.substr(0, 5) != "racun")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		getline(inputFile, tmp);
+		inputFile >> tmp;
+		if (tmp != "Proizvod")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "Kolicina")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "Cijena")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "Ukupno")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		inputFile >> tmp;
+		std::string tmp1;
+		for (int i = 0; i < tmp.length(); i++, tmp1 += "-");
+		if (tmp != tmp1)
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		do
+		{
+			tmp1 = "";
+			getline(inputFile, tmp);
+			for (int i = 0; i < tmp.length(); i++, tmp1 += "-");
+		} while (!inputFile.eof() && tmp != tmp1);
+		if (inputFile.eof())
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		inputFile >> tmp;
+		if (tmp != "Ukupno:")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		inputFile >> tmp;
+		if (tmp != "PDV:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		getline(inputFile, tmp);
+		inputFile >> tmp;
+		if (tmp != "Ukupno")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "za")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "placanje:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (!inputFile.eof())
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile.close();
+		return true;
+	}
+	return false;
+}
+
 void exportForCustomer(const Bill& bill)
 {
 	std::ofstream izlaz;
