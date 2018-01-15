@@ -204,7 +204,7 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 			std::string file = fileData.cFileName;
 			if (file.length() > 4 && (file.substr(file.length() - 4, 4) == ".txt" || file.substr(file.length() - 4, 4) == ".csv"))
 			{
-				if (file != LOG && file != LOGERROR && isProcessedBill(file) == false)
+				if (file != LOG && file != LOGERROR && !(file.length() > 10 && file.substr(file.length() - 10, 10) == "_error.txt") && isProcessedBill(file) == false)
 					files.push_back(file);
 			}
 		}
@@ -222,13 +222,13 @@ bool checkFormat1(const std::string file)
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Kupac:")
 		{
-			inputFile.close();//trebao bi da se baci exception sa nekim kodom da se zna o kojoj se greski radi i kako se zove racun
+			inputFile.close();
 			return false;
 		}
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Datum:")
 		{
-			inputFile.close();//
+			inputFile.close();
 			return false;
 		}
 		getline(inputFile, tmp);
