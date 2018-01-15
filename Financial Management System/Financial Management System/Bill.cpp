@@ -94,6 +94,32 @@ Product Bill::processDataForFormat124(std::string &tmp)
 
 }
 
+Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim da ce raditi iz prve
+{
+	std::string name;
+	double quantity, pricePerUnit, total;
+	double *productInfoPointers[3] = { &quantity, &pricePerUnit, &total };
+
+	int pos = tmp.find("=",0);
+	name = tmp.substr(0, pos);
+	while (tmp[++pos] == '=');
+
+	int posOfFirstCharOfEquality,posOfNextCharOfEquality = pos-1;
+
+	for (int i = 0; i < 3; i++)
+	{
+		posOfFirstCharOfEquality = posOfNextCharOfEquality;
+		posOfNextCharOfEquality = tmp.find("=", posOfNextCharOfEquality + 1);
+		int posOfFirstDigit = posOfFirstCharOfEquality + 1,posOfLastDigit = posOfNextCharOfEquality;
+		std::string  value = tmp.substr(posOfFirstDigit, posOfLastDigit - posOfFirstDigit + 1);
+		*productInfoPointers[i] = std::stod(value, nullptr);
+
+		while (tmp[++posOfNextCharOfEquality] == '=');
+		posOfNextCharOfEquality -= 1;
+	}
+	return Product(name, quantity, pricePerUnit, total);
+}
+
 void Bill::putNewProductInList(const Product & product)
 {
 	
