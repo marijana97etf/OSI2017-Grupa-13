@@ -17,6 +17,8 @@ const std::string month[12] = { "Januar","Februar","Mart","April","Maj","Jun","J
 bool isProcessedBill(const std::string);
 std::vector<std::string> returnVectorOfNotProcessedBills(const std::string directory);
 bool checkFormat1(const std::string);
+bool checkFormat2(const std::string);
+bool checkFormat3(const std::string);
 
 class Bill
 {
