@@ -282,19 +282,175 @@ bool checkFormat1(const std::string file)
 			inputFile.close();
 			return false;
 		}
-		inputFile >> tmp;
-		int size = tmp.length();
-		std::string tmp1 = "";
-		for (int i = 0; i < size; i++, tmp1 += '-');
-		if (tmp == tmp1)//sta se ovde desava
+		getline(inputFile, tmp);
+		std::string tmp1;
+		do
+		{
+			tmp1 = "";
+			getline(inputFile, tmp);
+			for (int i = 0; i < tmp.length(); i++, tmp1 += "-");
+		} while (!inputFile.eof() && tmp != tmp1);
+		if (inputFile.eof())
 		{
 			inputFile.close();
 			return false;
 		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 7) != "Ukupno:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 4) != "PDV:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 19) != "Ukupno za placanje:")
+		{
+			inputFile.close();
+			return false;
+		}
+		if (!inputFile.eof())
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile.close();
+		return true;
+	}
+	return false;
+}
 
-		//Trebao bi samo jos daprodjes par linija dok ne naidjes na ------------------
-		//i da provjeris da li su ukupno,ukupno sa pdv i pdv dobro napisani
-		//dobro uradjeno, veliki lajk
+bool checkFormat2(const std::string file)
+{
+	std::ifstream inputFile(file);
+	if (inputFile.is_open())
+	{
+		std::string tmp;
+		getline(inputFile, tmp);
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 11) != "Poslovnica:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		inputFile >> tmp;
+		if (tmp.substr(0, 12) != "Maloprodajni")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp.substr(0, 5) != "racun")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		getline(inputFile, tmp);
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 6) != "Kupac:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		inputFile >> tmp;
+		if (tmp != "Proizvod")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "-")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "kolicina")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "-")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "cijena")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "-")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		if (tmp != "ukupno")
+		{
+			inputFile.close();
+			return false;
+		}
+		inputFile >> tmp;
+		getline(inputFile, tmp);
+		std::string tmp1;
+		for (int i = 0; i < tmp.length(); i++, tmp1 += "-");
+		if (tmp != tmp1)
+		{
+			inputFile.close();
+			return false;
+		}
+		do
+		{
+			tmp1 = "";
+			getline(inputFile, tmp);
+			for (int i = 0; i < tmp.length(); i++, tmp1 += "-");
+		} while (!inputFile.eof() && tmp != tmp1);
+		if (inputFile.eof())
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 7) != "Ukupno:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 4) != "PDV:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 19) != "Ukupno za placanje:")
+		{
+			inputFile.close();
+			return false;
+		}
+		getline(inputFile, tmp);
+		if (tmp.substr(0, 6) != "Datum:")
+		{
+			inputFile.close();
+			return false;
+		}
+		if (!inputFile.eof())
+		{
+			inputFile.close();
+			return false;
+		}
 		inputFile.close();
 		return true;
 	}
