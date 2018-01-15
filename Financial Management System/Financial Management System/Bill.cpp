@@ -222,13 +222,13 @@ bool checkFormat1(const std::string file)
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Kupac:")
 		{
-			inputFile.close();
+			inputFile.close();//trebao bi da se baci exception sa nekim kodom da se zna o kojoj se greski radi i kako se zove racun
 			return false;
 		}
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Datum:")
 		{
-			inputFile.close();
+			inputFile.close();//
 			return false;
 		}
 		getline(inputFile, tmp);
@@ -286,11 +286,15 @@ bool checkFormat1(const std::string file)
 		int size = tmp.length();
 		std::string tmp1 = "";
 		for (int i = 0; i < size; i++, tmp1 += '-');
-		if (tmp == tmp1)
+		if (tmp == tmp1)//sta se ovde desava
 		{
 			inputFile.close();
 			return false;
 		}
+
+		//Trebao bi samo jos daprodjes par linija dok ne naidjes na ------------------
+		//i da provjeris da li su ukupno,ukupno sa pdv i pdv dobro napisani
+		//dobro uradjeno, veliki lajk
 		inputFile.close();
 		return true;
 	}
