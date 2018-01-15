@@ -32,17 +32,8 @@ void Bill::processFormat1()
 	getline(inputf,tmp,END_OF_LINE);//
 	while (tmp[0] != '-')//radi dok se ne dodlje do linije sa -----------------------------
 	{
-		Product product = processData(tmp);
-		auto iterator = list.begin();
-		for (; iterator != list.end(); iterator++)
-			if (iterator->getCode() == product.getCode() )
-			{
-				product.setQuantity(product.getQuantity() + iterator->getQuantity());
-				product.setTotal(product.getTotal() + iterator->getTotal());
-				break;
-			}
-		if (iterator == list.end())
-			list.push_back(product);
+		Product product = processDataForFormat124(tmp);
+		putNewProductInList(product);
 		getline(inputf, tmp,END_OF_LINE);
 	}
 	std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
@@ -77,7 +68,7 @@ void Bill::processDate(std::ifstream &inputf)
 	date = Date::Date(std::stoi(day, nullptr, 10), std::stoi(month, nullptr, 10), std::stoi(year, nullptr, 10));
 }
 
-Product Bill::processData(std::string &tmp)
+Product Bill::processDataForFormat124(std::string &tmp)
 {
 	std::string name;
 	double quantity, pricePerUnit, total;
@@ -101,6 +92,46 @@ Product Bill::processData(std::string &tmp)
 	}
 	return Product::Product(name, quantity, pricePerUnit, total);
 
+}
+
+Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim da ce raditi iz prve
+{
+	std::string name;
+	double quantity, pricePerUnit, total;
+	double *productInfoPointers[3] = { &quantity, &pricePerUnit, &total };
+
+	int pos = tmp.find("=",0);
+	name = tmp.substr(0, pos);
+	while (tmp[++pos] == '=');
+
+	int posOfFirstCharOfEquality,posOfNextCharOfEquality = pos-1;
+
+	for (int i = 0; i < 3; i++)
+	{
+		posOfFirstCharOfEquality = posOfNextCharOfEquality;
+		posOfNextCharOfEquality = tmp.find("=", posOfNextCharOfEquality + 1);
+		int posOfFirstDigit = posOfFirstCharOfEquality + 1,posOfLastDigit = posOfNextCharOfEquality;
+		std::string  value = tmp.substr(posOfFirstDigit, posOfLastDigit - posOfFirstDigit + 1);
+		*productInfoPointers[i] = std::stod(value, nullptr);
+
+		while (tmp[++posOfNextCharOfEquality] == '=');
+		posOfNextCharOfEquality -= 1;
+	}
+	return Product(name, quantity, pricePerUnit, total);
+}
+
+void Bill::putNewProductInList(const Product & product)
+{
+	
+	for (auto& listProduct : list)
+		if (listProduct.getCode() == product.getCode())
+		{
+			listProduct.setQuantity(product.getQuantity() + listProduct.getQuantity());
+			listProduct.setTotal(product.getTotal() + listProduct.getTotal());
+			return;
+		}
+		list.push_back(product);
+		return;
 }
 
 void Bill::ignoreElementsUntil(std::ifstream &inputf, char boundary)
