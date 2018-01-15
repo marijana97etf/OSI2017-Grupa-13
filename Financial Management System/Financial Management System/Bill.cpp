@@ -204,7 +204,7 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 			std::string file = fileData.cFileName;
 			if (file.length() > 4 && (file.substr(file.length() - 4, 4) == ".txt" || file.substr(file.length() - 4, 4) == ".csv"))
 			{
-				if (file != LOG && file != LOGERROR && isProcessedBill(file) == false)
+				if (file != LOG && file != LOGERROR && !(file.length() > 10 && file.substr(file.length() - 10, 10) == "_error.txt") && isProcessedBill(file) == false)
 					files.push_back(file);
 			}
 		}
