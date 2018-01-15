@@ -222,13 +222,13 @@ bool checkFormat1(const std::string file)
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Kupac:")
 		{
-			inputFile.close();//trebao bi da se baci exception sa nekim kodom da se zna o kojoj se greski radi i kako se zove racun
+			inputFile.close();
 			return false;
 		}
 		getline(inputFile, tmp);
 		if (tmp.substr(0, 6) != "Datum:")
 		{
-			inputFile.close();//
+			inputFile.close();
 			return false;
 		}
 		getline(inputFile, tmp);
