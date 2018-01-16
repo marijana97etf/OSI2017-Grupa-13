@@ -19,6 +19,8 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 bool checkFormat1(const std::string);
 bool checkFormat2(const std::string);
 bool checkFormat3(const std::string);
+bool checkFormat4(const std::string);
+bool checkFormat5(const std::string);
 
 class Bill
 {
