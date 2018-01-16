@@ -51,6 +51,7 @@ private:
 	void processFormat1();
 	void processFormat2();
 	void processFormat3();
+	void processFormat4();
 	void processDate(std::ifstream &);
 	Product processDataForFormat124(std::string &);
 	Product processDataForFormat3(std::string &);
