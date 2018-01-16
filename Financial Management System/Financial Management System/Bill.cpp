@@ -191,6 +191,19 @@ void Bill::processFormat4() // Nije testirano!!
 	inputf.close();
 }
 
+void Bill::processFormat5() // Nije testirano!!
+{
+	std::ifstream inputf(nameOfBill);
+	std::string tmp;
+	
+	inputf.ignore(28);
+	getline(inputf, tmp, END_OF_LINE);
+	
+	processDataForFormat5(tmp);
+
+	inputf.close();
+}
+
 void Bill::processDate(std::ifstream &inputf)
 {
 	std::string day, month, year;
@@ -256,6 +269,43 @@ Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim
 		posOfNextCharOfEquality -= 1;
 	}
 	return Product(name, quantity, pricePerUnit, total);
+}
+
+void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
+{
+	std::list <std::string> ProductsInString;
+	std::string tmp_line = "";
+	
+	while (tmp.size != NULL)
+	{
+		int i = 0;
+		int comaCounter = 0; 
+		while (!(comaCounter==3 && !(isalpha(tmp[i]))))
+		{
+			tmp_line.append(&tmp[i]);
+			i++; 
+			if (tmp[i] == ',') comaCounter++;
+		}
+		ProductsInString.push_back(tmp_line);
+    }
+
+	for (auto& k : ProductsInString)
+	{
+		Product product;
+		
+		int pos = k.find(",", 0);
+		product.setCode(k.substr(0, pos-1));
+
+		int pos2 = k.find(",", pos + 1);
+		product.setQuantity(stod(k.substr(pos+1, pos2-1)));
+
+		int pos3 = k.find(",", pos2 + 1);
+		product.setPricePerUnit(stod(k.substr(pos2+1, pos3-1)));
+
+		product.setTotal(stod(k.substr(pos3 + 1, k.end)));
+
+		putNewProductInList(product);
+	}
 }
 
 void Bill::putNewProductInList(const Product & product)
