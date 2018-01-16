@@ -807,6 +807,136 @@ bool checkFormat3(const std::string file)
 	return false;
 }
 
+bool checkFormat4(const std::string bill)
+{
+	std::ifstream file(bill);
+	std::string trickystring1 = "		";
+	std::string trickystring2 = "	      OSI Market";
+	std::string trickystring3 = "Proizvod - kolicina - cijena - ukupno";
+	std::string trickystring4 = "---------------------------------------";
+	std::string trickystring5 = "=======================================";
+	if (file.is_open())
+	{
+		std::string tmp;
+		std::getline(file, tmp);
+		if (tmp.substr(0, 7) != "Kupac: ")
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp.substr(0, 7) != "Datum: ")
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp != trickystring1)
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp != trickystring2)
+		{
+			file.close();
+			return false;
+		}
+		tmp.clear();
+		std::getline(file, tmp);
+		if (!tmp.empty())
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp != trickystring3)
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp != trickystring4)
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		while (tmp != trickystring4)
+			std::getline(file, tmp);
+		if (file.peek() == std::ifstream::traits_type::eof())
+			return false;
+		std::getline(file, tmp);
+		if (tmp.substr(0, 8) != "Ukupno: ")
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp.substr(0, 5) != "PDV: ")
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp != trickystring5)
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp.substr(0, 20) != "Ukupno za placanje: ")
+		{
+			file.close();
+			return false;
+		}
+		tmp.clear();
+		std::getline(file, tmp);
+		if (!tmp.empty())
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, tmp);
+		if (tmp != trickystring5)
+		{
+			file.close();
+			return false;
+		}
+		file.close();
+		return true;
+	}
+	return false;
+}
+
+bool checkFormat5(const std::string bill)
+{
+	std::ifstream file(bill);
+	int count = 0;
+	std::string trickystring1 = "Sifra,Kolicina,Cijena,Ukupno";
+	std::string tmp;
+	std::getline(file, tmp);
+	if (tmp != trickystring1)
+	{
+		file.close();
+		return false;
+	}
+	while (!tmp.empty())
+	{
+		std::getline(file, tmp);
+		for (int i = 0; i < tmp.length() - 1; i++)
+			if (tmp[i] == ',')
+				count++;
+		if (count != 3)
+		{
+			file.close();
+			return false;
+		}
+	}
+	file.close();
+	return true;
+}
+
 void exportForCustomer(const Bill& bill)
 {
 	std::ofstream izlaz;
