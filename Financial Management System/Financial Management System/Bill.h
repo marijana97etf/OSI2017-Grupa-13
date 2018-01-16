@@ -49,6 +49,7 @@ private:
 	friend void exportForMonth(const Bill&);
 	void process();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
 	void processFormat1();
+	void processFormat2();
 	void processDate(std::ifstream &);
 	Product processDataForFormat124(std::string &);
 	Product processDataForFormat3(std::string &);

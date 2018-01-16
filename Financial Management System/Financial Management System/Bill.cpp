@@ -53,6 +53,52 @@ void Bill::processFormat1()
 	inputf.close();
 }
 
+void Bill::processFormat2() // Nije testirano!
+{
+		std::ifstream inputf(nameOfBill);
+		std::string tmp;
+		
+		for (int i = 0; i<5; i++)
+			ignoreElementsUntil(inputf, END_OF_LINE);
+		
+		inputf.ignore(7);
+		getline(inputf, nameOfClient, END_OF_LINE);//pretpostavlja se da se ne stavljaju razmaci poslije naziva
+
+		for (int i = 0; i<3; i++)
+			ignoreElementsUntil(inputf, END_OF_LINE);
+        
+		getline(inputf, tmp, END_OF_LINE);//
+		while (tmp[0] != '-')//radi dok se ne dodlje do linije sa -----------------------------
+		{
+			Product product = processDataForFormat124(tmp);
+			putNewProductInList(product);
+			getline(inputf, tmp, END_OF_LINE);
+		}
+
+		for (int i = 0; i<2; i++)
+			ignoreElementsUntil(inputf, END_OF_LINE);
+		
+		std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
+		
+		inputf.ignore(8);
+		getline(inputf, totalSumOfProducts, END_OF_LINE);
+		
+		inputf.ignore(5);
+		getline(inputf, pdv, END_OF_LINE);
+		
+		inputf.ignore(20);
+		getline(inputf, totalSumOfBill, END_OF_LINE);
+
+		inputf.ignore(7);
+		processDate(inputf);
+        getline(inputf, tmp, END_OF_LINE);//
+		
+		this->totalSumOfProducts = std::stod(totalSumOfProducts, nullptr);
+		this->pdv = std::stod(pdv, nullptr);
+		this->totalSumOfBill = std::stod(totalSumOfBill, nullptr);
+		inputf.close();
+}
+
 void Bill::processDate(std::ifstream &inputf)
 {
 	std::string day, month, year;
