@@ -30,6 +30,9 @@
     <ClInclude Include="Analyst.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ErrorException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Account.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Analyst.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

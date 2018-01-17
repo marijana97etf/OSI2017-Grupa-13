@@ -14,30 +14,96 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 		for (int i = 0; i < vec.size(); i++)
 		{
 			int formatCode;
+			std::ofstream logOut(LOG, std::ios::in);
 			if (checkFormat1(vec[i]))
 			{
 				formatCode = 1;
 				Bill bill(vec[i], formatCode);
+				try
+				{
+					bill.process();
+					bill.exportForCustomer();
+					bill.exportForMonth();
+					bill.exportForProduct();
+					logOut << vec[i] << std::endl;
+				}
+				catch (ErrorException& ex)
+				{
+					ex.processException();
+				}
 			}
 			else if (checkFormat2(vec[i]))
 			{
 				formatCode = 2;
 				Bill bill(vec[i], formatCode);
+				try
+				{
+					bill.process();
+					bill.exportForCustomer();
+					bill.exportForMonth();
+					bill.exportForProduct();
+					logOut << vec[i] << std::endl;
+				}
+				catch (ErrorException& ex)
+				{
+					ex.processException();
+				}
 			}
 			else if (checkFormat3(vec[i]))
 			{
 				formatCode = 3;
 				Bill bill(vec[i], formatCode);
+				try
+				{
+					bill.process();
+					bill.exportForCustomer();
+					bill.exportForMonth();
+					bill.exportForProduct();
+					logOut << vec[i] << std::endl;
+				}
+				catch (ErrorException& ex)
+				{
+					ex.processException();
+				}
 			}
 			else if (checkFormat4(vec[i]))
 			{
 				formatCode = 4;
 				Bill bill(vec[i], formatCode);
+				try
+				{
+					bill.process();
+					bill.exportForCustomer();
+					bill.exportForMonth();
+					bill.exportForProduct();
+					logOut << vec[i] << std::endl;
+				}
+				catch (ErrorException& ex)
+				{
+					ex.processException();
+				}
 			}
 			else if (checkFormat5(vec[i]))
 			{
 				formatCode = 5;
 				Bill bill(vec[i], formatCode);
+				try
+				{
+					bill.process();
+					bill.exportForCustomer();
+					bill.exportForMonth();
+					bill.exportForProduct();
+					logOut << vec[i] << std::endl;
+				}
+				catch (ErrorException& ex)
+				{
+					ex.processException();
+				}
+			}
+			else
+			{
+				ErrorException ex(vec[i], "Neodgovarajuci format.");
+				ex.processException();
 			}
 		}
 	}
