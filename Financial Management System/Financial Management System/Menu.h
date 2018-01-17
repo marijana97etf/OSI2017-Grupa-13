@@ -7,6 +7,7 @@
 class Menu
 {
 	std::string pattern;
+	std::string typeOfAccount;
 	Account* accountP;
 	int currOption;
 public:
