@@ -1,6 +1,7 @@
 #pragma once
 #include "Product.h"
 #include "Account.h"
+#include "ErrorException.h"
 #include <Windows.h>
 #include <vector>
 #include <iostream>
@@ -8,8 +9,6 @@
 #include <fstream>
 #include<list>
 #include<iomanip>
-#define LOG "Log.txt"
-#define LOGERROR "LogError.txt"
 
 const int isFormat[5] = { 1,2,3,4,5 } ;
 const std::string month[12] = { "Januar","Februar","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar" };
@@ -39,17 +38,17 @@ class Bill
 public:
 	Bill();
 	Bill(const std::string &,int);//daje se ime .txt ili .csv koji se treba obraditi
-	bool Validate();//izvrsava validaciju podataka
-	  bool checkTotalOfEveryProduct();
-	  bool checkTotalofAllproducts();
-	  bool checkTotalPlusPDV();
-	  bool checkPDV();
+	void process();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
+	void exportForCustomer();
+	void exportForProduct();
+	void exportForMonth();
 	~Bill();
 private:
-	friend void exportForCustomer(const Bill&);
-	friend void exportForProduct(const Bill&);
-	friend void exportForMonth(const Bill&);
-	void process();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
+	bool checkTotalOfEveryProduct();
+	bool checkTotalofAllproducts();
+	bool checkTotalPlusPDV();
+	bool checkPDV();
+	bool Validate();//izvrsava validaciju podataka
 	void processFormat1();
 	void processFormat2();
 	void processFormat3();
