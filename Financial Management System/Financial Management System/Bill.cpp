@@ -809,14 +809,44 @@ bool checkFormat3(const std::string file)
 	return false;
 }
 
+bool checkFormat5(const std::string bill)
+{
+	std::ifstream file(bill);
+	int count = 0;
+	std::string fileFormatString1 = "Sifra,Kolicina,Cijena,Ukupno";
+	std::string tmp;
+	std::getline(file, tmp);
+	if (tmp != fileFormatString1)
+	{
+		file.close();
+		return false;
+	}
+	do
+	{
+		std::getline(file, tmp);
+		for (int i = 0; i < tmp.length() - 1; i++)
+			if (tmp[i] == ',')
+				count++;
+		if (count != 3)
+		{
+			file.close();
+			return false;
+		}
+		count = 0;
+	} while (file.peek() != std::ifstream::traits_type::eof());
+	file.close();
+	return true;
+}
+
 bool checkFormat4(const std::string bill)
 {
 	std::ifstream file(bill);
-	std::string trickystring1 = "		";
-	std::string trickystring2 = "	      OSI Market";
-	std::string trickystring3 = "Proizvod - kolicina - cijena - ukupno";
-	std::string trickystring4 = "---------------------------------------";
-	std::string trickystring5 = "=======================================";
+	std::string fileFormatString1 = "		";
+	std::string fileFormatString2 = "	      OSI Market";
+	std::string fileFormatString3 = "Proizvod - kolicina - cijena - ukupno";
+	std::string fileFormatString4 = "";
+	std::string fileFormatString5 = "";
+	int count = 0;
 	if (file.is_open())
 	{
 		std::string tmp;
@@ -833,13 +863,13 @@ bool checkFormat4(const std::string bill)
 			return false;
 		}
 		std::getline(file, tmp);
-		if (tmp != trickystring1)
+		if (tmp != fileFormatString1)
 		{
 			file.close();
 			return false;
 		}
 		std::getline(file, tmp);
-		if (tmp != trickystring2)
+		if (tmp != fileFormatString2)
 		{
 			file.close();
 			return false;
@@ -851,23 +881,72 @@ bool checkFormat4(const std::string bill)
 			file.close();
 			return false;
 		}
-		std::getline(file, tmp);
-		if (tmp != trickystring3)
+		int pos1 = tmp.find_first_of("Proizvod");
+		if (pos1 > 0)
 		{
 			file.close();
 			return false;
 		}
-		std::getline(file, tmp);
-		if (tmp != trickystring4)
+		int pos2 = tmp.find_first_of('-', pos1);
+		if (pos1 > pos2)
 		{
 			file.close();
 			return false;
 		}
-		std::getline(file, tmp);
-		while (tmp != trickystring4)
-			std::getline(file, tmp);
+		int pos3 = tmp.find_first_of("kolicina", pos2);
+		if (pos2 > pos3)
+		{
+			file.close();
+			return false;
+		}
+		int pos4 = tmp.find_first_of('-', pos3);
+		if (pos3 > pos4)
+		{
+			file.close();
+			return false;
+		}
+		int pos5 = tmp.find_first_of("cijena", pos4);
+		if (pos4 > pos5)
+		{
+			file.close();
+			return false;
+		}
+		int pos6 = tmp.find_first_of('-', pos5);
+		if (pos5 > pos6)
+		{
+			file.close();
+			return false;
+		}
+		int pos7 = tmp.find_first_of("ukupno", pos6);
+		if (pos6 > pos7)
+		{
+			file.close();
+			return false;
+		}
+		std::getline(file, fileFormatString4);//nemam pojma zasto ova linija mora, radi, ne diraj
+		std::getline(file, fileFormatString4);
+		if (fileFormatString4.empty())
+		{
+			file.close();
+			return false;
+		}
+		while (count != fileFormatString4.length() - 1)
+		{
+			if (fileFormatString4[count++] != '-')
+			{
+				file.close();
+				return false;
+			}
+		}
+		count = 0;
+		std::getline(file, fileFormatString5);
+		while (fileFormatString5 != fileFormatString4)
+			std::getline(file, fileFormatString5);
 		if (file.peek() == std::ifstream::traits_type::eof())
+		{
+			file.close();
 			return false;
+		}
 		std::getline(file, tmp);
 		if (tmp.substr(0, 8) != "Ukupno: ")
 		{
@@ -880,11 +959,20 @@ bool checkFormat4(const std::string bill)
 			file.close();
 			return false;
 		}
-		std::getline(file, tmp);
-		if (tmp != trickystring5)
+		count = 0;
+		std::getline(file, fileFormatString4);
+		if (fileFormatString4.empty())
 		{
 			file.close();
 			return false;
+		}
+		while (count != fileFormatString4.length() - 1)
+		{
+			if (fileFormatString4[count++] != '=')
+			{
+				file.close();
+				return false;
+			}
 		}
 		std::getline(file, tmp);
 		if (tmp.substr(0, 20) != "Ukupno za placanje: ")
@@ -900,7 +988,7 @@ bool checkFormat4(const std::string bill)
 			return false;
 		}
 		std::getline(file, tmp);
-		if (tmp != trickystring5)
+		if (tmp != fileFormatString4)
 		{
 			file.close();
 			return false;
@@ -909,35 +997,7 @@ bool checkFormat4(const std::string bill)
 		return true;
 	}
 	return false;
-}
-
-bool checkFormat5(const std::string bill)
-{
-	std::ifstream file(bill);
-	int count = 0;
-	std::string trickystring1 = "Sifra,Kolicina,Cijena,Ukupno";
-	std::string tmp;
-	std::getline(file, tmp);
-	if (tmp != trickystring1)
-	{
-		file.close();
-		return false;
-	}
-	while (!tmp.empty())
-	{
-		std::getline(file, tmp);
-		for (int i = 0; i < tmp.length() - 1; i++)
-			if (tmp[i] == ',')
-				count++;
-		if (count != 3)
-		{
-			file.close();
-			return false;
-		}
-	}
-	file.close();
-	return true;
-}
+};
 
 void Bill::exportForCustomer()
 {
