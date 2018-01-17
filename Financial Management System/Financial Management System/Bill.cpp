@@ -275,11 +275,13 @@ void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
 {
 	std::list <std::string> ProductsInString;
 	std::string tmp_line = "";
-	
+	int i;
+	int comaCounter; 
+
 	while (tmp.size != NULL)
 	{
-		int i = 0;
-		int comaCounter = 0; 
+		i = 0;
+		comaCounter = 0; 
 		while (!(comaCounter==3 && !(isalpha(tmp[i]))))
 		{
 			tmp_line.append(&tmp[i]);
@@ -289,10 +291,10 @@ void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
 		ProductsInString.push_back(tmp_line);
     }
 
+    Product product;
+
 	for (auto& k : ProductsInString)
 	{
-		Product product;
-		
 		int pos = k.find(",", 0);
 		product.setCode(k.substr(0, pos-1));
 
