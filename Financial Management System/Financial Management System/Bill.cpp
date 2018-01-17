@@ -14,6 +14,13 @@ void Bill::process()
 {
 	if (formatCode == isFormat[0])
 		processFormat1();
+	else if (formatCode == isFormat[1])
+		processFormat2();
+	else if (formatCode == isFormat[2])
+		processFormat3();
+	else if (formatCode == isFormat[3])
+		processFormat4();
+	else processFormat5();
 }
 
 void Bill::processFormat1()
@@ -275,13 +282,13 @@ void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
 {
 	std::list <std::string> ProductsInString;
 	std::string tmp_line = "";
-	int i;
+	int i=0;
 	int comaCounter; 
 
-	while (tmp.size != NULL)
+	while (i < tmp.length())
 	{
-		i = 0;
 		comaCounter = 0; 
+		tmp_line = "";
 		while (!(comaCounter==3 && !(isalpha(tmp[i]))))
 		{
 			tmp_line.append(&tmp[i]);
@@ -304,7 +311,7 @@ void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
 		int pos3 = k.find(",", pos2 + 1);
 		product.setPricePerUnit(stod(k.substr(pos2+1, pos3-1)));
 
-		product.setTotal(stod(k.substr(pos3 + 1, k.end)));
+		product.setTotal(stod(k.substr(pos3 + 1)));
 
 		putNewProductInList(product);
 	}

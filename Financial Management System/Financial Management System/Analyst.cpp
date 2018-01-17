@@ -113,6 +113,7 @@ bool Analyst::inportForCustomer(const std::string& customer, std::ostream& out)
 {
 	std::ifstream in;
 	in.open("Kupac\\" + customer + ".txt", std::ios::in);
+	//trebalo bi ispisati nekakvu poruku da li ima ili nema kupca i tako za sve ove importe
 	if (in.is_open())
 	{
 		std::string temp;

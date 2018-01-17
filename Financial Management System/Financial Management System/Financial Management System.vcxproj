@@ -116,6 +116,8 @@
     <ClInclude Include="Analyst.h" />
     <ClInclude Include="Bill.h" />
     <ClInclude Include="ErrorException.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Pattern.h" />
     <ClInclude Include="Product.h" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +126,7 @@
     <ClCompile Include="Analyst.cpp" />
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="ErrorException.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Product.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
