@@ -45,6 +45,11 @@ int Account::checkTypeOfUser()
 	return ERROR;
 }
 
+std::string Account::getType()
+{
+	return type;
+}
+
 void Account::ignoreElementsUntil(std::ifstream& inputf, char boundary)
 {
 	char tmp;

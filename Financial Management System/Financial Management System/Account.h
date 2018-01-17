@@ -18,10 +18,23 @@ protected:
 	void ignoreElementsUntil(std::ifstream &, char);
 public:
 	Account();
-	Account(const std::string&, const std::string&, const std::string&);
+	Account(const std::string&, const std::string&, const std::string& = "");//mijenjao sam ovu liniju
 
 	Account getNextUser(std::ifstream &);		
 	int checkTypeOfUser();
+	std::string getType();
+
+	void exitSystem();//ostalo je da se ovo napise
+
+	virtual void addAccount() {};
+	virtual bool deleteAccount() {};
+	virtual void printAccounts() {};
+	virtual bool changeAccount() {};
+
+	virtual bool inportForCustomer(const std::string&, std::ostream&) {};//vraca true ako je uspio inportovati, a false ako nije
+	virtual bool inportForProduct(const std::string&, std::ostream&) {};
+	virtual bool inportForMonth(const std::string&, std::ostream&) {};
+	//VIdi sta ces sa destruktorom
 
 private:
 	friend std::ostream& operator<<(std::ostream&, const Account&);

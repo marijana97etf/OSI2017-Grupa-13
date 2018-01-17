@@ -6,15 +6,16 @@
 
 class Menu
 {
-	std::string pattern;
-	std::string typeOfAccount;
 	Account* accountP;
 	int currOption;
 public:
-	Menu(const std::string&,const std::string&);
-	void setOption(int);
+	Menu(Account&);//metode u adminu bi trebale biti const
+	bool setOption(std::istream &,std::ostream &);
 	void executeOption();
-	void printPattern(const std::ostream&);
+	void printPattern(std::ostream&);
+	int getCurrOption();
 	~Menu();
+private:
+	/*void setIfOptionRangeIsValid(int&,const int);*/
 };
 

@@ -19,10 +19,10 @@ class Admin :
 public:
 	Admin();
 	Admin(const std::string&, const std::string&, const std::string&);
-	void addAccount();
-	bool deleteAccount();
-	void printAccounts();
-	bool changeAccount();
+	virtual void addAccount();
+	virtual bool deleteAccount();
+	virtual void printAccounts();
+	virtual bool changeAccount();
 private:
 	bool isLegit(const std::string,char);
 	void format(std::string&, char);
