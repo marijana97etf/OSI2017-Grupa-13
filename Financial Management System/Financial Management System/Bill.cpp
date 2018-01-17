@@ -285,9 +285,8 @@ void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
 	int i=0;
 	int comaCounter; 
 
-	while (i <= tmp.length())
+	while (i < tmp.length())
 	{
-		i = 0;
 		comaCounter = 0; 
 		tmp_line = "";
 		while (!(comaCounter==3 && !(isalpha(tmp[i]))))
