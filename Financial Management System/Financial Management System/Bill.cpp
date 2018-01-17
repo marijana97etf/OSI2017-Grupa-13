@@ -888,49 +888,50 @@ bool checkFormat4(const std::string bill)
 			file.close();
 			return false;
 		}
-		int pos1 = tmp.find_first_of("Proizvod");
-		if (pos1 > 0)
+		std::getline(file, tmp);
+		if (tmp.substr(0, 8) != "Proizvod")
 		{
 			file.close();
 			return false;
 		}
-		int pos2 = tmp.find_first_of('-', pos1);
-		if (pos1 > pos2)
+		int pos1 = tmp.find_first_not_of(' ', 9);
+		if (tmp[pos1] != '-')
 		{
 			file.close();
 			return false;
 		}
-		int pos3 = tmp.find_first_of("kolicina", pos2);
-		if (pos2 > pos3)
+		int pos2 = tmp.find_first_not_of(' ', pos1 + 1);
+		if (tmp.substr(pos2, 8) != "kolicina")
 		{
 			file.close();
 			return false;
 		}
-		int pos4 = tmp.find_first_of('-', pos3);
-		if (pos3 > pos4)
+		pos2 += 8;
+		pos1 = tmp.find_first_not_of(' ', pos2 + 1);
+		if (tmp[pos1] != '-')
 		{
 			file.close();
 			return false;
 		}
-		int pos5 = tmp.find_first_of("cijena", pos4);
-		if (pos4 > pos5)
+		pos2 = tmp.find_first_not_of(' ', pos1 + 1);
+		if (tmp.substr(pos2, 6) != "cijena")
 		{
 			file.close();
 			return false;
 		}
-		int pos6 = tmp.find_first_of('-', pos5);
-		if (pos5 > pos6)
+		pos2 += 6;
+		pos1 = tmp.find_first_not_of(' ', pos2 + 1);
+		if (tmp[pos1] != '-')
 		{
 			file.close();
 			return false;
 		}
-		int pos7 = tmp.find_first_of("ukupno", pos6);
-		if (pos6 > pos7)
+		pos2 = tmp.find_first_not_of(' ', pos1 + 1);
+		if (tmp.substr(pos2, 6) != "ukupno")
 		{
 			file.close();
 			return false;
 		}
-		std::getline(file, fileFormatString4);//nemam pojma zasto ova linija mora, radi, ne diraj
 		std::getline(file, fileFormatString4);
 		if (fileFormatString4.empty())
 		{
