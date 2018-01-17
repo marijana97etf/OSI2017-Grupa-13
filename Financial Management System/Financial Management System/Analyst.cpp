@@ -18,6 +18,7 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 			{
 				formatCode = 1;
 				Bill bill(vec[i], formatCode);
+				//fali export podataka sa racuna u fajlove
 			}
 			else if (checkFormat2(vec[i]))
 			{
@@ -47,6 +48,7 @@ bool Analyst::inportForCustomer(const std::string& customer, std::ostream& out)
 {
 	std::ifstream in;
 	in.open("Kupac\\" + customer + ".txt", std::ios::in);
+	//trebalo bi ispisati nekakvu poruku da li ima ili nema kupca i tako za sve ove importe
 	if (in.is_open())
 	{
 		std::string temp;
