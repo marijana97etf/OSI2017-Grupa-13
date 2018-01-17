@@ -115,6 +115,8 @@
     <ClInclude Include="Admin.h" />
     <ClInclude Include="Analyst.h" />
     <ClInclude Include="Bill.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Pattern.h" />
     <ClInclude Include="Product.h" />
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +124,7 @@
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Analyst.cpp" />
     <ClCompile Include="Bill.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Product.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

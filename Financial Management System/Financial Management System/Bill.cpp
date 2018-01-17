@@ -14,6 +14,13 @@ void Bill::process()
 {
 	if (formatCode == isFormat[0])
 		processFormat1();
+	else if (formatCode == isFormat[1])
+		processFormat2();
+	else if (formatCode == isFormat[2])
+		processFormat3();
+	else if (formatCode == isFormat[3])
+		processFormat4();
+	else processFormat5();
 }
 
 void Bill::processFormat1()
