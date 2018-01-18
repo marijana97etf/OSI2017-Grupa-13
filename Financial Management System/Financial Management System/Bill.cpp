@@ -291,7 +291,7 @@ void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
 		tmp_line = "";
 		while (!(comaCounter==3 && !(isalpha(tmp[i]))))
 		{
-			tmp_line.append(&tmp[i]);
+			tmp_line+=tmp[i];
 			i++; 
 			if (tmp[i] == ',') comaCounter++;
 		}
@@ -306,12 +306,12 @@ void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
 		product.setCode(k.substr(0, pos-1));
 
 		int pos2 = k.find(",", pos + 1);
-		product.setQuantity(stod(k.substr(pos+1, pos2-1)));
+		product.setQuantity(stod(k.substr(pos+1, pos2-pos),nullptr));
 
 		int pos3 = k.find(",", pos2 + 1);
-		product.setPricePerUnit(stod(k.substr(pos2+1, pos3-1)));
+		product.setPricePerUnit(stod(k.substr(pos2+1, pos3-pos2),nullptr));
 
-		product.setTotal(stod(k.substr(pos3 + 1)));
+		product.setTotal(stod(k.substr(pos3 + 1),nullptr));
 
 		putNewProductInList(product);
 	}
