@@ -82,7 +82,7 @@ void Bill::processFormat2() // Nije testirano!
 			getline(inputf, tmp, END_OF_LINE);
 		}
 
-		for (int i = 0; i<2; i++)
+		for (int i = 0; i<1; i++)
 			ignoreElementsUntil(inputf, END_OF_LINE);
 		
 		std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
