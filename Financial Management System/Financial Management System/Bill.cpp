@@ -60,7 +60,7 @@ void Bill::processFormat1()
 	inputf.close();
 }
 
-void Bill::processFormat2() // Nije testirano!
+void Bill::processFormat2() 
 {
 		std::ifstream inputf(nameOfBill);
 		std::string tmp;
@@ -106,7 +106,7 @@ void Bill::processFormat2() // Nije testirano!
 		inputf.close();
 }
 
-void Bill::processFormat3() // Nije testirana funkcija!!
+void Bill::processFormat3() 
 {
 		std::ifstream inputf(nameOfBill);
 		std::string tmp;
@@ -134,16 +134,16 @@ void Bill::processFormat3() // Nije testirana funkcija!!
 		ignoreElementsUntil(inputf, END_OF_LINE);
 
 		std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
-		
+
 		getline(inputf, tmp, END_OF_LINE);
-		
-		int posTSOP = tmp.find("  ", 0);
-		totalSumOfProducts = tmp.substr(8, posTSOP);
-		
-		while (tmp[++posTSOP] == ' ');
+
+		int posTSOP = tmp.find("\t", 0);
+		totalSumOfProducts = tmp.substr(8, posTSOP - 8);
+
+		while (tmp[++posTSOP] == '\t');
 		int posPDV_begin = tmp.find(" ", posTSOP);
-		int posPDV_end = tmp.find(nullptr, posPDV_begin);
-		pdv = tmp.substr(posPDV_begin, posPDV_end);
+		int posPDV_end = tmp.length();
+		pdv = tmp.substr(posPDV_begin, posPDV_end - posPDV_begin);
 
 		ignoreElementsUntil(inputf, END_OF_LINE);
 
