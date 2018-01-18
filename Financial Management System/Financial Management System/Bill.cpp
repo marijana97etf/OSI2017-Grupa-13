@@ -60,7 +60,7 @@ void Bill::processFormat1()
 	inputf.close();
 }
 
-void Bill::processFormat2() // Nije testirano!
+void Bill::processFormat2() 
 {
 		std::ifstream inputf(nameOfBill);
 		std::string tmp;
@@ -82,7 +82,7 @@ void Bill::processFormat2() // Nije testirano!
 			getline(inputf, tmp, END_OF_LINE);
 		}
 
-		for (int i = 0; i<2; i++)
+		for (int i = 0; i<1; i++)
 			ignoreElementsUntil(inputf, END_OF_LINE);
 		
 		std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
@@ -106,7 +106,7 @@ void Bill::processFormat2() // Nije testirano!
 		inputf.close();
 }
 
-void Bill::processFormat3() // Nije testirana funkcija!!
+void Bill::processFormat3() 
 {
 		std::ifstream inputf(nameOfBill);
 		std::string tmp;
@@ -137,13 +137,12 @@ void Bill::processFormat3() // Nije testirana funkcija!!
 		
 		getline(inputf, tmp, END_OF_LINE);
 		
-		int posTSOP = tmp.find("  ", 0);
-		totalSumOfProducts = tmp.substr(8, posTSOP);
+		int posTSOP = tmp.find('\t', 8);
+		totalSumOfProducts = tmp.substr(8, posTSOP - 8);
 		
-		while (tmp[++posTSOP] == ' ');
-		int posPDV_begin = tmp.find(" ", posTSOP);
-		int posPDV_end = tmp.find(nullptr, posPDV_begin);
-		pdv = tmp.substr(posPDV_begin, posPDV_end);
+		while (!std::isalpha(tmp[++posTSOP]));
+		posTSOP += 5;
+		pdv = tmp.substr(posTSOP);
 
 		ignoreElementsUntil(inputf, END_OF_LINE);
 
@@ -156,7 +155,7 @@ void Bill::processFormat3() // Nije testirana funkcija!!
 		inputf.close();
 }
 
-void Bill::processFormat4() // Nije testirano!!
+void Bill::processFormat4() 
 {
 	std::ifstream inputf(nameOfBill);
 	std::string tmp;
@@ -177,7 +176,6 @@ void Bill::processFormat4() // Nije testirano!!
 		putNewProductInList(product);
 		getline(inputf, tmp, END_OF_LINE);
 	}
-	ignoreElementsUntil(inputf, END_OF_LINE);
     
 	std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
 	
@@ -258,6 +256,7 @@ Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim
 	double quantity, pricePerUnit, total;
 	double *productInfoPointers[3] = { &quantity, &pricePerUnit, &total };
 
+	tmp += '=';
 	int pos = tmp.find("=",0);
 	name = tmp.substr(0, pos);
 	while (tmp[++pos] == '=');
@@ -268,7 +267,7 @@ Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim
 	{
 		posOfFirstCharOfEquality = posOfNextCharOfEquality;
 		posOfNextCharOfEquality = tmp.find("=", posOfNextCharOfEquality + 1);
-		int posOfFirstDigit = posOfFirstCharOfEquality + 1,posOfLastDigit = posOfNextCharOfEquality;
+		int posOfFirstDigit = posOfFirstCharOfEquality + 1,posOfLastDigit = posOfNextCharOfEquality-1;
 		std::string  value = tmp.substr(posOfFirstDigit, posOfLastDigit - posOfFirstDigit + 1);
 		*productInfoPointers[i] = std::stod(value, nullptr);
 

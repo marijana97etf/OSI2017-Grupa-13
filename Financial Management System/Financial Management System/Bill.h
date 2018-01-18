@@ -9,6 +9,7 @@
 #include <fstream>
 #include<list>
 #include<iomanip>
+#include<cctype>
 
 const int isFormat[5] = { 1,2,3,4,5 } ;
 const std::string month[12] = { "Januar","Februar","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar" };
@@ -37,8 +38,9 @@ class Bill
 	Date date;
 public:
 	Bill();
-	Bill(const std::string &,int);//daje se ime .txt ili .csv koji se treba obraditi
-	void process();//jedna od vecih funkcija koja treba da iz fajla sve podatke izdvoji u listu
+	Bill(const std::string &,int);
+	void process();
+	bool Validate();
 	void exportForCustomer();
 	void exportForProduct();
 	void exportForMonth();
@@ -48,7 +50,6 @@ private:
 	bool checkTotalofAllproducts();
 	bool checkTotalPlusPDV();
 	bool checkPDV();
-	bool Validate();//izvrsava validaciju podataka
 	void processFormat1();
 	void processFormat2();
 	void processFormat3();

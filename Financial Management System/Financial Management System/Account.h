@@ -27,13 +27,13 @@ public:
 	void exitSystem();//ostalo je da se ovo napise
 
 	virtual void addAccount() {};
-	virtual bool deleteAccount() {};
+	virtual bool deleteAccount() { return false;  };
 	virtual void printAccounts() {};
-	virtual bool changeAccount() {};
+	virtual bool changeAccount() { return false;  };
 
-	virtual bool inportForCustomer(const std::string&, std::ostream&) {};//vraca true ako je uspio inportovati, a false ako nije
-	virtual bool inportForProduct(const std::string&, std::ostream&) {};
-	virtual bool inportForMonth(const std::string&, std::ostream&) {};
+	virtual bool inportForCustomer(const std::string&, std::ostream&) { return false; };//vraca true ako je uspio inportovati, a false ako nije
+	virtual bool inportForProduct(const std::string&, std::ostream&) { return false;  };
+	virtual bool inportForMonth(const std::string&, std::ostream&) { return false; };
 	//VIdi sta ces sa destruktorom
 
 private:
