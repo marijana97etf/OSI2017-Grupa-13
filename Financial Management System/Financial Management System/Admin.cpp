@@ -12,6 +12,8 @@ void Admin::addAccount()
 	char type;
 	bool _isLegit;
 	bool _nameExists;
+	int count = 0;
+	char c;
 	if (is_textfile_empty())
 	{
 		std::fstream accounts_file(ACCOUNT_FILE_NAME, std::ios_base::app);
@@ -23,17 +25,25 @@ void Admin::addAccount()
 	std::cout << "Unesite podatke o novom nalogu:\n";
 	do
 	{
+		if (warningFunction(count++))
+			return;
 		std::cout << "Username: "; std::cin >> _tmpusername;
 		_isLegit = isLegit(_tmpusername, 'U');
 		_nameExists = nameExists(_tmpusername);
 	} while (isLegit(_tmpusername, 'U') || nameExists(_tmpusername));
+	count = 0;
 	do
 	{
+		if (warningFunction(count++))
+			return;
 		std::cout << "PIN: "; std::cin >> _tmppin;
 	} while (isLegit(_tmppin, 'P'));
+	count = 0;
 	do
 	{
-		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar"; std::cin >> type;
+		if (warningFunction(count++))
+			return;
+		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar "; std::cin >> type;
 	} while (type != 'D' && type != 'N');
 
 	format(_tmpusername, 'U');
@@ -46,29 +56,38 @@ bool Admin::deleteAccount()
 {
 	std::string _tmpusername, _testline;
 	std::fstream file(ACCOUNT_FILE_NAME);
+	int count = 0;
+	char c = 'X';
 	if (is_textfile_empty() || is_textfile_without_accounts()) return false;
 	do
 	{
 		std::cout << "Unesite username naloga koji treba obrisati\n";
-		std::cin >> _tmpusername;
-	} while (isLegit(_tmpusername, 'U'));
-	if (nameExists(_tmpusername))
-	{
-		std::ofstream tmp(TMP_FILE, std::ios_base::trunc);
-		while (file.peek() != std::ifstream::traits_type::eof())
+		do
 		{
-			getline(file, _testline);
-			if (_testline.find(_tmpusername, 0) == std::string::npos)
-				tmp << _testline << "\n";
-			_testline.clear();
+			if (warningFunction(count++))
+				return false;
+			std::cin >> _tmpusername;
+		} while (isLegit(_tmpusername, 'U'));
+		if (nameExists(_tmpusername))
+		{
+			std::ofstream tmp(TMP_FILE, std::ios_base::trunc);
+			while (file.peek() != std::ifstream::traits_type::eof())
+			{
+				getline(file, _testline);
+				if (_testline.substr(2, _testline.find_first_of(' ', 2) - 2) != _tmpusername)
+					tmp << _testline << "\n";
+				_testline.clear();
+			}
+			file.close();
+			tmp.close();
+			std::remove(ACCOUNT_FILE_NAME.c_str());
+			std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
+			return true;
 		}
-		file.close();
-		tmp.close();
-		std::remove(ACCOUNT_FILE_NAME.c_str());
-		std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
-		return true;
-	}
-	std::cout << "Ime korisnika koje ste uneli ne postoji\n";
+		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
+		std::cout << " Da li zelite unesete ponovo : [D]a, [N]e.\n UPOZORENJE!\n Unosenje bilo kog karaktera osim navedih ce se protumaciti\n kao izlazak iz procesa unosenja naloga!: ";
+		std::cin >> c;
+	} while (c == 'D');
 	return false;
 }
 
@@ -82,53 +101,71 @@ void Admin::printAccounts()
 bool Admin::changeAccount()
 {
 	std::string _tmpusername, _textdiff;
-	char c;
+	int count = 0;
+	char c = 'X';
 	do
 	{
-		std::cout << "Unesite username naloga koji treba promjeniti\n";
-		std::cin >> _tmpusername;
-	} while (isLegit(_tmpusername, 'U'));
-	if (nameExists(_tmpusername))
-	{
-		std::cout << "Unesite sta zelite izmjeniti: [U]sername, [P]IN, [T]ip korisnika\n";
 		do
 		{
-			std::cin >> c;
-		} while (c != 'P' && c != 'U' && c != 'T');
-		if (c == 'P')
+			if (warningFunction(count++))
+				return false;
+			std::cout << "Unesite username naloga koji treba promjeniti\n";
+			std::cin >> _tmpusername;
+		} while (isLegit(_tmpusername, 'U'));
+		count = 0;
+		if (nameExists(_tmpusername))
 		{
-			std::cout << "Unesite novi PIN:\n";
+			std::cout << "Unesite sta zelite izmjeniti: [U]sername, [P]IN, [T]ip korisnika\n";
 			do
 			{
-				std::cin >> _textdiff;
-			} while (isLegit(_textdiff, 'P'));
-			insert(pullFromText(_tmpusername), _tmpusername, _textdiff, 'P');
-		}
-		if (c == 'U')
-		{
-			std::cout << "Unesite novi username:\n";
-			do
-			{
-				std::cin >> _textdiff;
-			} while (isLegit(_textdiff, 'U'));
-			insert(pullFromText(_tmpusername), _tmpusername, _textdiff, 'U');
-		}
-		if (c == 'T')
-		{
-			std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar:\n";
-			do
-			{
+				if (warningFunction(count++))
+					return false;
 				std::cin >> c;
-			} while (c != 'A' && c != 'D');
-			std::string type = (c == 'D') ? "admin" : "analyst";
-			if (c == 'A')
-				insert(pullFromText(_tmpusername), _tmpusername, type , c);
-			else
-				insert(pullFromText(_tmpusername), _tmpusername, type, c);
+			} while (c != 'P' && c != 'U' && c != 'T');
+			if (c == 'P')
+			{
+				std::cout << "Unesite novi PIN:\n";
+				do
+				{
+					if (warningFunction(count++))
+						return false;
+					std::cin >> _textdiff;
+				} while (isLegit(_textdiff, 'P'));
+				insert(pullFromText(_tmpusername), _tmpusername, _textdiff, 'P');
+			}
+			if (c == 'U')
+			{
+				std::cout << "Unesite novi username:\n";
+				do
+				{
+					if (warningFunction(count++))
+						return false;
+					std::cin >> _textdiff;
+				} while (isLegit(_textdiff, 'U'));
+				insert(pullFromText(_tmpusername), _tmpusername, _textdiff, 'U');
+			}
+			if (c == 'T')
+			{
+				std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar:\n";
+				do
+				{
+					if (warningFunction(count++))
+						return false;
+					std::cin >> c;
+				} while (c != 'A' && c != 'D');
+				std::string type = (c == 'D') ? "admin" : "analyst";
+				if (c == 'A')
+					insert(pullFromText(_tmpusername), _tmpusername, type, c);
+				else
+					insert(pullFromText(_tmpusername), _tmpusername, type, c);
 
+			}
+			return true;
 		}
-		return true;
-	}
+		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
+		std::cout << " Da li zelite unesete ponovo : [D]a, [N]e.\n UPOZORENJE!\n Unosenje bilo kog karaktera osim navedih ce se protumaciti kao\n izlazak iz procesa izmjene naloga!: ";
+		std::cin >> c;
+	} while (c == 'D');
 	return false;
 }
 
@@ -269,7 +306,7 @@ bool Admin::nameExists(std::string testusername)
 	while (file.peek() != std::ifstream::traits_type::eof())
 	{
 		getline(file, tmpline);
-		if (tmpline.find(testusername, 0) != std::string::npos)
+		if (tmpline.substr(2, tmpline.find_first_of(' ', 2) - 2) == testusername)
 		{
 			file.close();
 			return true;
@@ -324,7 +361,7 @@ const std::vector<std::string> Admin::pullFromText(std::string modkey)
 	while (file.peek() != std::ifstream::traits_type::eof())
 	{
 		getline(file, _testline);
-		if (_testline.find(modkey, 0) != std::string::npos)
+		if (_testline.substr(2, _testline.find_first_of(' ', 2) - 2) == modkey)
 		{
 			file.close();
 			return explode(_testline, SEPARATOR);
@@ -341,7 +378,7 @@ void Admin::insert(const std::vector<std::string> _modvec, std:: string &text, s
 	while (accountfile.peek() != std::ifstream::traits_type::eof())
 	{
 		getline(accountfile, _currline);
-		if (_currline.find(text, 0) == std::string::npos)
+		if (_currline.substr(2, _currline.find_first_of(' ', 2) - 2) != text)
 			tmp << _currline << "\n";
 		else
 		{
@@ -364,5 +401,22 @@ void Admin::insert(const std::vector<std::string> _modvec, std:: string &text, s
 	tmp.close();
 	std::remove(ACCOUNT_FILE_NAME.c_str());
 	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
+}
+
+bool  warningFunction(int count)
+{
+	char c = 'X';
+	if (count >= 3)
+	{
+		std::cout << " Uneli ste netacnu informaciju 3 ili vise puta.\n Da li zelite da nastavite sa procesom: [D]a, [N]e?\n";
+		std::cout << " UPOZORENJE!\n Unosenje bilo kog karaktera\n osim navedenih ce se protumaciti kao komanda za izlazak iz procesa: ";
+		std::cin >> c;
+		if (c != 'D' && c != 'N')
+			return true;
+		if (c == 'D')
+			return false;
+		return true;
+	}
+	return false;
 }
 
