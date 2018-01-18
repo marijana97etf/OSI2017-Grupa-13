@@ -132,6 +132,95 @@ bool Admin::changeAccount()
 	return false;
 }
 
+void Admin::changeInterface()
+{
+	HANDLE consoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	int option;
+	std::string choose;
+	bool check = false;
+	do
+	{
+		std::cout << "Da li zelite promjeniti boju pozadine: [Da/Ne]";
+		std::cin >> choose;
+		if (choose == "Da" || choose == "DA" || choose == "da" || choose == "dA")
+		{
+			do
+			{
+				std::cout << "Izaberite boju pozadine." << std::endl;
+				std::cout << "[1] Bijela" << std::endl;
+				std::cout << "[2] Crna" << std::endl;
+				std::cout << "[3] Plava" << std::endl;
+				std::cout << "[4] Crvena" << std::endl;
+				std::cout << "[5] Zelena" << std::endl;
+				std::cout << "[6] Zuta" << std::endl;
+				std::cout << "[7] Narandzasta" << std::endl;
+				std::cout << "[8] Smedja" << std::endl;
+				std::cout << "[9] Siva" << std::endl;
+				std::cout << "Unesite broj: ";
+				std::cin >> option;
+			} while (option < 1 || option > 9);
+			CONSOLE_SCREEN_BUFFER_INFOEX sbInfoEx;
+			sbInfoEx.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
+			GetConsoleScreenBufferInfoEx(consoleOut, &sbInfoEx);
+			sbInfoEx.ColorTable[0] = colors[option];
+			SetConsoleScreenBufferInfoEx(consoleOut, &sbInfoEx);
+			check = true;
+		}
+		else if (choose == "Ne" || choose == "NE" || choose == "ne" || choose == "nE")
+			check = true;
+	} while(check != true);
+	check = false;
+	do
+	{
+		std::cout << "Da li želite promjeniti boju teksta: [Da/Ne]";
+		std::cin >> choose;
+		if (choose == "Da" || choose == "DA" || choose == "da" || choose == "dA")
+		{
+			do
+			{
+				std::cout << "Izaberite boju teksta." << std::endl;
+				std::cout << "[1] Bijela" << std::endl;
+				std::cout << "[2] Crna" << std::endl;
+				std::cout << "[3] Plava" << std::endl;
+				std::cout << "[4] Crvena" << std::endl;
+				std::cout << "[5] Zelena" << std::endl;
+				std::cout << "[6] Zuta" << std::endl;
+				std::cout << "[7] Narandzasta" << std::endl;
+				std::cout << "[8] Smedja" << std::endl;
+				std::cout << "[9] Siva" << std::endl;
+				std::cout << "Unesite broj: ";
+				std::cin >> option;
+			} while (option < 1 || option > 9);
+			CONSOLE_SCREEN_BUFFER_INFOEX sbInfoEx;
+			sbInfoEx.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
+			GetConsoleScreenBufferInfoEx(consoleOut, &sbInfoEx);
+			sbInfoEx.ColorTable[15] = colors[option];
+			SetConsoleScreenBufferInfoEx(consoleOut, &sbInfoEx);
+			check = true;
+		}
+		else if (choose == "Ne" || choose == "NE" || choose == "ne" || choose == "nE")
+			check = true;
+	} while (check != true);
+	check = false;
+	do
+	{
+		std::cout << "Da li zelite promjeniti velicinu fonta: [Da/Ne]";
+		std::cin >> choose;
+		if (choose == "Da" || choose == "DA" || choose == "da" || choose == "dA")
+		{
+			std::cout << "Unesite velicinu fonta (Preporuka: Izaberite velicinu fonta vecu od 14.): ";
+			std::cin >> option;
+			CONSOLE_FONT_INFOEX font = { sizeof(CONSOLE_FONT_INFOEX) };
+			GetCurrentConsoleFontEx(consoleOut, false, &font);
+			font.dwFontSize = { 6, option };
+			SetCurrentConsoleFontEx(consoleOut, false, &font);
+			check = true;
+		}
+		else if (choose == "Ne" || choose == "NE" || choose == "ne" || choose == "nE")
+			check = true;
+	} while (check != true);
+}
+
 bool Admin::isLegit(std::string tmp, char typeofstring)
 {
 	std::locale loc;

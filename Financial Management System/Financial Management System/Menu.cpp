@@ -23,6 +23,7 @@ void Menu::executeOption()//pogledajte ovo
 			case 2:accountP->deleteAccount(); break;
 			case 3:accountP->printAccounts(); break;
 			case 4:accountP->changeAccount(); break;
+			case 5:accountP->changeInterface(); break;
 				//ostaju mi jos dva case
 			case -1:accountP->exitSystem(); break;
 			default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
