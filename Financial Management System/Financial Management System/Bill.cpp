@@ -60,7 +60,7 @@ void Bill::processFormat1()
 	inputf.close();
 }
 
-void Bill::processFormat2() // Nije testirano!
+void Bill::processFormat2() 
 {
 		std::ifstream inputf(nameOfBill);
 		std::string tmp;
@@ -82,7 +82,7 @@ void Bill::processFormat2() // Nije testirano!
 			getline(inputf, tmp, END_OF_LINE);
 		}
 
-		for (int i = 0; i<2; i++)
+		for (int i = 0; i<1; i++)
 			ignoreElementsUntil(inputf, END_OF_LINE);
 		
 		std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
@@ -106,7 +106,7 @@ void Bill::processFormat2() // Nije testirano!
 		inputf.close();
 }
 
-void Bill::processFormat3() // Nije testirana funkcija!!
+void Bill::processFormat3() 
 {
 		std::ifstream inputf(nameOfBill);
 		std::string tmp;
@@ -155,7 +155,7 @@ void Bill::processFormat3() // Nije testirana funkcija!!
 		inputf.close();
 }
 
-void Bill::processFormat4() // Nije testirano!!
+void Bill::processFormat4() 
 {
 	std::ifstream inputf(nameOfBill);
 	std::string tmp;
@@ -176,7 +176,6 @@ void Bill::processFormat4() // Nije testirano!!
 		putNewProductInList(product);
 		getline(inputf, tmp, END_OF_LINE);
 	}
-	ignoreElementsUntil(inputf, END_OF_LINE);
     
 	std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
 	
