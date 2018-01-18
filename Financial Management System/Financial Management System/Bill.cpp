@@ -137,13 +137,12 @@ void Bill::processFormat3() // Nije testirana funkcija!!
 		
 		getline(inputf, tmp, END_OF_LINE);
 		
-		int posTSOP = tmp.find("  ", 0);
-		totalSumOfProducts = tmp.substr(8, posTSOP);
+		int posTSOP = tmp.find('\t', 8);
+		totalSumOfProducts = tmp.substr(8, posTSOP - 8);
 		
-		while (tmp[++posTSOP] == ' ');
-		int posPDV_begin = tmp.find(" ", posTSOP);
-		int posPDV_end = tmp.find(nullptr, posPDV_begin);
-		pdv = tmp.substr(posPDV_begin, posPDV_end);
+		while (!std::isalpha(tmp[++posTSOP]));
+		posTSOP += 5;
+		pdv = tmp.substr(posTSOP);
 
 		ignoreElementsUntil(inputf, END_OF_LINE);
 
@@ -258,6 +257,7 @@ Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim
 	double quantity, pricePerUnit, total;
 	double *productInfoPointers[3] = { &quantity, &pricePerUnit, &total };
 
+	tmp += '=';
 	int pos = tmp.find("=",0);
 	name = tmp.substr(0, pos);
 	while (tmp[++pos] == '=');
@@ -268,7 +268,7 @@ Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim
 	{
 		posOfFirstCharOfEquality = posOfNextCharOfEquality;
 		posOfNextCharOfEquality = tmp.find("=", posOfNextCharOfEquality + 1);
-		int posOfFirstDigit = posOfFirstCharOfEquality + 1,posOfLastDigit = posOfNextCharOfEquality;
+		int posOfFirstDigit = posOfFirstCharOfEquality + 1,posOfLastDigit = posOfNextCharOfEquality-1;
 		std::string  value = tmp.substr(posOfFirstDigit, posOfLastDigit - posOfFirstDigit + 1);
 		*productInfoPointers[i] = std::stod(value, nullptr);
 
