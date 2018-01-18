@@ -156,7 +156,7 @@ void Bill::processFormat3()
 		inputf.close();
 }
 
-void Bill::processFormat4() // Nije testirano!!
+void Bill::processFormat4() 
 {
 	std::ifstream inputf(nameOfBill);
 	std::string tmp;
@@ -177,7 +177,6 @@ void Bill::processFormat4() // Nije testirano!!
 		putNewProductInList(product);
 		getline(inputf, tmp, END_OF_LINE);
 	}
-	ignoreElementsUntil(inputf, END_OF_LINE);
     
 	std::string totalSumOfProducts, pdv, totalSumOfBill;//maskiraju podatke clanove klase Bill
 	
