@@ -32,5 +32,6 @@ private:
 	const std::vector<std::string> pullFromText(std::string);
 	const std::vector<std::string> explode(const std::string& s, const char& c);
 	void insert(const std::vector<std::string>, std::string&, std::string&, char);
+	bool warningFunction(int);
 };
 

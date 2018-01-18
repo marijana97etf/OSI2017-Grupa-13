@@ -12,7 +12,6 @@ bool Menu::setOption(std::istream &input,std::ostream & output)
 	currOption = option;
 }
 
-
 void Menu::executeOption()//pogledajte ovo
 {
 	if (accountP->getType == NAME_OF_ADMIN)
