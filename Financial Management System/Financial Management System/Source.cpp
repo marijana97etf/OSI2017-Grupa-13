@@ -2,6 +2,7 @@
 #include<cstdlib>
 #include"Menu.h"
 #include"ErrorException.h"
+#include "Interface.h"
 #include"Account.h"
 #include"Admin.h"
 #include"Analyst.h"
@@ -9,6 +10,7 @@
 
 int main()
 {
+	systemConfiguration();
 	std::cout << "                LOGIN                 " << std::endl;
 	while (1)
 	{
