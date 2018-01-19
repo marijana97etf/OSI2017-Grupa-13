@@ -23,7 +23,7 @@ void Menu::executeOption()//pogledajte ovo
 			case 3:accountP->printAccounts(); break;
 			case 4:accountP->changeAccount(); break;
 			case 5:accountP->changeInterface(); break;
-				//ostaju mi jos dva case
+				//fali jos jedan case
 			case -1:accountP->exitSystem(); break;
 			default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
 		}
@@ -32,10 +32,9 @@ void Menu::executeOption()//pogledajte ovo
 	{
 		switch (currOption)
 		{
-		/*case 1:accountP->inportForCustomer(); break;//Sale ako moze promijeniti fukcije da se u njima unosi korisnik ,produkt ili mjesec
+		case 1:accountP->inportForCustomer(); break;//Sale ako moze promijeniti fukcije da se u njima unosi korisnik ,produkt ili mjesec
 		case 2:accountP->inportForProduct(); break;
 		case 3:accountP->inportForMonth(); break;
-		*/
 		case 0:break;
 		case -1:accountP->exitSystem(); break;
 		default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
@@ -61,15 +60,5 @@ int Menu::getCurrOption()
 
 Menu::~Menu()
 {
+	accountP = nullptr;
 }
-
-/*void Menu::setIfOptionRangeIsValid(int &option,const int limit)
-{
-	std::cin >> option;
-	while (option < 0 || option >= limit)
-	{
-		std::cout << "Pogreska u unosu broja za izbor opcije" << END_OF_LINE << "Unesite ponovo:";
-		std::cin >> option;
-	}
-}
-*/

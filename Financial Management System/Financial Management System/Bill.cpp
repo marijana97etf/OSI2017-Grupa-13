@@ -349,7 +349,7 @@ void Bill::checkTotalOfEveryProduct()//nije testirana
 		if (product.getTotal() != product.getPricePerUnit() * product.getQuantity())
 		{
 			std::string errorMessage;
-			errorMessage = "Za proizvod " + product.getCode + " ukupna kolicina nije jednako kolicina*cijena";
+			errorMessage = "Za proizvod " + product.getCode() + " ukupna kolicina nije jednako kolicina*cijena";
 			errorMessage += END_OF_LINE;
 			errorMessage += "Ukupno : ";
 			errorMessage += std::to_string(product.getTotal());

@@ -249,7 +249,7 @@ void Admin::changeInterface()
 			std::cin >> option;
 			CONSOLE_FONT_INFOEX font = { sizeof(CONSOLE_FONT_INFOEX) };
 			GetCurrentConsoleFontEx(consoleOut, false, &font);
-			font.dwFontSize = { 6, option };
+			font.dwFontSize = { 6, option };//ima greska
 			SetCurrentConsoleFontEx(consoleOut, false, &font);
 			check = true;
 		}

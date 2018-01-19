@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cstdlib>
 #include"Menu.h"
 #include"ErrorException.h"
 #include"Account.h"
@@ -6,10 +7,9 @@
 #include"Analyst.h"
 #include"Bill.h"
 
-
 int main()
 {
-	std::cout << "Dobrodosli :D " << std::endl;
+	std::cout << "                LOGIN                 " << std::endl;
 	while (1)
 	{
 		std::string name, pin;
@@ -20,6 +20,8 @@ int main()
 		Account acc(name, pin);
 		if ( acc.checkTypeOfUser() == IS_ADMIN)
 		{
+			std::cout << "Prijavljeni ste kao :"<<name<<std::endl;
+			system("cls");
 			Admin ad(name, pin, NAME_OF_ADMIN);//treba izmanipulisati destruktorima da se pravilno oslobodi memorija kod polimorfizma
 			Menu menu(ad);
 			while (1)
