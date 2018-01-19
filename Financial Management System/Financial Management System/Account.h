@@ -2,6 +2,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<cstdlib>
 
 const int MAX_LENGTH_OF_NAME = 20,LENGTH_OF_PIN = 4, MAX_LENGTH_OF_TYPE('10');
 const int MAX_LENGTH_OF_ROW = 100;

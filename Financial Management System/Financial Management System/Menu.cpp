@@ -4,7 +4,7 @@
 Menu::Menu(Account &account):accountP(&account)
 {}
 
-bool Menu::setOption(std::istream &input,std::ostream & output)
+void Menu::setOption(std::istream &input,std::ostream & output)
 {
 	int option;
 	output << "Unos:";
@@ -15,7 +15,7 @@ bool Menu::setOption(std::istream &input,std::ostream & output)
 
 void Menu::executeOption()//pogledajte ovo
 {
-	if (accountP->getType == NAME_OF_ADMIN)
+	if ( accountP->getType() == NAME_OF_ADMIN)
 	{
 		switch (currOption)
 		{
@@ -32,11 +32,12 @@ void Menu::executeOption()//pogledajte ovo
 	{
 		switch (currOption)
 		{
-		case 1:accountP->inportForCustomer(); break;//Sale ako moze promijeniti fukcije da se u njima unosi korisnik ,produkt ili mjesec
+		/*case 1:accountP->inportForCustomer(); break;//Sale ako moze promijeniti fukcije da se u njima unosi korisnik ,produkt ili mjesec
 		case 2:accountP->inportForProduct(); break;
 		case 3:accountP->inportForMonth(); break;
+		*/
 		case 0:break;
-		case -1:accountP->exitSystem; break;
+		case -1:accountP->exitSystem(); break;
 		default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
 		}
 	}
@@ -45,7 +46,7 @@ void Menu::executeOption()//pogledajte ovo
 void Menu::printPattern(std::ostream& output)
 {
 	output << "Izaberite neku od opcija:" << std::endl;
-	if (accountP->getType == NAME_OF_ADMIN)
+	if (accountP->getType() == NAME_OF_ADMIN)
 		for (int i = 0; i < patterns::MAX_OPTIONS_FOR_ADMIN; i++)
 			output << patterns::optionsForAdmin[i] << std::endl;
 	else

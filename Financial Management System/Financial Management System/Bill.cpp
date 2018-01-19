@@ -336,46 +336,67 @@ void Bill::ignoreElementsUntil(std::ifstream &inputf, char boundary)
 }
 
 
-bool Bill::Validate()
+void Bill::Validate()
 {
-	if (!(checkTotalOfEveryProduct() && checkTotalofAllproducts() && checkTotalPlusPDV() && checkPDV()))
-		return false;
-	return true;
+	checkTotalOfEveryProduct();
+	checkTotalofAllproducts();
+	checkTotalPlusPDV();
 }
 
-bool Bill::checkTotalOfEveryProduct()
+void Bill::checkTotalOfEveryProduct()//nije testirana
 {
 	for (auto& product : list)
 		if (product.getTotal() != product.getPricePerUnit() * product.getQuantity())
-			return false;
-	
-	return true;
+		{
+			std::string errorMessage;
+			errorMessage = "Za proizvod " + product.getCode + " ukupna kolicina nije jednako kolicina*cijena";
+			errorMessage += END_OF_LINE;
+			errorMessage += "Ukupno : ";
+			errorMessage += std::to_string(product.getTotal());
+			errorMessage += END_OF_LINE;
+			errorMessage += "Kolicina*Cijena : ";
+			errorMessage += std::to_string(product.getPricePerUnit() * product.getQuantity());
+			throw ErrorException(nameOfBill,errorMessage);
+		}
+	return;
 }
 
-bool Bill::checkTotalofAllproducts()
+void Bill::checkTotalofAllproducts()
 {
 	double total=0.0;
 	for (auto& product : list)
 		total += product.getTotal();
 
-	if (total==totalSumOfProducts)
-		return true;
-	return false;
+	if (total != totalSumOfProducts)
+	{
+		std::string errorMessage;
+		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu bez pdv-a nije jednaka ukupnoj sumi proizvoda";
+		errorMessage += END_OF_LINE;
+		errorMessage += "Ukupno bez pdv-a : ";
+		errorMessage += std::to_string(totalSumOfProducts);
+		errorMessage += END_OF_LINE;
+		errorMessage += "Ukupna suma proizvoda sa racuna : ";
+		errorMessage += std::to_string(total);
+		throw ErrorException(nameOfBill, errorMessage);
+	}
 }
 
-bool Bill::checkTotalPlusPDV()
+void Bill::checkTotalPlusPDV()
 {
 	if (totalSumOfProducts + pdv != totalSumOfBill)
-		return false;
-	return true;
+	{
+		std::string errorMessage;
+		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu nije jednaka ukupnoj vrijednosti bez pdv-a + pdv";
+		errorMessage += END_OF_LINE;
+		errorMessage += "Ukupna vrijednost : ";
+		errorMessage += std::to_string(totalSumOfBill);
+		errorMessage += END_OF_LINE;
+		errorMessage += "Ukupna vrijednost bez pdv-a + pdv : ";
+		errorMessage += std::to_string(totalSumOfProducts + pdv);
+		throw ErrorException(nameOfBill,errorMessage);
+	}
 }
 
-bool Bill::checkPDV()
-{
-	if(pdv==totalSumOfProducts*17/100)
-		return true;
-	return false;
-}
 
 
 Bill::~Bill()
