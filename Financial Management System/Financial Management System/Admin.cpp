@@ -403,7 +403,7 @@ void Admin::insert(const std::vector<std::string> _modvec, std:: string &text, s
 	std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
 }
 
-bool  warningFunction(int count)
+bool Admin::warningFunction(int count)
 {
 	char c = 'X';
 	if (count >= 3)
