@@ -40,16 +40,15 @@ public:
 	Bill();
 	Bill(const std::string &,int);
 	void process();
-	bool Validate();
+	void Validate();
 	void exportForCustomer();
 	void exportForProduct();
 	void exportForMonth();
 	~Bill();
 private:
-	bool checkTotalOfEveryProduct();
-	bool checkTotalofAllproducts();
-	bool checkTotalPlusPDV();
-	bool checkPDV();
+	void checkTotalOfEveryProduct();
+	void checkTotalofAllproducts();
+	void checkTotalPlusPDV();
 	void processFormat1();
 	void processFormat2();
 	void processFormat3();

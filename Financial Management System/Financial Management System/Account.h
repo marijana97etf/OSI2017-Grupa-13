@@ -2,6 +2,7 @@
 #include<iostream>
 #include<fstream>
 #include<string>
+#include<cstdlib>
 
 const int MAX_LENGTH_OF_NAME = 20,LENGTH_OF_PIN = 4, MAX_LENGTH_OF_TYPE('10');
 const int MAX_LENGTH_OF_ROW = 100;
@@ -30,10 +31,11 @@ public:
 	virtual bool deleteAccount() { return false;  };
 	virtual void printAccounts() {};
 	virtual bool changeAccount() { return false;  };
+	virtual void changeInterface() {};
 
-	virtual bool inportForCustomer(const std::string&, std::ostream&) { return false; };//vraca true ako je uspio inportovati, a false ako nije
-	virtual bool inportForProduct(const std::string&, std::ostream&) { return false;  };
-	virtual bool inportForMonth(const std::string&, std::ostream&) { return false; };
+	virtual bool inportForCustomer() { return false; };//vraca true ako je uspio inportovati, a false ako nije
+	virtual bool inportForProduct() { return false;  };
+	virtual bool inportForMonth() { return false; };
 	//VIdi sta ces sa destruktorom
 
 private:

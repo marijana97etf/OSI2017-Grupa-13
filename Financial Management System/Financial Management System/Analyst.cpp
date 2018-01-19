@@ -114,8 +114,11 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 	}
 }
 
-bool Analyst::inportForCustomer(const std::string& customer, std::ostream& out)
+bool Analyst::inportForCustomer()
 {
+	std::string customer;
+	std::cout << "Unesite kupca: ";
+	std::cin >> customer;
 	std::ifstream in;
 	in.open("Kupac\\" + customer + ".txt", std::ios::in);
 	//trebalo bi ispisati nekakvu poruku da li ima ili nema kupca i tako za sve ove importe
@@ -125,16 +128,22 @@ bool Analyst::inportForCustomer(const std::string& customer, std::ostream& out)
 		while (!in.eof())
 		{
 			getline(in, temp);
-			out << temp;
+			std::cout << temp;
 		}
 		return true;
 	}
 	else
+	{
+		std::cout << "Nema podataka za unesenog kupca." << std::endl;
 		return false;
+	}
 }
 
-bool Analyst::inportForProduct(const std::string& product, std::ostream& out)
+bool Analyst::inportForProduct()
 {
+	std::string product;
+	std::cout << "Unesite proizvod: ";
+	std::cin >> product;
 	std::ifstream in;
 	in.open("Proizvod\\" + product + ".txt", std::ios::in);
 	if (in.is_open())
@@ -143,30 +152,39 @@ bool Analyst::inportForProduct(const std::string& product, std::ostream& out)
 		while (!in.eof())
 		{
 			getline(in, temp);
-			out << temp;
+			std::cout << temp;
 		}
 		return true;
 	}
 	else
+	{
+		std::cout << "Nema podataka za uneseni proizvod." << std::endl;
 		return false;
+	}
 }
 
-bool Analyst::inportForMonth(const std::string& month, std::ostream& out)
+bool Analyst::inportForMonth()
 {
+	std::string date;
+	std::cout << "Unesite mjesec i godinu (npr: Januar 2017): ";
+	std::cin >> date;
 	std::ifstream in;
-	in.open("Mjesec\\" + month + ".txt", std::ios::in); //month je oblika "Januar 2017"
+	in.open("Mjesec\\" + date + ".txt", std::ios::in); //month je oblika "Januar 2017"
 	if (in.is_open())
 	{
 		std::string temp;
 		while (!in.eof())
 		{
 			getline(in, temp);
-			out << temp;
+			std::cout << temp;
 		}
 		return true;
 	}
 	else
+	{
+		std::cout << "Nema podataka za uneseni datum." << std::endl;
 		return false;
+	}
 }
 
 

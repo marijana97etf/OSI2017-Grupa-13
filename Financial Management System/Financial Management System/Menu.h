@@ -10,7 +10,7 @@ class Menu
 	int currOption;
 public:
 	Menu(Account&);//metode u adminu bi trebale biti const
-	bool setOption(std::istream &,std::ostream &);
+	void setOption(std::istream &,std::ostream &);
 	void executeOption();
 	void printPattern(std::ostream&);
 	int getCurrOption();

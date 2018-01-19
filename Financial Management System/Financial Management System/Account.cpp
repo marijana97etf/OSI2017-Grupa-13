@@ -50,6 +50,11 @@ std::string Account::getType()
 	return type;
 }
 
+void Account::exitSystem()
+{
+	exit(0);
+}
+
 void Account::ignoreElementsUntil(std::ifstream& inputf, char boundary)
 {
 	char tmp;
