@@ -11,19 +11,20 @@
 int main()
 {
 	systemConfiguration();
-	std::cout << "                LOGIN                 " << std::endl;
 	while (1)
 	{
+		system("CLS");
+		std::cout << "                LOGIN                 " << std::endl;
 		std::string name, pin;
-		std::cout << "Unesite ime" << std::endl;
+		std::cout << "Unesite ime: ";
 		std::cin >> name;//treba izvrsiti provjeru imena
-		std::cout << "Unesite pin" << std::endl;
+		std::cout << "Unesite pin: ";
 		std::cin >> pin;
 		Account acc(name, pin);
 		if ( acc.checkTypeOfUser() == IS_ADMIN)
 		{
-			std::cout << "Prijavljeni ste kao :"<<name<<std::endl;
-			system("cls");
+			std::cout << "Prijavljeni ste kao: " << "Administrator"<<std::endl;
+			Sleep(1000);
 			Admin ad(name, pin, NAME_OF_ADMIN);//treba izmanipulisati destruktorima da se pravilno oslobodi memorija kod polimorfizma
 			Menu menu(ad);
 			while (1)
@@ -38,6 +39,8 @@ int main()
 		else
 			if (acc.checkTypeOfUser() == IS_ANALYST)
 			{
+				std::cout << "Prijavljeni ste kao: " << "Analiticar" << std::endl;
+				Sleep(1000);
 				Analyst an(name, pin, NAME_OF_ANALYST);
 				Menu menu(an);
 				while (1)

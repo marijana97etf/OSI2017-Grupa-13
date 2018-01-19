@@ -23,7 +23,7 @@ void Menu::executeOption()//pogledajte ovo
 			case 3:accountP->printAccounts(); break;
 			case 4:accountP->changeAccount(); break;
 			case 5:accountP->changeInterface(); break;
-				//fali jos jedan case
+			case 0: break;	//fali jos jedan case
 			case -1:accountP->exitSystem(); break;
 			default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
 		}
@@ -44,6 +44,7 @@ void Menu::executeOption()//pogledajte ovo
 
 void Menu::printPattern(std::ostream& output)
 {
+	system("CLS");
 	output << "Izaberite neku od opcija:" << std::endl;
 	if (accountP->getType() == NAME_OF_ADMIN)
 		for (int i = 0; i < patterns::MAX_OPTIONS_FOR_ADMIN; i++)

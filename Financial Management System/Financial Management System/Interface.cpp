@@ -1,5 +1,8 @@
 #include "Interface.h"
 
+COLORREF colors[] = { WHITE,BLACK,BLUE,RED,GREEN,YELLOW,ORANGE,PURPLE,BROWN,SILVER };
+HANDLE consoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
 void changeBackgroundColor(short index)
 {
 	std::ifstream input("Config.ini");
@@ -16,6 +19,7 @@ void changeBackgroundColor(short index)
 				output << value[i] << " ";
 			else
 				output << value[i];
+		output << '\0';
 		output.close();
 	}
 	CONSOLE_SCREEN_BUFFER_INFOEX sbInfoEx;
@@ -46,12 +50,13 @@ void changeTextColor(short index)
 				output << value[i] << " ";
 			else
 				output << value[i];
+		output << '\0';
 		output.close();
 	}
 	CONSOLE_SCREEN_BUFFER_INFOEX sbInfoEx;
 	sbInfoEx.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
 	GetConsoleScreenBufferInfoEx(consoleOut, &sbInfoEx);
-	sbInfoEx.ColorTable[15] = colors[index - 1];
+	sbInfoEx.ColorTable[1] = colors[index - 1];
 	SetConsoleScreenBufferInfoEx(consoleOut, &sbInfoEx);
 	CONSOLE_SCREEN_BUFFER_INFO screen;
 	GetConsoleScreenBufferInfo(consoleOut, &screen);
@@ -76,6 +81,7 @@ void changeFontSize(short size)
 				output << value[i] << " ";
 			else
 				output << value[i];
+		output << '\0';
 		output.close();
 	}
 	CONSOLE_FONT_INFOEX font = { sizeof(CONSOLE_FONT_INFOEX) };
@@ -92,9 +98,9 @@ void systemConfiguration()
 	if (input.is_open())
 	{
 		input >> index;
-		changeBackgroundColor(colors[index]);
+		changeBackgroundColor(index);
 		input >> index;
-		changeTextColor(colors[index]);
+		changeTextColor(index);
 		input >> index;
 		changeFontSize(index);
 		system("COLOR 01");

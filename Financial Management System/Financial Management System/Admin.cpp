@@ -1,5 +1,7 @@
 #include "Admin.h"
 
+std::string currency[] = { "BAM","EUR","USD","RSD","HRK" };
+
 Admin::Admin() :Account::Account()
 {}
 
@@ -26,12 +28,14 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "Unesite broj: ";
 			std::cin >> choose;
 		} while (choose < 1 || choose > 5);
+		output << currency[choose - 1];
 		output.close();
 	}
 }
 
 void Admin::addAccount()
 {
+	system("CLS");
 	std::string tmpusername, tmp_pin;
 	char type;
 	int count = 0;
@@ -70,15 +74,19 @@ void Admin::addAccount()
 	format(tmp_pin, 'P');
 	account_file << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst") << "\n";
 	account_file.close();
+	std::cout << "Nalog je uspjesno dodan." << std::endl;
+	Sleep(1000);
 }
 
 bool Admin::deleteAccount()
 {
+	system("CLS");
 	if (isAccountFileEmpty() || isAccountFileWithoutAccounts()) return false;
 	std::string username, testline;
 	std::fstream account_file(ACCOUNT_FILE_NAME);
 	int count = 0;
 	char c = 'X';
+	std::string temp;
 	do
 	{
 		std::cout << "Unesite username naloga koji treba obrisati\n";
@@ -102,28 +110,39 @@ bool Admin::deleteAccount()
 			tmpfile.close();
 			std::remove(ACCOUNT_FILE_NAME.c_str());
 			std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
+			std::cout << "Nalog je uspjesno obrisan." << std::endl;
+			Sleep(1000);
 			return true;
 		}
 		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
 		std::cout << " Da li zelite unesete ponovo : [D]a, [N]e.\n UPOZORENJE!\n Unosenje bilo kog karaktera osim navedih ce se protumaciti\n kao komanda za izlazak\n iz procesa unosenja naloga!: ";
-		std::cin >> c;
-	} while (c == 'D');
+		std::cin >> temp;
+		if (temp == "D")
+			system("CLS");
+	} while (temp == "D");
 	return false;
 }
 
 void Admin::printAccounts()
 {
+	system("CLS");
 	std::ifstream accountsfile(ACCOUNT_FILE_NAME);
 	std::cout << accountsfile.rdbuf();
 	accountsfile.close();
+	getchar();
+	std::cout << "Pritisni ENTER za povratak.";
+	std::string temp;
+	getline(std::cin, temp);
 }
 
 bool Admin::changeAccount()
 {
+	system("CLS");
 	if (isAccountFileEmpty() || isAccountFileWithoutAccounts()) return false;
 	std::string username, textdiff;
 	int count = 0;
 	char c = 'X';
+	std::string temp;
 	do
 	{
 		std::cout << "Unesite username naloga koji treba promjeniti\n";
@@ -185,8 +204,10 @@ bool Admin::changeAccount()
 		}
 		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
 		std::cout << " Da li zelite unesete ponovo : [D]a, [N]e.\n UPOZORENJE!\n Unosenje bilo kog karaktera osim navedih ce se protumaciti kao komanda za\n izlazak iz procesa izmjene naloga!: ";
-		std::cin >> c;
-	} while (c == 'D');
+		std::cin >> temp;
+		if (temp == "D")
+			system("CLS");
+	} while (temp == "D");
 	return false;
 }
 
