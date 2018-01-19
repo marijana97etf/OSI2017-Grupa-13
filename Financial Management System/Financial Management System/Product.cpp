@@ -3,7 +3,7 @@
 
 
 
-Product::Product():code(nullptr), quantity(0.0), pricePerUnit(0.0), total(0.0)
+Product::Product():code(""), quantity(0.0), pricePerUnit(0.0), total(0.0)
 {
 }
 
