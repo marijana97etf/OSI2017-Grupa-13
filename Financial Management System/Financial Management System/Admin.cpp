@@ -4,7 +4,29 @@ Admin::Admin() :Account::Account()
 {}
 
 Admin::Admin(const std::string &username, const std::string &pin, const std::string &type) : Account::Account(username, pin, type)
-{}
+{
+	std::string temp;
+	std::ifstream input(CONFIG);
+	getline(input, temp);
+	if (input.eof())
+	{
+		input.close();
+		std::ofstream output(CONFIG);
+		output << temp << std::endl;
+		short choose;
+		do
+		{
+			system("CLS");
+			std::cout << "Izaberite valutu sistema: " << std::endl;
+			std::cout << "[1] (BAM) Konvertibilna marka" << std::endl;
+			std::cout << "[2] (EUR) Euro" << std::endl;
+			std::cout << "[3] (USD) Americki dolar" << std::endl;
+			std::cout << "[4] (RSD) Srpski dinar" << std::endl;
+			std::cout << "[5] (HRK) Hrvatska kuna" << std::endl;
+		} while (choose < 1 || choose > 5);
+		output.close();
+	}
+}
 
 void Admin::addAccount()
 {
@@ -254,6 +276,7 @@ void Admin::changeInterface()
 			check = true;
 	} while (check != true);
 }
+
 
 bool Admin::isNotLegit(std::string string, char typeofstring)
 {

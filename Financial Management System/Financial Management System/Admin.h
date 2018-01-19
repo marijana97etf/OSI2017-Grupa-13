@@ -15,8 +15,7 @@ const std::string SECOND_LINE_OF_HEADER("  -------------------------------------
 const std::string TMP_FILE("tmpfile.txt");
 
 
-class Admin :
-	public Account
+class Admin : public Account
 {
 public:
 	Admin();

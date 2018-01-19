@@ -9,12 +9,14 @@ void changeBackgroundColor(short index)
 		for (int i = 0; i < 3; i++)
 			input >> value[i];
 		value[0] = index;
+		input.close();
 		std::ofstream output("Config.ini", std::ios::in);
 		for (int i = 0; i < 3; i++)
 			if (i != 2)
 				output << value[i] << " ";
 			else
 				output << value[i];
+		output.close();
 	}
 	CONSOLE_SCREEN_BUFFER_INFOEX sbInfoEx;
 	sbInfoEx.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
@@ -37,12 +39,14 @@ void changeTextColor(short index)
 		for (int i = 0; i < 3; i++)
 			input >> value[i];
 		value[1] = index;
+		input.close();
 		std::ofstream output("Config.ini", std::ios::in);
 		for (int i = 0; i < 3; i++)
 			if (i != 2)
 				output << value[i] << " ";
 			else
 				output << value[i];
+		output.close();
 	}
 	CONSOLE_SCREEN_BUFFER_INFOEX sbInfoEx;
 	sbInfoEx.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
@@ -65,12 +69,14 @@ void changeFontSize(short size)
 		for (int i = 0; i < 3; i++)
 			input >> value[i];
 		value[2] = size;
+		input.close();
 		std::ofstream output("Config.ini", std::ios::in);
 		for (int i = 0; i < 3; i++)
 			if (i != 2)
 				output << value[i] << " ";
 			else
 				output << value[i];
+		output.close();
 	}
 	CONSOLE_FONT_INFOEX font = { sizeof(CONSOLE_FONT_INFOEX) };
 	GetCurrentConsoleFontEx(consoleOut, false, &font);
@@ -92,12 +98,14 @@ void systemConfiguration()
 		input >> index;
 		changeFontSize(index);
 		system("COLOR 01");
+		input.close();
 	}
 	else
 	{
 		std::ofstream output(CONFIG);
 		output << short(2) << " ";
-		output << short(1) << " ";
-		output << short(16) << " ";
+		output << short(10) << " ";
+		output << short(16);
+		output.close();
 	}
 }

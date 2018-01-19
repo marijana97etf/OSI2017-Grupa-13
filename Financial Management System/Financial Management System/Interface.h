@@ -1,8 +1,9 @@
 #pragma once
 #include <windows.h>
 #include <fstream>
+#include <string>
+#include <iostream>
 #define CONFIG "Config.ini"
-
 
 COLORREF WHITE = RGB(255, 255, 255);
 COLORREF BLACK = RGB(0, 0, 0);
