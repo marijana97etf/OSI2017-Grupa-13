@@ -847,9 +847,6 @@ bool checkFormat5(const std::string bill)
 bool checkFormat4(const std::string bill)
 {
 	std::ifstream file(bill);
-	std::string fileFormatString1 = "		";
-	std::string fileFormatString2 = "	      OSI Market";
-	std::string fileFormatString3 = "Proizvod - kolicina - cijena - ukupno";
 	std::string fileFormatString4 = "";
 	std::string fileFormatString5 = "";
 	int count = 0;
@@ -869,24 +866,8 @@ bool checkFormat4(const std::string bill)
 			return false;
 		}
 		std::getline(file, tmp);
-		if (tmp != fileFormatString1)
-		{
-			file.close();
-			return false;
-		}
 		std::getline(file, tmp);
-		if (tmp != fileFormatString2)
-		{
-			file.close();
-			return false;
-		}
-		tmp.clear();
 		std::getline(file, tmp);
-		if (!tmp.empty())
-		{
-			file.close();
-			return false;
-		}
 		std::getline(file, tmp);
 		if (tmp.substr(0, 8) != "Proizvod")
 		{

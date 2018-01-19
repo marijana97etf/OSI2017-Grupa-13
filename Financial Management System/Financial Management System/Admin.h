@@ -24,11 +24,11 @@ public:
 	virtual void printAccounts();
 	virtual bool changeAccount();
 private:
-	bool isLegit(const std::string,char);
+	bool isNotLegit(const std::string,char);
 	void format(std::string&, char);
 	bool nameExists(std::string);
-	bool is_textfile_empty();
-	bool is_textfile_without_accounts();
+	bool isAccountFileEmpty();
+	bool isAccountFileWithoutAccounts();
 	const std::vector<std::string> pullFromText(std::string);
 	const std::vector<std::string> explode(const std::string& s, const char& c);
 	void insert(const std::vector<std::string>, std::string&, std::string&, char);
