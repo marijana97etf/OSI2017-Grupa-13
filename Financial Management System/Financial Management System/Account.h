@@ -31,10 +31,11 @@ public:
 	virtual bool deleteAccount() { return false;  };
 	virtual void printAccounts() {};
 	virtual bool changeAccount() { return false;  };
+	virtual void changeInterface() {};
 
-	virtual bool inportForCustomer(const std::string&, std::ostream&) { return false; };//vraca true ako je uspio inportovati, a false ako nije
-	virtual bool inportForProduct(const std::string&, std::ostream&) { return false;  };
-	virtual bool inportForMonth(const std::string&, std::ostream&) { return false; };
+	virtual bool inportForCustomer() { return false; };//vraca true ako je uspio inportovati, a false ako nije
+	virtual bool inportForProduct() { return false;  };
+	virtual bool inportForMonth() { return false; };
 	//VIdi sta ces sa destruktorom
 
 private:
