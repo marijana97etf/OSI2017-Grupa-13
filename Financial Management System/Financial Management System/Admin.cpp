@@ -23,6 +23,8 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "[3] (USD) Americki dolar" << std::endl;
 			std::cout << "[4] (RSD) Srpski dinar" << std::endl;
 			std::cout << "[5] (HRK) Hrvatska kuna" << std::endl;
+			std::cout << "Unesite broj: ";
+			std::cin >> choose;
 		} while (choose < 1 || choose > 5);
 		output.close();
 	}
