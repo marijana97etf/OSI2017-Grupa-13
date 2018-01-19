@@ -116,6 +116,7 @@
     <ClInclude Include="Analyst.h" />
     <ClInclude Include="Bill.h" />
     <ClInclude Include="ErrorException.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pattern.h" />
     <ClInclude Include="Product.h" />
@@ -126,6 +127,7 @@
     <ClCompile Include="Analyst.cpp" />
     <ClCompile Include="Bill.cpp" />
     <ClCompile Include="ErrorException.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Product.cpp" />
     <ClCompile Include="Source.cpp" />
