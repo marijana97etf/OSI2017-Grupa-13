@@ -172,7 +172,7 @@ bool Admin::changeAccount()
 void Admin::changeInterface()
 {
 	HANDLE consoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	int option;
+	short option;
 	std::string choose;
 	bool check = false;
 	do
@@ -249,7 +249,7 @@ void Admin::changeInterface()
 			std::cin >> option;
 			CONSOLE_FONT_INFOEX font = { sizeof(CONSOLE_FONT_INFOEX) };
 			GetCurrentConsoleFontEx(consoleOut, false, &font);
-			font.dwFontSize = { 6, option };//ima greska
+			font.dwFontSize = { 6, option };
 			SetCurrentConsoleFontEx(consoleOut, false, &font);
 			check = true;
 		}

@@ -32,7 +32,7 @@ void Menu::executeOption()//pogledajte ovo
 	{
 		switch (currOption)
 		{
-		case 1:accountP->inportForCustomer(); break;//Sale ako moze promijeniti fukcije da se u njima unosi korisnik ,produkt ili mjesec
+		case 1:accountP->inportForCustomer(); break;
 		case 2:accountP->inportForProduct(); break;
 		case 3:accountP->inportForMonth(); break;
 		case 0:break;
