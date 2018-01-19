@@ -200,11 +200,33 @@ void Bill::processFormat5() // Nije testirano!!
 {
 	std::ifstream inputf(nameOfBill);
 	std::string tmp;
+    std::list <std::string> ProductsInString;
 	
-	inputf.ignore(28);
-	getline(inputf, tmp, END_OF_LINE);
-	
-	processDataForFormat5(tmp);
+	int ignoreHeader=0;
+	while (!inputf.eof())
+	{
+		getline(inputf, tmp);
+		if(ignoreHeader!=0 && tmp.size()!=0) ProductsInString.push_back(tmp);
+		ignoreHeader++;
+	}
+
+	Product product;
+
+	for (auto& k : ProductsInString)
+	{
+		int pos = k.find(",", 0);
+		product.setCode(k.substr(0, pos));
+
+		int pos2 = k.find(",", pos + 1);
+		product.setQuantity(stod(k.substr(pos + 1, pos2 - pos), nullptr));
+
+		int pos3 = k.find(",", pos2 + 1);
+		product.setPricePerUnit(stod(k.substr(pos2 + 1, pos3 - pos2), nullptr));
+
+		product.setTotal(stod(k.substr(pos3 + 1), nullptr));
+
+		putNewProductInList(product);
+	}
 
 	inputf.close();
 }
@@ -275,45 +297,6 @@ Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim
 		posOfNextCharOfEquality -= 1;
 	}
 	return Product(name, quantity, pricePerUnit, total);
-}
-
-void Bill::processDataForFormat5(std::string& tmp)  // Nije testirano!
-{
-	std::list <std::string> ProductsInString;
-	std::string tmp_line = "";
-	int i=0;
-	int comaCounter; 
-
-	while (i < tmp.length())
-	{
-		comaCounter = 0; 
-		tmp_line = "";
-		while (!(comaCounter==3 && !(isalpha(tmp[i]))))
-		{
-			tmp_line+=tmp[i];
-			i++; 
-			if (tmp[i] == ',') comaCounter++;
-		}
-		ProductsInString.push_back(tmp_line);
-    }
-
-    Product product;
-
-	for (auto& k : ProductsInString)
-	{
-		int pos = k.find(",", 0);
-		product.setCode(k.substr(0, pos-1));
-
-		int pos2 = k.find(",", pos + 1);
-		product.setQuantity(stod(k.substr(pos+1, pos2-pos),nullptr));
-
-		int pos3 = k.find(",", pos2 + 1);
-		product.setPricePerUnit(stod(k.substr(pos2+1, pos3-pos2),nullptr));
-
-		product.setTotal(stod(k.substr(pos3 + 1),nullptr));
-
-		putNewProductInList(product);
-	}
 }
 
 void Bill::putNewProductInList(const Product & product)
