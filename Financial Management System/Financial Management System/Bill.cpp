@@ -196,13 +196,13 @@ void Bill::processFormat4()
 	inputf.close();
 }
 
-void Bill::processFormat5() // Nije testirano!!
+void Bill::processFormat5() 
 {
 	std::ifstream inputf(nameOfBill);
 	std::string tmp;
     std::list <std::string> ProductsInString;
 	
-	int pos = nameOfBill.find("_", 0);
+	int pos = nameOfBill.find("#", 0);
 	nameOfClient = nameOfBill.substr(12, pos-12);
     
 	auto dateString = nameOfBill.substr(pos+1, tmp.length()-pos);
