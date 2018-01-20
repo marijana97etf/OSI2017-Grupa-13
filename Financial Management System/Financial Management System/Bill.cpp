@@ -202,7 +202,22 @@ void Bill::processFormat5() // Nije testirano!!
 	std::string tmp;
     std::list <std::string> ProductsInString;
 	
-	int ignoreHeader=0;
+	int pos = nameOfBill.find("_", 0);
+	nameOfClient = nameOfBill.substr(12, pos-12);
+    
+	auto dateString = nameOfBill.substr(pos+1, tmp.length()-pos);
+	
+	std::ofstream tmp_date("temp_date.txt");
+	tmp_date << dateString;
+	tmp_date.close();
+	
+	std::ifstream tmp_date2("temp_date.txt");
+	processDate(tmp_date2);
+	tmp_date.close();
+
+	std::remove("temp_date.txt");
+
+    int ignoreHeader=0;
 	while (!inputf.eof())
 	{
 		getline(inputf, tmp);
