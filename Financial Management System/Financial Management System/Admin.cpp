@@ -32,8 +32,7 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "[4] (RSD) Srpski dinar" << std::endl;
 			std::cout << "[5] (HRK) Hrvatska kuna" << std::endl;
 			std::cout << "Unesite broj: ";
-			getchar();
-			std::cin >> option;
+			std::cin >> option; getchar();
 			choose = std::stoi(option, nullptr, 10);
 		}
 		catch (std::invalid_argument &ex)
