@@ -318,6 +318,14 @@ void Bill::ignoreElementsUntil(std::ifstream &inputf, char boundary)
 	while (inputf.get() != boundary);
 }
 
+int Bill::numberOfDigits(double data) 
+{
+	int numOfDigits = 0;
+	while ( data >= 1)
+		data/=10,numOfDigits++;
+	return numOfDigits;
+}
+
 
 void Bill::Validate()
 {
@@ -1028,7 +1036,7 @@ void Bill::exportForCustomer()
 		output << tmp << std::endl;
 		for (auto& product : this->list)
 		{
-			output << std::setw(20) << std::left << this->date.day << "/" << this->date.month << "/" << this->date.year;
+			output << std::left << this->date.day << "/" <<std::left<< this->date.month << "/" <<std::setw( 20 - numberOfDigits(date.day) - numberOfDigits(date.month) -2 )<<std::left<< this->date.year;
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
@@ -1043,7 +1051,7 @@ void Bill::exportForCustomer()
 		for (auto product : this->list)
 		{
 
-			output << std::setw(20) << std::left << this->date.day << "/" << this->date.month << "/" << this->date.year;
+			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
@@ -1076,7 +1084,7 @@ void Bill::exportForProduct()
 				tmp += "-";
 			output << tmp << std::endl;
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::setw(20) << std::left << this->date.day << "/" << this->date.month << "/" << this->date.year;
+			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
 			output << std::setw(20) << std::left << product.getTotal() << std::endl;
@@ -1087,7 +1095,7 @@ void Bill::exportForProduct()
 			output.close();
 			output.open(directory, std::ios::app);
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::setw(20) << std::left << this->date.day << "/" << this->date.month << "/" << this->date.year;
+			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
 			output << std::setw(20) << std::left << product.getTotal() << std::endl;
@@ -1122,7 +1130,7 @@ void Bill::exportForMonth()
 		for (auto& product : this->list)
 		{
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::setw(20) << std::left << this->date.day << "/" << this->date.month << "/" << this->date.year;
+			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
@@ -1137,7 +1145,7 @@ void Bill::exportForMonth()
 		for (auto product : this->list)
 		{
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::setw(20) << std::left << this->date.day << "/" << this->date.month << "/" << this->date.year;
+			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();

@@ -58,10 +58,13 @@ int main()
 					if (menu.getCurrOption() == 0)        //I jos bi trebali tu par informacija ispisati
 						break;                          //I JOS DESTRUKTOR
 				}                                       //jos treba namjestiti da se bacaju izuzetci u validaciji i da se hvataju
-			} 
-		std::cout << "Korisnik sa unesenim imenom i pinom ne postoji na sistemu." << std::endl;
-		std::cout << "Prijavite se ponovo." << std::endl << "Nova prijava zapocinje uskoro" << std::endl;
-		Sleep(3000);
+		     }
+		else
+			{
+				std::cout << "Korisnik sa unesenim imenom i pinom ne postoji na sistemu." << std::endl;
+				std::cout << "Prijavite se ponovo." << std::endl << "Nova prijava zapocinje uskoro" << std::endl;
+				Sleep(3000);
+			}
 	}
 	getchar();
 	getchar();

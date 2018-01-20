@@ -61,5 +61,6 @@ private:
 	Product processDataForFormat3(std::string &);
 	void putNewProductInList(const Product&);
 	void ignoreElementsUntil(std::ifstream &, char);
+	int numberOfDigits(double);
 };
 
