@@ -1,6 +1,6 @@
 #include "Bill.h"
 #include "Account.h"
-
+#include "Interface.h"
 
 Bill::Bill(): nameOfBill(nullptr),nameOfClient(nullptr), date(Date(0,0,0))
 {}
@@ -450,6 +450,12 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 		}
 	}
 	FindClose(hFind);
+	for (auto& billName : files)
+	{
+		std::string tmp = billName;
+		billName = FILE_OF_BILLS;
+		billName += "\\" + tmp;
+	}
 	return files;
 }
 

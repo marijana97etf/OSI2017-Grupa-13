@@ -1,0 +1,4 @@
+Za racun Racuni\Racun5.csvukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu
+Ukupno bez pdv-a : 0.000000
+Ukupna suma proizvoda sa racuna : 292.790000
+Tacnost : 0.500000
