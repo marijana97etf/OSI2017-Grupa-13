@@ -494,6 +494,8 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 	WIN32_FIND_DATA fileData;
 	HANDLE hFind;
 	std::ofstream logError(LOGERROR);
+	std::string folder = FILE_OF_BILLS;
+	folder += "\\";
 
 	if (!((hFind = FindFirstFile(directory.c_str(), &fileData)) == INVALID_HANDLE_VALUE)) {
 		while (FindNextFile(hFind, &fileData))
@@ -502,9 +504,9 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 			if (file.length() > 4 && (file.substr(file.length() - 4, 4) == ".txt" || file.substr(file.length() - 4, 4) == ".csv"))
 			{
 				if ((file.length() >= 10) && (file.substr(file.length() - 10, 6) == "_error"))
-					logError << file.substr(0, file.length() - 10) + file.substr(file.length() - 4, 4) << std::endl;
+					logError << folder + file.substr(0, file.length() - 10) + file.substr(file.length() - 4, 4) << std::endl;
 				else if (file != LOG && file != LOGERROR)
-					files.push_back(file);
+					files.push_back(folder + file);
 			}
 		}
 	}
@@ -513,12 +515,7 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 	for (int i = 0; i < files.size(); i++)
 	{
 		if (isProcessedBill(files[i]) == false)
-		{
 			std::string temp = files[i];
-			files[i] = FILE_OF_BILLS;
-			files[i] += "\\" + temp;
-			filesToProcess.push_back(files[i]);
-		}
 	}
 	FindClose(hFind);
 	files.erase(files.begin());
@@ -1094,7 +1091,7 @@ void Bill::exportForCustomer()
 		output << tmp << std::endl;
 		for (auto& product : this->list)
 		{
-			output << std::left << this->date.day << "/" <<std::left<< this->date.month << "/" <<std::setw( 20 - numberOfDigits(date.day) - numberOfDigits(date.month) -2 )<<std::left<< this->date.year;
+			output << std::setw(20) << std::left << std::to_string(this->date.day) + "/" + std::to_string(this->date.month) + "/" + std::to_string(this->date.year);
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
@@ -1109,7 +1106,7 @@ void Bill::exportForCustomer()
 		for (auto product : this->list)
 		{
 
-			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
+			output << std::setw(20) << std::left << std::to_string(this->date.day) + "/" + std::to_string(this->date.month) + "/" + std::to_string(this->date.year);
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
@@ -1142,7 +1139,7 @@ void Bill::exportForProduct()
 				tmp += "-";
 			output << tmp << std::endl;
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
+			output << std::setw(20) << std::left << std::to_string(this->date.day) + "/" + std::to_string(this->date.month) + "/" + std::to_string(this->date.year);
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
 			output << std::setw(20) << std::left << product.getTotal() << std::endl;
@@ -1153,7 +1150,7 @@ void Bill::exportForProduct()
 			output.close();
 			output.open(directory, std::ios::app);
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
+			output << std::setw(20) << std::left << std::to_string(this->date.day) + "/" + std::to_string(this->date.month) + "/" + std::to_string(this->date.year);
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
 			output << std::setw(20) << std::left << product.getTotal() << std::endl;
@@ -1188,7 +1185,7 @@ void Bill::exportForMonth()
 		for (auto& product : this->list)
 		{
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
+			output << std::setw(20) << std::left << std::to_string(this->date.day) + "/" + std::to_string(this->date.month) + "/" + std::to_string(this->date.year);
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
@@ -1203,7 +1200,7 @@ void Bill::exportForMonth()
 		for (auto product : this->list)
 		{
 			output << std::setw(20) << std::left << this->nameOfClient;
-			output << std::left << this->date.day << "/" << std::left << this->date.month << "/" << std::setw(20 - numberOfDigits(date.day) - numberOfDigits(date.month) - 2) << std::left << this->date.year;
+			output << std::setw(20) << std::left << std::to_string(this->date.day) + "/" + std::to_string(this->date.month) + "/" + std::to_string(this->date.year);
 			output << std::setw(20) << std::left << product.getCode();
 			output << std::setw(20) << std::left << product.getQuantity();
 			output << std::setw(20) << std::left << product.getPricePerUnit();
