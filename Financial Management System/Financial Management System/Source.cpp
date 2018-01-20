@@ -18,10 +18,10 @@ int main()
 		std::cout << "                LOGIN                 " << std::endl;
 		std::string name, pin;
 		std::cout << "Unesite ime: ";
-		std::cin >> name;//treba izvrsiti provjeru imena
+		std::cin >> name;
 		std::cout << "Unesite pin: ";
 		std::cin >> pin;
-		while (pin.length() != 4)
+		while ( Admin::isNotLegit(pin,'P') )
 		{
 			std::cout << "Pin nije dozvoljene duzine" << std::endl;
 			std::cout << "Unesite novi pin : ";
@@ -32,7 +32,7 @@ int main()
 		{
 			std::cout << "Prijavljeni ste kao: " << "Administrator"<<std::endl;
 			Sleep(1000);
-			Admin ad(name, pin, NAME_OF_ADMIN);//treba izmanipulisati destruktorima da se pravilno oslobodi memorija kod polimorfizma
+			Admin ad(name, pin, NAME_OF_ADMIN);
 			Menu menu(ad);
 			while (1)
 			{

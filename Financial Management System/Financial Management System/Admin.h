@@ -27,8 +27,9 @@ public:
 	virtual bool changeAccount();
 	virtual void changeInterface();
 	virtual void getSystemCurrency();
+
+    static bool isNotLegit(const std::string, char);
 private:
-	bool isNotLegit(const std::string,char);
 	void format(std::string&, char);
 	bool nameExists(std::string);
 	bool isAccountFileEmpty();
