@@ -32,6 +32,7 @@ public:
 	virtual void printAccounts() {};
 	virtual bool changeAccount() { return false;  };
 	virtual void changeInterface() {};
+	virtual void getSystemCurrency() {};
 
 	virtual bool inportForCustomer() { return false; };//vraca true ako je uspio inportovati, a false ako nije
 	virtual bool inportForProduct() { return false;  };

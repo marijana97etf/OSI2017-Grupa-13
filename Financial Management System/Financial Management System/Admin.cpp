@@ -1,6 +1,6 @@
 #include "Admin.h"
 
-std::string currency[] = { "BAM","EUR","USD","RSD","HRK" };
+std::string currencies[] = { "BAM","EUR","USD","RSD","HRK" };
 
 Admin::Admin() :Account::Account()
 {}
@@ -9,6 +9,10 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 {
 	std::string temp;
 	std::ifstream input(CONFIG);
+	getline(input, temp);
+	getline(input, currency);
+	input.close();
+	input.open(CONFIG);
 	getline(input, temp);
 	if (input.eof())
 	{
@@ -28,7 +32,7 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "Unesite broj: ";
 			std::cin >> choose;
 		} while (choose < 1 || choose > 5);
-		output << currency[choose - 1];
+		output << currencies[choose - 1];
 		output.close();
 	}
 }
@@ -298,6 +302,16 @@ void Admin::changeInterface()
 		else if (choose == "Ne" || choose == "NE" || choose == "ne" || choose == "nE")
 			check = true;
 	} while (check != true);
+}
+
+void Admin::getSystemCurrency()
+{
+	system("CLS");
+	getchar();
+	std::cout << "Valuta sistema je " << currency << std::endl;
+	std::string temp;
+	std::cout << "Pritisnite ENTER za povratak u meni.";
+	getline(std::cin, temp);
 }
 
 
