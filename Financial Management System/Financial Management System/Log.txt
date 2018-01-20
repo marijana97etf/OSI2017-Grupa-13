@@ -1,3 +1,9 @@
 Racuni\Racun2.txt
 Racuni\Racun4.txt
 Racuni\Racun5.csv
+Racuni\Racun2.txt
+Racuni\Racun4.txt
+Racuni\Racun5.csv
+Racuni\Racun2.txt
+Racuni\Racun4.txt
+Racuni\Racun5.csv

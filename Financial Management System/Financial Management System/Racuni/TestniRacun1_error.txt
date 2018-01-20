@@ -8,3 +8,23 @@ Ukupno bez pdv-a : 250.000000
 Ukupna suma proizvoda sa racuna : 20000.000000
 Tacnost : 0.500000
 
+Za proizvod dadad 32 ukupna kolicina nije u okolini kolicina*cijena sa zadovoljavajucom tacnoscu
+Ukupno : 20000.000000
+Kolicina*Cijena : 200.000000
+Tacnost : 0.500000
+
+Za racun Racuni\TestniRacun1.txt ukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu
+Ukupno bez pdv-a : 250.000000
+Ukupna suma proizvoda sa racuna : 20000.000000
+Tacnost : 0.500000
+
+Za proizvod dadad 32 ukupna kolicina nije u okolini kolicina*cijena sa zadovoljavajucom tacnoscu
+Ukupno : 20000.000000
+Kolicina*Cijena : 200.000000
+Tacnost : 0.500000
+
+Za racun Racuni\TestniRacun1.txt ukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu
+Ukupno bez pdv-a : 250.000000
+Ukupna suma proizvoda sa racuna : 20000.000000
+Tacnost : 0.500000
+

@@ -74,7 +74,7 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 			}
 			else
 			{
-				ErrorException ex(vec[i], "Neodgovarajuci format.",true);
+				ErrorException ex(vec[i], "Neodgovarajuci format.");
 				ex.processException();
 			}
 		}

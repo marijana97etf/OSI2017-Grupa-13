@@ -342,7 +342,6 @@ bool Bill::Validate()
 bool Bill::checkTotalOfEveryProduct()//nije testirana
 {
 	bool check = true;
-	bool toOpen = true;
 	for (auto& product : list)
 		if ((product.getTotal() < product.getPricePerUnit() * product.getQuantity() - EPS) || ( product.getTotal() >product.getPricePerUnit() * product.getQuantity() + EPS))
 		try
@@ -360,13 +359,7 @@ bool Bill::checkTotalOfEveryProduct()//nije testirana
 			errorMessage += "Tacnost : ";
 			errorMessage += std::to_string(EPS);
 			errorMessage += END_OF_LINE;
-			/*if (toOpen == true)
-			{
-				toOpen = false;
-				throw ErrorException(nameOfBill, errorMessage,true);
-			}
-			else*/
-				throw ErrorException(nameOfBill, errorMessage);
+			throw ErrorException(nameOfBill, errorMessage);
 		}
 	    catch (ErrorException& ex)
 		{
@@ -378,7 +371,6 @@ bool Bill::checkTotalOfEveryProduct()//nije testirana
 bool Bill::checkTotalofAllproducts()
 {
 	bool check = true;
-	bool toOpen = true;
 
 	double total=0.0;
 	for (auto& product : list)
@@ -400,13 +392,7 @@ bool Bill::checkTotalofAllproducts()
 		errorMessage += "Tacnost : ";
 		errorMessage += std::to_string(EPS);
 		errorMessage += END_OF_LINE;
-		/*if (toOpen == true)
-		{
-			toOpen = false;
-			throw ErrorException(nameOfBill, errorMessage, true);
-		}
-		else*/
-			throw ErrorException(nameOfBill, errorMessage);
+		throw ErrorException(nameOfBill, errorMessage);
 	}
 	catch (ErrorException& ex)
 	{
@@ -418,7 +404,7 @@ bool Bill::checkTotalofAllproducts()
 bool Bill::checkTotalPlusPDV()
 {
 	bool check = true;
-	bool toOpen = true;
+
 	if ((totalSumOfBill < totalSumOfProducts + pdv - EPS) || (totalSumOfBill > totalSumOfProducts + pdv + EPS) )
 	try
 	{
@@ -435,13 +421,7 @@ bool Bill::checkTotalPlusPDV()
 		errorMessage += "Tacnost : ";
 		errorMessage += std::to_string(EPS);
 		errorMessage += END_OF_LINE;
-		/*if (toOpen == true)
-		{
-			toOpen = false;
-			throw ErrorException(nameOfBill, errorMessage, true);
-		}
-		else*/
-			throw ErrorException(nameOfBill, errorMessage);
+		throw ErrorException(nameOfBill, errorMessage);
 	}
 	catch (ErrorException& ex)
 	{

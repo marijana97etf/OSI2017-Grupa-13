@@ -2,7 +2,7 @@
 #include "Account.h"
 
 
-ErrorException::ErrorException(const std::string& file, const std::string& message,bool toOpen ) : file(file), message(message),toOpen(toOpen)
+ErrorException::ErrorException(const std::string& file, const std::string& message) : file(file), message(message)
 {
 }
 
