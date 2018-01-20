@@ -251,6 +251,8 @@ bool Admin::changeAccount()
 					insert(pullFromText(username), username, type, c);
 
 			}
+			std::cout << "Nalog je uspjesno izmjenjen." << std::endl;
+			Sleep(1000);
 			return true;
 		}
 		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
