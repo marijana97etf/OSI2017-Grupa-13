@@ -52,7 +52,7 @@ void Menu::executeOption()
 		case 3:accountP->inportForMonth(); break;
 		case 0:break;
 		case -1:accountP->exitSystem(); break;
-		default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
+		default: std::cout << "Greska u unosu indeksa operacije" << std::endl; Sleep(1000); break;
 		}
 	}
 }
