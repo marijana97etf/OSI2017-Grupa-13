@@ -1,4 +1,3 @@
   Username             PIN      Type    
   --------------------------------------
   Admin               |1234    |admin
-  Risto               |5678    |analyst

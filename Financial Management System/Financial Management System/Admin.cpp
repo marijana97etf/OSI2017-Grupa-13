@@ -19,9 +19,10 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 		input.close();
 		std::ofstream output(CONFIG);
 		output << temp << std::endl;
-		int choose;
+		int choose = 10;//default_option
 		std::string option;
 		do
+		try
 		{
 			system("CLS");
 			std::cout << "Izaberite valutu sistema: " << std::endl;
@@ -32,9 +33,15 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "[5] (HRK) Hrvatska kuna" << std::endl;
 			std::cout << "Unesite broj: ";
 			getchar();
-			getline(std::cin, option);
+			std::cin >> option;
 			choose = std::stoi(option, nullptr, 10);
-		} while (choose < 1 || choose > 5);
+		}
+		catch (std::invalid_argument &ex)
+		{
+			std::cout << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
+			Sleep(2000);
+		}
+		while (choose < 1 || choose > 5);
 		currency = currencies[choose - 1];
 		output << currencies[choose - 1];
 		output.close();
