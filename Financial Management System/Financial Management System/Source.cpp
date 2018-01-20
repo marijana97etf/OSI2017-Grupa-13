@@ -1,5 +1,6 @@
 #include<iostream>
 #include<cstdlib>
+#include<Windows.h>
 #include"Menu.h"
 #include"ErrorException.h"
 #include "Interface.h"
@@ -20,6 +21,12 @@ int main()
 		std::cin >> name;//treba izvrsiti provjeru imena
 		std::cout << "Unesite pin: ";
 		std::cin >> pin;
+		while (pin.length() != 4)
+		{
+			std::cout << "Pin nije dozvoljene duzine" << std::endl;
+			std::cout << "Unesite novi pin : ";
+			std::cin >> pin;
+		}
 		Account acc(name, pin);
 		if ( acc.checkTypeOfUser() == IS_ADMIN)
 		{
@@ -51,7 +58,10 @@ int main()
 					if (menu.getCurrOption() == 0)        //I jos bi trebali tu par informacija ispisati
 						break;                          //I JOS DESTRUKTOR
 				}                                       //jos treba namjestiti da se bacaju izuzetci u validaciji i da se hvataju
-			}                                           
+			} 
+		std::cout << "Korisnik sa unesenim imenom i pinom ne postoji na sistemu." << std::endl;
+		std::cout << "Prijavite se ponovo." << std::endl << "Nova prijava zapocinje uskoro" << std::endl;
+		Sleep(3000);
 	}
 	getchar();
 	getchar();

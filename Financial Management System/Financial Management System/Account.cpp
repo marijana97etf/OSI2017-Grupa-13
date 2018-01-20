@@ -42,7 +42,7 @@ int Account::checkTypeOfUser()
 			return next.type == NAME_OF_ADMIN ? IS_ADMIN : IS_ANALYST;
 
 	}
-	return ERROR;
+	return ERRORFLAG;
 }
 
 std::string Account::getType()

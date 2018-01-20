@@ -9,7 +9,7 @@ const int MAX_LENGTH_OF_ROW = 100;
 const std::string ACCOUNT_FILE_NAME("accountfile.txt");
 const std::string NAME_OF_ADMIN("admin"),NAME_OF_ANALYST("analyst");
 const char END_OF_LINE('\n'),SEPARATOR('|');
-const int ERROR = -1;
+const int ERRORFLAG = -1;
 const int IS_ADMIN = 0, IS_ANALYST = 1;
 
 class Account
