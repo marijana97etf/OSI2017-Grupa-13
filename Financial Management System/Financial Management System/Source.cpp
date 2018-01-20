@@ -37,8 +37,16 @@ int main()
 			while (1)
 			{
 				menu.printPattern(std::cout);
-				menu.setOption(std::cin, std::cout);
-				menu.executeOption();
+				try
+				{
+					menu.setOption(std::cin, std::cout);
+					menu.executeOption();
+				}
+				catch (std::invalid_argument &ex)
+				{
+					std::cout << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
+					Sleep(2000);
+				}
 				if ( menu.getCurrOption() == 0)
 					break;
 			}
