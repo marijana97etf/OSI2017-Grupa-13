@@ -500,7 +500,7 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 	for (int i = 0; i < files.size(); i++)
 	{
 		if (isProcessedBill(files[i]) == false)
-			std::string temp = files[i];
+			filesToProcess.push_back(files[i]);
 	}
 	FindClose(hFind);
 	files.erase(files.begin());

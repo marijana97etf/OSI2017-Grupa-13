@@ -71,7 +71,7 @@ void Admin::addAccount()
 	{
 		if (warningFunction(count++))
 			return;
-		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar "; std::cin >> type;
+		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar: "; std::cin >> type;
 	} while (type != 'D' && type != 'N');
 
 	format(tmpusername, 'U');
@@ -199,9 +199,9 @@ bool Admin::changeAccount()
 			} while (c != 'P' && c != 'U' && c != 'T');
 			if (c == 'P')
 			{
-				std::cout << "Unesite novi PIN: ";
 				do
 				{
+					std::cout << "Unesite novi PIN: ";
 					if (warningFunction(count++))
 						return false;
 					std::cin >> textdiff;
@@ -210,9 +210,9 @@ bool Admin::changeAccount()
 			}
 			if (c == 'U')
 			{
-				std::cout << "Unesite novi username: ";
 				do
 				{
+					std::cout << "Unesite novi username: ";
 					if (warningFunction(count++))
 						return false;
 					std::cin >> textdiff;
@@ -227,9 +227,9 @@ bool Admin::changeAccount()
 					Sleep(1000);
 					return false;
 				}
-				std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar: ";
 				do
 				{
+					std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar: ";
 					if (warningFunction(count++))
 						return false;
 					std::cin >> c;
@@ -362,7 +362,7 @@ bool Admin::isNotLegit(std::string string, char typeofstring)
 	{
 		if (string.length() != LENGTH_OF_PIN || string.empty()) return true;
 		while (i < string.length())
-			if (!std::isalnum(string[i++], loc))
+			if (!std::isdigit(string[i++], loc))
 				return true;
 		return false;
 	}
