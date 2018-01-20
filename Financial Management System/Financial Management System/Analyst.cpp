@@ -16,96 +16,65 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 		for (int i = 0; i < vec.size(); i++)
 		{
 			int formatCode;
-			std::ofstream logOut(LOG,std::ios::in);
+			std::ofstream logOut(LOG,std::ios::app | std::ios::out);
 			if (checkFormat1(vec[i]))
 			{
 				formatCode = 1;
 				Bill bill(vec[i], formatCode);
-				try
-				{
-					bill.Validate();//dodao sam ovde da bi se bacao izuzetak o gresci
-					bill.exportForCustomer();
-					bill.exportForMonth();
-					bill.exportForProduct();
-					logOut << vec[i] << std::endl;
-
-				}
-				catch (ErrorException& ex)
-				{
-					ex.processException();
-				}
+				if (!bill.Validate())//dodao sam ovde da bi se bacao izuzetak o gresci
+					continue;
+				bill.exportForCustomer();
+				bill.exportForMonth();
+				bill.exportForProduct();
+				logOut << vec[i] << std::endl;
 			}
 			else if (checkFormat2(vec[i]))
 			{
 				formatCode = 2;
 				Bill bill(vec[i], formatCode);
-				try
-				{
-					bill.Validate();
-					bill.exportForCustomer();
-					bill.exportForMonth();
-					bill.exportForProduct();
-					logOut << vec[i] << std::endl;
-				}
-				catch (ErrorException& ex)
-				{
-					ex.processException();
-				}
+				if (!bill.Validate())//dodao sam ovde da bi se bacao izuzetak o gresci
+					continue;
+				bill.exportForCustomer();
+				bill.exportForMonth();
+				bill.exportForProduct();
+				logOut << vec[i] << std::endl;
 			}
 			else if (checkFormat3(vec[i]))
 			{
 				formatCode = 3;
 				Bill bill(vec[i], formatCode);
-				try
-				{
-					bill.Validate();
-					bill.exportForCustomer();
-					bill.exportForMonth();
-					bill.exportForProduct();
-					logOut << vec[i] << std::endl;
-				}
-				catch (ErrorException& ex)
-				{
-					ex.processException();
-				}
+				if (!bill.Validate())//dodao sam ovde da bi se bacao izuzetak o gresci
+					continue;
+				bill.exportForCustomer();
+				bill.exportForMonth();
+				bill.exportForProduct();
+				logOut << vec[i] << std::endl;
 			}
 			else if (checkFormat4(vec[i]))
 			{
 				formatCode = 4;
 				Bill bill(vec[i], formatCode);
-				try
-				{
-					bill.Validate();
-					bill.exportForCustomer();
-					bill.exportForMonth();
-					bill.exportForProduct();
-					logOut << vec[i] << std::endl;
-				}
-				catch (ErrorException& ex)
-				{
-					ex.processException();
-				}
+				if (!bill.Validate())//dodao sam ovde da bi se bacao izuzetak o gresci
+					continue;
+				bill.exportForCustomer();
+				bill.exportForMonth();
+				bill.exportForProduct();
+				logOut << vec[i] << std::endl;
 			}
 			else if (checkFormat5(vec[i]))
 			{
 				formatCode = 5;
 				Bill bill(vec[i], formatCode);
-				try
-				{
-					bill.Validate();
-					bill.exportForCustomer();
-					bill.exportForMonth();
-					bill.exportForProduct();
-					logOut << vec[i] << std::endl;
-				}
-				catch (ErrorException& ex)
-				{
-					ex.processException();
-				}
+				if (!bill.Validate())
+					continue;		
+				bill.exportForCustomer();
+				bill.exportForMonth();
+				bill.exportForProduct();
+				logOut << vec[i] << std::endl;
 			}
 			else
 			{
-				ErrorException ex(vec[i], "Neodgovarajuci format.");
+				ErrorException ex(vec[i], "Neodgovarajuci format.",true);
 				ex.processException();
 			}
 		}
@@ -118,7 +87,7 @@ bool Analyst::inportForCustomer()
 	getchar();
 	std::string customer;
 	std::cout << "Unesite kupca: ";
-	std::cin >> customer;
+	getline(std::cin, customer);
 	std::ifstream in;
 	in.open("Kupac\\" + customer + ".txt", std::ios::in);
 	if (in.is_open())
@@ -147,7 +116,7 @@ bool Analyst::inportForProduct()
 	getchar();
 	std::string product;
 	std::cout << "Unesite proizvod: ";
-	std::cin >> product;
+	getline(std::cin, product);
 	std::ifstream in;
 	in.open("Proizvod\\" + product + ".txt", std::ios::in);
 	if (in.is_open())

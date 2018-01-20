@@ -327,21 +327,27 @@ int Bill::numberOfDigits(double data)
 }
 
 
-void Bill::Validate()
+bool Bill::Validate()
 {
-	checkTotalOfEveryProduct();
+	bool check1 = checkTotalOfEveryProduct();
+	bool check2 = true, check3 = true;
 	if (formatCode != 5)
 	{
-		checkTotalofAllproducts();
-		checkTotalPlusPDV();
+		check2 = checkTotalofAllproducts();
+		check3 = checkTotalPlusPDV();
 	}
+	return check1 && check2 && check3;
 }
 
-void Bill::checkTotalOfEveryProduct()//nije testirana
+bool Bill::checkTotalOfEveryProduct()//nije testirana
 {
+	bool check = true;
+	bool toOpen = true;
 	for (auto& product : list)
 		if ((product.getTotal() < product.getPricePerUnit() * product.getQuantity() - EPS) || ( product.getTotal() >product.getPricePerUnit() * product.getQuantity() + EPS))
+		try
 		{
+			check = false;
 			std::string errorMessage;
 			errorMessage = "Za proizvod " + product.getCode() + " ukupna kolicina nije u okolini kolicina*cijena sa zadovoljavajucom tacnoscu";
 			errorMessage += END_OF_LINE;
@@ -353,19 +359,35 @@ void Bill::checkTotalOfEveryProduct()//nije testirana
 			errorMessage += END_OF_LINE;
 			errorMessage += "Tacnost : ";
 			errorMessage += std::to_string(EPS);
-			throw ErrorException(nameOfBill,errorMessage);
+			errorMessage += END_OF_LINE;
+			/*if (toOpen == true)
+			{
+				toOpen = false;
+				throw ErrorException(nameOfBill, errorMessage,true);
+			}
+			else*/
+				throw ErrorException(nameOfBill, errorMessage);
 		}
-	return;
+	    catch (ErrorException& ex)
+		{
+			ex.processException();
+		}
+	return check;
 }
 
-void Bill::checkTotalofAllproducts()
+bool Bill::checkTotalofAllproducts()
 {
+	bool check = true;
+	bool toOpen = true;
+
 	double total=0.0;
 	for (auto& product : list)
 		total += product.getTotal();
 
 	if ((totalSumOfProducts < total- EPS) || (totalSumOfProducts > total + EPS))
+	try
 	{
+		check = false;
 		std::string errorMessage;
 		errorMessage += "Za racun " + nameOfBill + " ukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu";
 		errorMessage += END_OF_LINE;
@@ -377,14 +399,30 @@ void Bill::checkTotalofAllproducts()
 		errorMessage += END_OF_LINE;
 		errorMessage += "Tacnost : ";
 		errorMessage += std::to_string(EPS);
-		throw ErrorException(nameOfBill, errorMessage);
+		errorMessage += END_OF_LINE;
+		/*if (toOpen == true)
+		{
+			toOpen = false;
+			throw ErrorException(nameOfBill, errorMessage, true);
+		}
+		else*/
+			throw ErrorException(nameOfBill, errorMessage);
 	}
+	catch (ErrorException& ex)
+	{
+		ex.processException();
+	}
+	return check;
 }
 
-void Bill::checkTotalPlusPDV()
+bool Bill::checkTotalPlusPDV()
 {
+	bool check = true;
+	bool toOpen = true;
 	if ((totalSumOfBill < totalSumOfProducts + pdv - EPS) || (totalSumOfBill > totalSumOfProducts + pdv + EPS) )
+	try
 	{
+		check = false;
 		std::string errorMessage;
 		errorMessage += "Za racun " + nameOfBill + " ukupna vrijednost na racunu nije u okolini ukupne vrijednosti bez pdv-a + pdv sa zadovoljavajucom tacnoscu";
 		errorMessage += END_OF_LINE;
@@ -396,8 +434,20 @@ void Bill::checkTotalPlusPDV()
 		errorMessage += END_OF_LINE;
 		errorMessage += "Tacnost : ";
 		errorMessage += std::to_string(EPS);
-		throw ErrorException(nameOfBill,errorMessage);
+		errorMessage += END_OF_LINE;
+		/*if (toOpen == true)
+		{
+			toOpen = false;
+			throw ErrorException(nameOfBill, errorMessage, true);
+		}
+		else*/
+			throw ErrorException(nameOfBill, errorMessage);
 	}
+	catch (ErrorException& ex)
+	{
+		ex.processException();
+	}
+	return check;
 }
 
 
