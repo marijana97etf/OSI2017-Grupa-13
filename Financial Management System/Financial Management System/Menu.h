@@ -1,6 +1,8 @@
 #pragma once
 #include<iostream>
 #include<fstream>
+#include<exception>
+#include<Windows.h>
 #include"Account.h"
 #include"Pattern.h"
 

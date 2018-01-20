@@ -6,10 +6,18 @@ Menu::Menu(Account &account):accountP(&account)
 
 void Menu::setOption(std::istream &input,std::ostream & output)
 {
-	int option;
+	std::string option;
 	output << "Unos:";
 	input >> option;
-	currOption = option;
+	try
+	{
+		currOption = std::stoi(option, nullptr, 10);
+	}
+	catch (std::invalid_argument &ex)
+	{
+		output <<std::endl<< "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
+		Sleep(2000);
+	}
 }
 
 void Menu::executeOption()
@@ -26,7 +34,7 @@ void Menu::executeOption()
 			case 6:accountP->getSystemCurrency(); break;
 			case 0: break;
 			case -1:accountP->exitSystem(); break;
-			default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
+			default: std::cout<<std::endl << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl; break;
 		}
 	}
 	else

@@ -1,0 +1,12 @@
+Kupac: BCD
+Datum: 24/12/2017
+
+	       Racun
+
+Proizvod - kolicina - cijena - ukupno
+abcd 1234  -    10    -    5   -   50
+abb 456  -    20    -   10   -   200
+---------------------------------------
+Ukupno: 250
+PDV: 42.5
+Ukupno za placanje: 292.5
