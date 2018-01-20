@@ -1,4 +1,0 @@
-Racun1.txt
-Racun3.txt
-Racun6.txt
-TestniRacun1.txt
