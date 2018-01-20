@@ -99,6 +99,12 @@ bool Admin::deleteAccount()
 				return false;
 			std::cin >> username;
 		} while (isNotLegit(username, 'U'));
+		if (username == this->username)
+		{
+			std::cout << "Nemoguce je obrisati nalog koji trenutno koristite!" << std::endl;
+			Sleep(1000);
+			return false;
+		}
 		std::ifstream in(ACCOUNT_FILE_NAME);
 		std::ofstream out("accountfile.tmp");
 		bool check = false;
@@ -174,7 +180,7 @@ bool Admin::changeAccount()
 	std::string temp;
 	do
 	{
-		std::cout << "Unesite username naloga koji treba promjeniti\n";
+		std::cout << "Unesite username naloga koji treba promjeniti: ";
 		do
 		{
 			if (warningFunction(count++))
@@ -184,7 +190,7 @@ bool Admin::changeAccount()
 		count = 0;
 		if (nameExists(username))
 		{
-			std::cout << "Unesite sta zelite izmjeniti: [U]sername, [P]IN, [T]ip korisnika\n";
+			std::cout << "Unesite sta zelite izmjeniti: [U]sername, [P]IN, [T]ip korisnika: ";
 			do
 			{
 				if (warningFunction(count++))
@@ -193,7 +199,7 @@ bool Admin::changeAccount()
 			} while (c != 'P' && c != 'U' && c != 'T');
 			if (c == 'P')
 			{
-				std::cout << "Unesite novi PIN:\n";
+				std::cout << "Unesite novi PIN: ";
 				do
 				{
 					if (warningFunction(count++))
@@ -204,7 +210,7 @@ bool Admin::changeAccount()
 			}
 			if (c == 'U')
 			{
-				std::cout << "Unesite novi username:\n";
+				std::cout << "Unesite novi username: ";
 				do
 				{
 					if (warningFunction(count++))
@@ -215,7 +221,13 @@ bool Admin::changeAccount()
 			}
 			if (c == 'T')
 			{
-				std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar:\n";
+				if (username == this->username)
+				{
+					std::cout << "Nemoguce je promjeniti tip naloga koji trenutno koristite!" << std::endl;
+					Sleep(1000);
+					return false;
+				}
+				std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar: ";
 				do
 				{
 					if (warningFunction(count++))
@@ -468,15 +480,17 @@ void Admin::insert(const std::vector<std::string> modvec, std:: string &text, st
 			if (c == 'P')
 			{
 				format(textdiff, 'P');
-				tmpfile << modvec[0] << SEPARATOR << textdiff << modvec[2] << "\n";
+				tmpfile << modvec[0] << SEPARATOR << textdiff << modvec[2];
 			}
 			if (c == 'U')
 			{
 				format(textdiff, 'U');
-				tmpfile << textdiff << modvec[1] << SEPARATOR << modvec[2] << "\n";
+				tmpfile << textdiff << modvec[1] << SEPARATOR << modvec[2];
 			}
 			if (c == 'A' || c == 'D')
-				tmpfile << modvec[0] << SEPARATOR << modvec[1] << SEPARATOR << textdiff << "\n";
+				tmpfile << modvec[0] << SEPARATOR << modvec[1] << SEPARATOR << textdiff;
+			if (!accountfile.eof())
+				tmpfile << std::endl;
 		}
 		currline.clear();
 	}
