@@ -196,13 +196,13 @@ void Bill::processFormat4()
 	inputf.close();
 }
 
-void Bill::processFormat5() // Nije testirano!!
+void Bill::processFormat5() 
 {
 	std::ifstream inputf(nameOfBill);
 	std::string tmp;
     std::list <std::string> ProductsInString;
 	
-	int pos = nameOfBill.find("_", 0);
+	int pos = nameOfBill.find("#", 0);
 	nameOfClient = nameOfBill.substr(12, pos-12);
     
 	auto dateString = nameOfBill.substr(pos+1, tmp.length()-pos);
@@ -213,9 +213,9 @@ void Bill::processFormat5() // Nije testirano!!
 	
 	std::ifstream tmp_date2("temp_date.txt");
 	processDate(tmp_date2);
-	tmp_date.close();
+	tmp_date2.close();
 
-	std::remove("temp_date.txt");
+	_unlink("temp_date.txt");
 
     int ignoreHeader=0;
 	while (!inputf.eof())
@@ -518,7 +518,8 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 			filesToProcess.push_back(files[i]);
 	}
 	FindClose(hFind);
-	files.erase(files.begin());
+	if(files.size() > 0)
+		files.erase(files.begin());
 	return filesToProcess;
 }
 

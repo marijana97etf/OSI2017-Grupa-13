@@ -32,6 +32,7 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "Unesite broj: ";
 			std::cin >> choose;
 		} while (choose < 1 || choose > 5);
+		currency = currencies[choose - 1];
 		output << currencies[choose - 1];
 		output.close();
 	}
