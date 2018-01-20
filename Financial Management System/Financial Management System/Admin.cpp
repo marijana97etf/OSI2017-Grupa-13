@@ -267,9 +267,10 @@ void Admin::changeInterface()
 				std::cout << "[8] Ljubicasta" << std::endl;
 				std::cout << "[9] Smedja" << std::endl;
 				std::cout << "[10] Siva" << std::endl;
+				std::cout << "[11] Roza" << std::endl;
 				std::cout << "Unesite broj: ";
 				std::cin >> option;
-			} while (option < 1 || option > 10);
+			} while (option < 1 || option > 11);
 			changeBackgroundColor(option);
 			check = true;
 		}
@@ -298,9 +299,10 @@ void Admin::changeInterface()
 				std::cout << "[8] Ljubicasta" << std::endl;
 				std::cout << "[9] Smedja" << std::endl;
 				std::cout << "[10] Siva" << std::endl;
+				std::cout << "[11] Roza" << std::endl;
 				std::cout << "Unesite broj: ";
 				std::cin >> option;
-			} while (option < 1 || option > 10);
+			} while (option < 1 || option > 11);
 			changeTextColor(option);
 			check = true;
 		}

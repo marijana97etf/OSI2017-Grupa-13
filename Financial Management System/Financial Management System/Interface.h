@@ -16,6 +16,7 @@
 #define PURPLE RGB(128, 0, 128)
 #define BROWN RGB(102, 51, 0)
 #define SILVER RGB(192, 192, 192)
+#define ROSE RGB(255, 102, 153)
 
 void changeBackgroundColor(short);
 void changeTextColor(short);

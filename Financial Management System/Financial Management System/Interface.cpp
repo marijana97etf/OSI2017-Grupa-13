@@ -1,6 +1,6 @@
 #include "Interface.h"
 
-COLORREF colors[] = { WHITE,BLACK,BLUE,RED,GREEN,YELLOW,ORANGE,PURPLE,BROWN,SILVER };
+COLORREF colors[] = { WHITE,BLACK,BLUE,RED,GREEN,YELLOW,ORANGE,PURPLE,BROWN,SILVER,ROSE};
 HANDLE consoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void changeBackgroundColor(short index)
@@ -116,7 +116,7 @@ void systemConfiguration()
 	{
 		input >> index1;
 		input >> index2;
-		if (index1 == index2 || (index1 < 1 || index1 > 10) || (index2 < 1 || index2 > 10))
+		if (index1 == index2 || (index1 < 1 || index1 > 11) || (index2 < 1 || index2 > 11))
 		{
 			index1 = 2;
 			index2 = 10;
