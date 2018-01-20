@@ -23,6 +23,7 @@ void Menu::executeOption()//pogledajte ovo
 			case 3:accountP->printAccounts(); break;
 			case 4:accountP->changeAccount(); break;
 			case 5:accountP->changeInterface(); break;
+			case 6:accountP->getSystemCurrency(); break;
 			case 0: break;	//fali jos jedan case
 			case -1:accountP->exitSystem(); break;
 			default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;

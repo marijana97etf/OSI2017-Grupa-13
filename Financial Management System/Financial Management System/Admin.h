@@ -17,6 +17,7 @@ const std::string TMP_FILE("tmpfile.txt");
 
 class Admin : public Account
 {
+	std::string currency;
 public:
 	Admin();
 	Admin(const std::string&, const std::string&, const std::string&);
@@ -25,6 +26,7 @@ public:
 	virtual void printAccounts();
 	virtual bool changeAccount();
 	virtual void changeInterface();
+	virtual void getSystemCurrency();
 private:
 	bool isNotLegit(const std::string,char);
 	void format(std::string&, char);

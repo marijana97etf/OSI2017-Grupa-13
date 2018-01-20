@@ -20,6 +20,7 @@ namespace patterns
 		"[3] Ispisi naloge na sistemu",
 		"[4] Izmjeni odredjeni nalog",
 		"[5] Promjena korisnickog interfejsa",
+		"[6] Pregled valute sistema",
 		"[0] Odjava",
 		"[-1] Izlaz iz programa"
 	};

@@ -5,15 +5,23 @@ HANDLE consoleOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void changeBackgroundColor(short index)
 {
-	std::ifstream input("Config.ini");
+	std::ifstream input(CONFIG);
 	if (input.is_open())
 	{
-		short value[3];
+		short value[3] = { 2, 10, 16 };
 		for (int i = 0; i < 3; i++)
 			input >> value[i];
+		if (value[1] == index)
+		{
+			do
+			{
+				std::cout << "Unesite broj boje koja je razlicita od boje teksta: ";
+				std::cin >> index;
+			} while (value[1] == index);
+		}
 		value[0] = index;
 		input.close();
-		std::ofstream output("Config.ini", std::ios::in);
+		std::ofstream output(CONFIG, std::ios::in);
 		for (int i = 0; i < 3; i++)
 			if (i != 2)
 				output << value[i] << " ";
@@ -36,15 +44,23 @@ void changeBackgroundColor(short index)
 
 void changeTextColor(short index)
 {
-	std::ifstream input("Config.ini");
+	std::ifstream input(CONFIG);
 	if (input.is_open())
 	{
-		short value[3];
+		short value[3] = { 2, 10, 16 };
 		for (int i = 0; i < 3; i++)
 			input >> value[i];
+		if (value[0] == index)
+		{
+			do
+			{
+				std::cout << "Unesite broj boje koja je razlicita od boje pozadine: ";
+				std::cin >> index;
+			} while (value[0] == index);
+		}
 		value[1] = index;
 		input.close();
-		std::ofstream output("Config.ini", std::ios::in);
+		std::ofstream output(CONFIG, std::ios::in);
 		for (int i = 0; i < 3; i++)
 			if (i != 2)
 				output << value[i] << " ";
@@ -67,15 +83,15 @@ void changeTextColor(short index)
 
 void changeFontSize(short size)
 {
-	std::ifstream input("Config.ini");
+	std::ifstream input(CONFIG);
 	if (input.is_open())
 	{
-		short value[3];
+		short value[3] = { 2, 10, 16 };
 		for (int i = 0; i < 3; i++)
 			input >> value[i];
 		value[2] = size;
 		input.close();
-		std::ofstream output("Config.ini", std::ios::in);
+		std::ofstream output(CONFIG, std::ios::in);
 		for (int i = 0; i < 3; i++)
 			if (i != 2)
 				output << value[i] << " ";
@@ -93,16 +109,21 @@ void changeFontSize(short size)
 void systemConfiguration()
 {
 	SetConsoleTitle("Financial Management System");
-	short index;
+	short index1, index2;
 	std::ifstream input(CONFIG);
 	if (input.is_open())
 	{
-		input >> index;
-		changeBackgroundColor(index);
-		input >> index;
-		changeTextColor(index);
-		input >> index;
-		changeFontSize(index);
+		input >> index1;
+		input >> index2;
+		if (index1 == index2 || (index1 < 1 || index1 > 10) || (index2 < 1 || index2 > 10))
+		{
+			index1 = 2;
+			index2 = 10;
+		}
+		changeBackgroundColor(index1);
+		changeTextColor(index2);
+		input >> index1;
+		changeFontSize(index1);
 		system("COLOR 01");
 		input.close();
 	}
@@ -112,6 +133,9 @@ void systemConfiguration()
 		output << short(2) << " ";
 		output << short(10) << " ";
 		output << short(16);
+		changeBackgroundColor(2);
+		changeTextColor(10);
+		changeFontSize(16);
 		output.close();
 	}
 }
