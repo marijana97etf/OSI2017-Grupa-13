@@ -135,7 +135,7 @@ bool Admin::deleteAccount()
 		char* account_file_name = new char[ACCOUNT_FILE_NAME.length() + 1];
 		for (int i = 0; i < ACCOUNT_FILE_NAME.length(); account_file_name[i] = ACCOUNT_FILE_NAME[i], i++);
 		account_file_name[ACCOUNT_FILE_NAME.length()] = 0;
-		std::remove(account_file_name);
+		_unlink(account_file_name);
 		std::rename("accountfile.tmp", account_file_name);
 		if (check == true)
 		{
