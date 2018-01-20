@@ -84,7 +84,6 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 bool Analyst::inportForCustomer()
 {
 	system("CLS");
-	getchar();
 	std::string customer;
 	std::cout << "Unesite kupca: ";
 	getline(std::cin, customer);
@@ -113,7 +112,6 @@ bool Analyst::inportForCustomer()
 bool Analyst::inportForProduct()
 {
 	system("CLS");
-	getchar();
 	std::string product;
 	std::cout << "Unesite proizvod: ";
 	getline(std::cin, product);
@@ -142,7 +140,6 @@ bool Analyst::inportForProduct()
 bool Analyst::inportForMonth()
 {
 	system("CLS");
-	getchar();
 	std::string date;
 	std::cout << "Unesite mjesec i godinu (npr: Januar 2017): ";
 	getline(std::cin, date);

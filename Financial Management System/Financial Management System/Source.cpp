@@ -27,6 +27,7 @@ int main()
 			std::cout << "Unesite novi pin : ";
 			std::cin >> pin;
 		}
+		getchar();
 		Account acc(name, pin);
 		if ( acc.checkTypeOfUser() == IS_ADMIN)
 		{

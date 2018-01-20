@@ -68,21 +68,21 @@ void Admin::addAccount()
 	{
 		if (warningFunction(count++))
 			return;
-		std::cout << "Username: "; std::cin >> tmpusername;
+		std::cout << "Username: "; std::cin >> tmpusername; getchar();
 	} while (isNotLegit(tmpusername, 'U') || nameExists(tmpusername));
 	count = 0;
 	do
 	{
 		if (warningFunction(count++))
 			return;
-		std::cout << "PIN: "; std::cin >> tmp_pin;
+		std::cout << "PIN: "; std::cin >> tmp_pin; getchar();
 	} while (isNotLegit(tmp_pin, 'P'));
 	count = 0;
 	do
 	{
 		if (warningFunction(count++))
 			return;
-		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar: "; std::cin >> type;
+		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar: "; std::cin >> type; getchar();
 	} while (type != 'D' && type != 'N');
 
 	format(tmpusername, 'U');
@@ -103,12 +103,12 @@ bool Admin::deleteAccount()
 	std::string temp;
 	do
 	{
-		std::cout << "Unesite username naloga koji treba obrisati\n";
+		std::cout << "Unesite username naloga koji treba obrisati: ";
 		do
 		{
 			if (warningFunction(count++))
 				return false;
-			std::cin >> username;
+			std::cin >> username; getchar();
 		} while (isNotLegit(username, 'U'));
 		if (username == this->username)
 		{
@@ -162,7 +162,7 @@ bool Admin::deleteAccount()
 		}
 		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
 		std::cout << " Da li zelite unesete ponovo : [D]a, [N]e.\n UPOZORENJE!\n Unosenje bilo kog karaktera osim navedih ce se protumaciti\n kao komanda za izlazak\n iz procesa unosenja naloga!: ";
-		std::cin >> temp;
+		std::cin >> temp; getchar();
 		if (temp == "D")
 			system("CLS");
 	} while (temp == "D");
@@ -175,7 +175,6 @@ void Admin::printAccounts()
 	std::ifstream accountsfile(ACCOUNT_FILE_NAME);
 	std::cout << accountsfile.rdbuf();
 	accountsfile.close();
-	getchar();
 	std::cout << std::endl << std::endl << "Pritisni ENTER za povratak.";
 	std::string temp;
 	getline(std::cin, temp);
@@ -196,7 +195,7 @@ bool Admin::changeAccount()
 		{
 			if (warningFunction(count++))
 				return false;
-			std::cin >> username;
+			std::cin >> username; getchar();
 		} while (isNotLegit(username, 'U'));
 		count = 0;
 		if (nameExists(username))
@@ -206,7 +205,7 @@ bool Admin::changeAccount()
 			{
 				if (warningFunction(count++))
 					return false;
-				std::cin >> c;
+				std::cin >> c; getchar();
 			} while (c != 'P' && c != 'U' && c != 'T');
 			if (c == 'P')
 			{
@@ -215,7 +214,7 @@ bool Admin::changeAccount()
 					std::cout << "Unesite novi PIN: ";
 					if (warningFunction(count++))
 						return false;
-					std::cin >> textdiff;
+					std::cin >> textdiff; getchar();
 				} while (isNotLegit(textdiff, 'P'));
 				insert(pullFromText(username), username, textdiff, 'P');
 			}
@@ -226,7 +225,7 @@ bool Admin::changeAccount()
 					std::cout << "Unesite novi username: ";
 					if (warningFunction(count++))
 						return false;
-					std::cin >> textdiff;
+					std::cin >> textdiff; getchar();
 				} while (isNotLegit(textdiff, 'U'));
 				insert(pullFromText(username), username, textdiff, 'U');
 			}
@@ -243,7 +242,7 @@ bool Admin::changeAccount()
 					std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar: ";
 					if (warningFunction(count++))
 						return false;
-					std::cin >> c;
+					std::cin >> c; getchar();
 				} while (c != 'A' && c != 'D');
 				std::string type = (c == 'D') ? "admin" : "analyst";
 				if (c == 'A')
@@ -256,7 +255,7 @@ bool Admin::changeAccount()
 		}
 		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
 		std::cout << " Da li zelite unesete ponovo : [D]a, [N]e.\n UPOZORENJE!\n Unosenje bilo kog karaktera osim navedih ce se protumaciti kao komanda za\n izlazak iz procesa izmjene naloga!: ";
-		std::cin >> temp;
+		std::cin >> temp; getchar();
 		if (temp == "D")
 			system("CLS");
 	} while (temp == "D");
@@ -273,7 +272,7 @@ void Admin::changeInterface()
 	{
 		system("CLS");
 		std::cout << "Da li zelite promjeniti boju pozadine: [Da/Ne]";
-		std::cin >> choose;
+		std::cin >> choose; getchar();
 		if (choose == "Da" || choose == "DA" || choose == "da" || choose == "dA")
 		{
 			do
@@ -292,7 +291,7 @@ void Admin::changeInterface()
 				std::cout << "[10] Siva" << std::endl;
 				std::cout << "[11] Roza" << std::endl;
 				std::cout << "Unesite broj: ";
-				std::cin >> option;
+				std::cin >> option; getchar();
 			} while (option < 1 || option > 11);
 			changeBackgroundColor(option);
 			check = true;
@@ -305,7 +304,7 @@ void Admin::changeInterface()
 	{
 		system("CLS");
 		std::cout << "Da li zelite promjeniti boju teksta: [Da/Ne]";
-		std::cin >> choose;
+		std::cin >> choose; getchar();
 		if (choose == "Da" || choose == "DA" || choose == "da" || choose == "dA")
 		{
 			do
@@ -324,7 +323,7 @@ void Admin::changeInterface()
 				std::cout << "[10] Siva" << std::endl;
 				std::cout << "[11] Roza" << std::endl;
 				std::cout << "Unesite broj: ";
-				std::cin >> option;
+				std::cin >> option; getchar();
 			} while (option < 1 || option > 11);
 			changeTextColor(option);
 			check = true;
@@ -337,14 +336,14 @@ void Admin::changeInterface()
 	{
 		system("CLS");
 		std::cout << "Da li zelite promjeniti velicinu fonta: [Da/Ne]";
-		std::cin >> choose;
+		std::cin >> choose; getchar();
 		if (choose == "Da" || choose == "DA" || choose == "da" || choose == "dA")
 		{
 			do
 			{
 				system("CLS");
 				std::cout << "Unesite velicinu fonta (Preporuka: Izaberite velicinu fonta vecu od 14.): ";
-				std::cin >> option;
+				std::cin >> option; getchar();
 				changeFontSize(option);
 				check = true;
 			} while (option < 5 || option > 72);
@@ -357,7 +356,6 @@ void Admin::changeInterface()
 void Admin::getSystemCurrency()
 {
 	system("CLS");
-	getchar();
 	std::cout << "Valuta sistema je " << currency << std::endl;
 	std::string temp;
 	std::cout << "Pritisnite ENTER za povratak u meni.";
