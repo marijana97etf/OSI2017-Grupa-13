@@ -53,11 +53,19 @@ int main()
 				while (1)
 				{
 					menu.printPattern(std::cout);
-					menu.setOption(std::cin, std::cout);//Treba jos vidjeti sta cemo sa ispisom kod analiticara kod funkcija koje on odabir
-					menu.executeOption();               //Mislim da se moze otvoriti noi prozor konzole za to da se ne guzva
-					if (menu.getCurrOption() == 0)        //I jos bi trebali tu par informacija ispisati
-						break;                          //I JOS DESTRUKTOR
-				}                                       //jos treba namjestiti da se bacaju izuzetci u validaciji i da se hvataju
+					try
+					{
+						menu.setOption(std::cin, std::cout);
+						menu.executeOption();
+					}
+					catch (std::invalid_argument &ex)
+					{
+						std::cout << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
+						Sleep(2000);
+					}
+					if (menu.getCurrOption() == 0)       
+						break;                          
+				}                                       
 		     }
 		else
 			{

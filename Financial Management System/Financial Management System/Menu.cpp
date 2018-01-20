@@ -9,15 +9,8 @@ void Menu::setOption(std::istream &input,std::ostream & output)
 	std::string option;
 	output << "Unos:";
 	input >> option;
-	try
-	{
-		currOption = std::stoi(option, nullptr, 10);
-	}
-	catch (std::invalid_argument &ex)
-	{
-		output << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
-		Sleep(2000);
-	}
+	currOption = std::stoi(option, nullptr, 10);
+
 }
 
 void Menu::executeOption()
