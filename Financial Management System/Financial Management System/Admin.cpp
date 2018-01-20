@@ -48,7 +48,7 @@ void Admin::addAccount()
 	{
 		std::fstream account_file(ACCOUNT_FILE_NAME, std::ios_base::app);
 		account_file << "  Username             PIN      Type    " << "\n";
-		account_file << "  --------------------------------------" << "\n";
+		account_file << "  --------------------------------------";
 		account_file.close();
 	}
 	std::fstream account_file(ACCOUNT_FILE_NAME, std::ios_base::app);
@@ -76,7 +76,7 @@ void Admin::addAccount()
 
 	format(tmpusername, 'U');
 	format(tmp_pin, 'P');
-	account_file << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst") << "\n";
+	account_file << std::endl << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst");
 	account_file.close();
 	std::cout << "Nalog je uspjesno dodan." << std::endl;
 	Sleep(1000);
@@ -134,7 +134,7 @@ void Admin::printAccounts()
 	std::cout << accountsfile.rdbuf();
 	accountsfile.close();
 	getchar();
-	std::cout << "Pritisni ENTER za povratak.";
+	std::cout << std::endl << std::endl << "Pritisni ENTER za povratak.";
 	std::string temp;
 	getline(std::cin, temp);
 }
