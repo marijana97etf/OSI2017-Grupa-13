@@ -133,7 +133,6 @@ bool Analyst::inportForCustomer()
 			getline(in, temp);
 			std::cout << temp;
 		}
-		std::string temp;
 		std::cout << "Pritisnite ENTER za povratak u meni." << std::endl;
 		getline(std::cin, temp);
 		return true;
@@ -163,7 +162,6 @@ bool Analyst::inportForProduct()
 			getline(in, temp);
 			std::cout << temp;
 		}
-		std::string temp;
 		std::cout << "Pritisnite ENTER za povratak u meni." << std::endl;
 		getline(std::cin, temp);
 		return true;
@@ -193,7 +191,6 @@ bool Analyst::inportForMonth()
 			getline(in, temp);
 			std::cout << temp;
 		}
-		std::string temp;
 		std::cout << "Pritisnite ENTER za povratak u meni." << std::endl;
 		getline(std::cin, temp);
 		return true;
