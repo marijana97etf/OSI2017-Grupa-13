@@ -76,7 +76,7 @@ void Admin::addAccount()
 
 	format(tmpusername, 'U');
 	format(tmp_pin, 'P');
-	account_file << std::endl << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst");
+	account_file << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst")<<"\n";//proba
 	account_file.close();
 	std::cout << "Nalog je uspjesno dodan." << std::endl;
 	Sleep(1000);
