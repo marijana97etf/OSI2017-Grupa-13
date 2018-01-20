@@ -76,7 +76,7 @@ void Admin::addAccount()
 
 	format(tmpusername, 'U');
 	format(tmp_pin, 'P');
-	account_file << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst")<<"\n";//proba
+	account_file << std::endl << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst");
 	account_file.close();
 	std::cout << "Nalog je uspjesno dodan." << std::endl;
 	Sleep(1000);
@@ -87,7 +87,6 @@ bool Admin::deleteAccount()
 	system("CLS");
 	if (isAccountFileEmpty() || isAccountFileWithoutAccounts()) return false;
 	std::string username, testline;
-	std::fstream account_file(ACCOUNT_FILE_NAME);
 	int count = 0;
 	char c = 'X';
 	std::string temp;
@@ -100,21 +99,47 @@ bool Admin::deleteAccount()
 				return false;
 			std::cin >> username;
 		} while (isNotLegit(username, 'U'));
-		if (nameExists(username))
+		std::ifstream in(ACCOUNT_FILE_NAME);
+		std::ofstream out("accountfile.tmp");
+		bool check = false;
+		bool checkNewLine = true;
+		std::string line;
+		while (!in.eof())
 		{
-			std::ofstream tmpfile(TMP_FILE, std::ios_base::trunc);
-			while (account_file.peek() != std::ifstream::traits_type::eof())
+			getline(in, line);
+			if (line.substr(2, username.length()) == username)
 			{
-				getline(account_file, testline);
-				if (testline.substr(2, testline.find_first_of(' ', 2) - 2) != username)
-					tmpfile << testline << "\n";
-				testline.clear();
+				check = true;
+				checkNewLine = true;
 			}
-			account_file.close();
-			tmpfile.close();
-			std::remove(ACCOUNT_FILE_NAME.c_str());
-			std::rename(TMP_FILE.c_str(), ACCOUNT_FILE_NAME.c_str());
-			std::cout << "Nalog je uspjesno obrisan." << std::endl;
+			if (checkNewLine == false)
+			{
+				out << std::endl;
+			}
+			if (line.substr(2, username.length()) == username)
+			{
+				checkNewLine = false;
+			}
+			else if (in.eof())
+			{
+				out << line;
+			}
+			else
+			{
+				out << line;
+				checkNewLine = false;
+			}
+		}
+		in.close();
+		out.close();
+		char* account_file_name = new char[ACCOUNT_FILE_NAME.length() + 1];
+		for (int i = 0; i < ACCOUNT_FILE_NAME.length(); account_file_name[i] = ACCOUNT_FILE_NAME[i], i++);
+		account_file_name[ACCOUNT_FILE_NAME.length()] = 0;
+		std::remove(account_file_name);
+		std::rename("accountfile.tmp", account_file_name);
+		if (check == true)
+		{
+			std::cout << "Nalog je uspjesno obrisan.";
 			Sleep(1000);
 			return true;
 		}
