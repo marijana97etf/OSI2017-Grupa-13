@@ -474,7 +474,7 @@ void Admin::insert(const std::vector<std::string> modvec, std:: string &text, st
 	{
 		getline(accountfile, currline);
 		if (currline.substr(2, currline.find_first_of(' ', 2) - 2) != text)
-			tmpfile << currline << "\n";
+			tmpfile << currline;
 		else
 		{
 			if (c == 'P')
@@ -489,9 +489,9 @@ void Admin::insert(const std::vector<std::string> modvec, std:: string &text, st
 			}
 			if (c == 'A' || c == 'D')
 				tmpfile << modvec[0] << SEPARATOR << modvec[1] << SEPARATOR << textdiff;
-			if (!accountfile.eof())
-				tmpfile << std::endl;
 		}
+		if (!accountfile.eof())
+			tmpfile << std::endl;
 		currline.clear();
 	}
 	accountfile.close();
