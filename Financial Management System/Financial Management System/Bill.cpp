@@ -330,8 +330,11 @@ int Bill::numberOfDigits(double data)
 void Bill::Validate()
 {
 	checkTotalOfEveryProduct();
-	checkTotalofAllproducts();
-	checkTotalPlusPDV();
+	if (formatCode != 5)
+	{
+		checkTotalofAllproducts();
+		checkTotalPlusPDV();
+	}
 }
 
 void Bill::checkTotalOfEveryProduct()//nije testirana
@@ -364,7 +367,7 @@ void Bill::checkTotalofAllproducts()
 	if ((totalSumOfProducts < total- EPS) || (totalSumOfProducts > total + EPS))
 	{
 		std::string errorMessage;
-		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu";
+		errorMessage += "Za racun " + nameOfBill + " ukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu";
 		errorMessage += END_OF_LINE;
 		errorMessage += "Ukupno bez pdv-a : ";
 		errorMessage += std::to_string(totalSumOfProducts);
@@ -383,7 +386,7 @@ void Bill::checkTotalPlusPDV()
 	if ((totalSumOfBill < totalSumOfProducts + pdv - EPS) || (totalSumOfBill > totalSumOfProducts + pdv + EPS) )
 	{
 		std::string errorMessage;
-		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu nije u okolini ukupne vrijednosti bez pdv-a + pdv sa zadovoljavajucom tacnoscu";
+		errorMessage += "Za racun " + nameOfBill + " ukupna vrijednost na racunu nije u okolini ukupne vrijednosti bez pdv-a + pdv sa zadovoljavajucom tacnoscu";
 		errorMessage += END_OF_LINE;
 		errorMessage += "Ukupna vrijednost : ";
 		errorMessage += std::to_string(totalSumOfBill);

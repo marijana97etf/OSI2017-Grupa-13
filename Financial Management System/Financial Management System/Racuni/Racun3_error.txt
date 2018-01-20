@@ -1,0 +1,4 @@
+Za racun Racuni\Racun3.txtukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu
+Ukupno bez pdv-a : 300.000000
+Ukupna suma proizvoda sa racuna : 250.000000
+Tacnost : 0.500000

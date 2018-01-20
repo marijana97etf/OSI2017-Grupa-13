@@ -1,0 +1,4 @@
+Za proizvod dadad 32 ukupna kolicina nije u okolini kolicina*cijena sa zadovoljavajucom tacnoscu
+Ukupno : 20000.000000
+Kolicina*Cijena : 200.000000
+Tacnost : 0.500000

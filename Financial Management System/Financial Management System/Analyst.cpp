@@ -16,7 +16,7 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 		for (int i = 0; i < vec.size(); i++)
 		{
 			int formatCode;
-			std::ofstream logOut(LOG, std::ios::in);
+			std::ofstream logOut(LOG,std::ios::in);
 			if (checkFormat1(vec[i]))
 			{
 				formatCode = 1;
@@ -28,6 +28,7 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 					bill.exportForMonth();
 					bill.exportForProduct();
 					logOut << vec[i] << std::endl;
+
 				}
 				catch (ErrorException& ex)
 				{
