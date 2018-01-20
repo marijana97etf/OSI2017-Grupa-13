@@ -272,7 +272,7 @@ Product Bill::processDataForFormat124(std::string &tmp)
 
 }
 
-Product Bill::processDataForFormat3(std::string &tmp)//nije testirana,ali mislim da ce raditi iz prve
+Product Bill::processDataForFormat3(std::string &tmp)
 {
 	std::string name;
 	double quantity, pricePerUnit, total;
@@ -329,16 +329,19 @@ void Bill::Validate()
 void Bill::checkTotalOfEveryProduct()//nije testirana
 {
 	for (auto& product : list)
-		if (product.getTotal() != product.getPricePerUnit() * product.getQuantity())
+		if ((product.getTotal() < product.getPricePerUnit() * product.getQuantity() - EPS) || ( product.getTotal() >product.getPricePerUnit() * product.getQuantity() + EPS))
 		{
 			std::string errorMessage;
-			errorMessage = "Za proizvod " + product.getCode() + " ukupna kolicina nije jednako kolicina*cijena";
+			errorMessage = "Za proizvod " + product.getCode() + " ukupna kolicina nije u okolini kolicina*cijena sa zadovoljavajucom tacnoscu";
 			errorMessage += END_OF_LINE;
 			errorMessage += "Ukupno : ";
 			errorMessage += std::to_string(product.getTotal());
 			errorMessage += END_OF_LINE;
 			errorMessage += "Kolicina*Cijena : ";
 			errorMessage += std::to_string(product.getPricePerUnit() * product.getQuantity());
+			errorMessage += END_OF_LINE;
+			errorMessage += "Tacnost : ";
+			errorMessage += std::to_string(EPS);
 			throw ErrorException(nameOfBill,errorMessage);
 		}
 	return;
@@ -350,32 +353,38 @@ void Bill::checkTotalofAllproducts()
 	for (auto& product : list)
 		total += product.getTotal();
 
-	if (total != totalSumOfProducts)
+	if ((totalSumOfProducts < total- EPS) || (totalSumOfProducts > total + EPS))
 	{
 		std::string errorMessage;
-		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu bez pdv-a nije jednaka ukupnoj sumi proizvoda";
+		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu bez pdv-a nije u okolini ukupne sume proizvoda sa zadovoljavajucom tacnoscu";
 		errorMessage += END_OF_LINE;
 		errorMessage += "Ukupno bez pdv-a : ";
 		errorMessage += std::to_string(totalSumOfProducts);
 		errorMessage += END_OF_LINE;
 		errorMessage += "Ukupna suma proizvoda sa racuna : ";
 		errorMessage += std::to_string(total);
+		errorMessage += END_OF_LINE;
+		errorMessage += "Tacnost : ";
+		errorMessage += std::to_string(EPS);
 		throw ErrorException(nameOfBill, errorMessage);
 	}
 }
 
 void Bill::checkTotalPlusPDV()
 {
-	if (totalSumOfProducts + pdv != totalSumOfBill)
+	if ((totalSumOfBill < totalSumOfProducts + pdv - EPS) || (totalSumOfBill > totalSumOfProducts + pdv + EPS) )
 	{
 		std::string errorMessage;
-		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu nije jednaka ukupnoj vrijednosti bez pdv-a + pdv";
+		errorMessage += "Za racun " + nameOfBill + "ukupna vrijednost na racunu nije u okolini ukupne vrijednosti bez pdv-a + pdv sa zadovoljavajucom tacnoscu";
 		errorMessage += END_OF_LINE;
 		errorMessage += "Ukupna vrijednost : ";
 		errorMessage += std::to_string(totalSumOfBill);
 		errorMessage += END_OF_LINE;
 		errorMessage += "Ukupna vrijednost bez pdv-a + pdv : ";
 		errorMessage += std::to_string(totalSumOfProducts + pdv);
+		errorMessage += END_OF_LINE;
+		errorMessage += "Tacnost : ";
+		errorMessage += std::to_string(EPS);
 		throw ErrorException(nameOfBill,errorMessage);
 	}
 }

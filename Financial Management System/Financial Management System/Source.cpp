@@ -23,7 +23,7 @@ int main()
 		std::cin >> pin;
 		while ( Admin::isNotLegit(pin,'P') )
 		{
-			std::cout << "Pin nije dozvoljene duzine" << std::endl;
+			std::cout << "Nedozvoljen format pin-a" << std::endl;
 			std::cout << "Unesite novi pin : ";
 			std::cin >> pin;
 		}

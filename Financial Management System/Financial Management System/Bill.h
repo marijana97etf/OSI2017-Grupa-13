@@ -10,9 +10,11 @@
 #include<list>
 #include<iomanip>
 #include<cctype>
+#include<cmath>
 
 const int isFormat[5] = { 1,2,3,4,5 } ;
 const std::string month[12] = { "Januar","Februar","Mart","April","Maj","Jun","Jul","Avgust","Septembar","Oktobar","Novembar","Decembar" };
+const double EPS = 0.5;
 
 bool isProcessedBill(const std::string);
 std::vector<std::string> returnVectorOfNotProcessedBills(const std::string directory);

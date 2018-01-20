@@ -12,7 +12,7 @@ void Menu::setOption(std::istream &input,std::ostream & output)
 	currOption = option;
 }
 
-void Menu::executeOption()//pogledajte ovo
+void Menu::executeOption()
 {
 	if ( accountP->getType() == NAME_OF_ADMIN)
 	{
@@ -24,7 +24,7 @@ void Menu::executeOption()//pogledajte ovo
 			case 4:accountP->changeAccount(); break;
 			case 5:accountP->changeInterface(); break;
 			case 6:accountP->getSystemCurrency(); break;
-			case 0: break;	//fali jos jedan case
+			case 0: break;
 			case -1:accountP->exitSystem(); break;
 			default: std::cout << "Greska u unosu indeksa operacije" << std::endl; break;
 		}
