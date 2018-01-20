@@ -19,7 +19,8 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 		input.close();
 		std::ofstream output(CONFIG);
 		output << temp << std::endl;
-		short choose;
+		int choose;
+		std::string option;
 		do
 		{
 			system("CLS");
@@ -30,7 +31,9 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "[4] (RSD) Srpski dinar" << std::endl;
 			std::cout << "[5] (HRK) Hrvatska kuna" << std::endl;
 			std::cout << "Unesite broj: ";
-			std::cin >> choose;
+			getchar();
+			getline(std::cin, option);
+			choose = std::stoi(option, nullptr, 10);
 		} while (choose < 1 || choose > 5);
 		currency = currencies[choose - 1];
 		output << currencies[choose - 1];
