@@ -96,7 +96,7 @@ bool Analyst::inportForCustomer()
 		while (!in.eof())
 		{
 			getline(in, temp);
-			std::cout << temp;
+			std::cout << temp << std::endl;
 		}
 		std::cout << "Pritisnite ENTER za povratak u meni." << std::endl;
 		getline(std::cin, temp);
@@ -125,7 +125,7 @@ bool Analyst::inportForProduct()
 		while (!in.eof())
 		{
 			getline(in, temp);
-			std::cout << temp;
+			std::cout << temp << std::endl;
 		}
 		std::cout << "Pritisnite ENTER za povratak u meni." << std::endl;
 		getline(std::cin, temp);
@@ -154,7 +154,7 @@ bool Analyst::inportForMonth()
 		while (!in.eof())
 		{
 			getline(in, temp);
-			std::cout << temp;
+			std::cout << temp << std::endl;
 		}
 		std::cout << "Pritisnite ENTER za povratak u meni." << std::endl;
 		getline(std::cin, temp);
