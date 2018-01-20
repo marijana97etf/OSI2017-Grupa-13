@@ -23,7 +23,6 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 				Bill bill(vec[i], formatCode);
 				try
 				{
-					bill.process();
 					bill.Validate();//dodao sam ovde da bi se bacao izuzetak o gresci
 					bill.exportForCustomer();
 					bill.exportForMonth();
@@ -41,7 +40,6 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 				Bill bill(vec[i], formatCode);
 				try
 				{
-					bill.process();
 					bill.Validate();
 					bill.exportForCustomer();
 					bill.exportForMonth();
@@ -59,7 +57,6 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 				Bill bill(vec[i], formatCode);
 				try
 				{
-					bill.process();
 					bill.Validate();
 					bill.exportForCustomer();
 					bill.exportForMonth();
@@ -77,7 +74,6 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 				Bill bill(vec[i], formatCode);
 				try
 				{
-					bill.process();
 					bill.Validate();
 					bill.exportForCustomer();
 					bill.exportForMonth();
@@ -95,7 +91,6 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 				Bill bill(vec[i], formatCode);
 				try
 				{
-					bill.process();
 					bill.Validate();
 					bill.exportForCustomer();
 					bill.exportForMonth();

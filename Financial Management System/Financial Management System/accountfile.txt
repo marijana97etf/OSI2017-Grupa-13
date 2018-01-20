@@ -4,5 +4,5 @@
   Nikola              |ms3d    |admin
   Sasa                |1234    |admin
   Sinisa              |4321    |admin
+  Ratko               |10bd    |analyst
   Risto               |tes1    |analyst
-  Ratko               |osi1    |analyst
