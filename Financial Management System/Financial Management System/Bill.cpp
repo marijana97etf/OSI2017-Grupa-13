@@ -217,7 +217,7 @@ void Bill::processFormat5() // Nije testirano!!
 
 	std::remove("temp_date.txt");
 
-int ignoreHeader=0;
+    int ignoreHeader=0;
 	while (!inputf.eof())
 	{
 		getline(inputf, tmp);
