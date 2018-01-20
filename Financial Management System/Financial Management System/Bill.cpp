@@ -518,7 +518,8 @@ std::vector<std::string> returnVectorOfNotProcessedBills(const std::string direc
 			filesToProcess.push_back(files[i]);
 	}
 	FindClose(hFind);
-	files.erase(files.begin());
+	if(files.size() > 0)
+		files.erase(files.begin());
 	return filesToProcess;
 }
 
