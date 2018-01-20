@@ -109,6 +109,7 @@ void changeFontSize(short size)
 void systemConfiguration()
 {
 	SetConsoleTitle("Financial Management System");
+	CreateDirectory(FILE_OF_BILLS, NULL);
 	short index1, index2;
 	std::ifstream input(CONFIG);
 	if (input.is_open())

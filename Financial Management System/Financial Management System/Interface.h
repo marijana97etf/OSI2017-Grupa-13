@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #define CONFIG "Config.ini"
+#define FILE_OF_BILLS "Racuni"
 
 #define WHITE RGB(255, 255, 255)
 #define BLACK RGB(0, 0, 0)
