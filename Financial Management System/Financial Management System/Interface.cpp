@@ -139,4 +139,14 @@ void systemConfiguration()
 		changeFontSize(16);
 		output.close();
 	}
+	input.close();
+	std::ofstream output(ACCOUNT_FILE_NAME, std::ios::in);
+	if (!output.is_open())
+	{
+		output.open(ACCOUNT_FILE_NAME);
+		output << "  Username             PIN      Type    " << std::endl;
+		output << "  --------------------------------------" << std::endl;
+		output << "  Admin               |1234    |admin";
+	}
+	output.close();
 }
