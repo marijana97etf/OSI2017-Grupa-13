@@ -1,7 +1,7 @@
   Username             PIN      Type    
   --------------------------------------
-  David               |dad2    |admin
-  Nikola              |ms3d    |admin
-  Sasa                |1234    |admin
-  Sinisa              |4321    |admin
-  Risto               |tes1    |analyst
+  David               |1234    |admin
+  Nikola              |2345    |admin
+  Sasa                |3456    |admin
+  Sinisa              |4567    |admin
+  Risto               |5678    |analyst
