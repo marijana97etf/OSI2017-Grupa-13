@@ -5,3 +5,4 @@
   Sasa                |3456    |admin
   Sinisa              |4567    |admin
   Risto               |5678    |analyst
+  Kristijan           |2002    |analyst

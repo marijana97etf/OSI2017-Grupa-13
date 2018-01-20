@@ -213,7 +213,7 @@ void Bill::processFormat5() // Nije testirano!!
 	
 	std::ifstream tmp_date2("temp_date.txt");
 	processDate(tmp_date2);
-	tmp_date.close();
+	tmp_date2.close();
 
 	std::remove("temp_date.txt");
 
