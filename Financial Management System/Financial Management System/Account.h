@@ -3,8 +3,8 @@
 #include<fstream>
 #include<string>
 #include<cstdlib>
+#include "Interface.h"
 
-const std::string ACCOUNT_FILE_NAME = "accountfile.txt";
 const int MAX_LENGTH_OF_NAME = 20,LENGTH_OF_PIN = 4, MAX_LENGTH_OF_TYPE('10');
 const int MAX_LENGTH_OF_ROW = 100;
 const std::string NAME_OF_ADMIN("admin"),NAME_OF_ANALYST("analyst");

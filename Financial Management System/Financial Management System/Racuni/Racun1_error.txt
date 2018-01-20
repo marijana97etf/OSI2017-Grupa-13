@@ -1,0 +1,5 @@
+Za racun Racuni\Racun1.txt ukupna vrijednost na racunu nije u okolini ukupne vrijednosti bez pdv-a + pdv sa zadovoljavajucom tacnoscu
+Ukupna vrijednost : 100.000000
+Ukupna vrijednost bez pdv-a + pdv : 292.500000
+Tacnost : 0.500000
+

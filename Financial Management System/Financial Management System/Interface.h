@@ -6,6 +6,8 @@
 #define CONFIG "Config.ini"
 #define FILE_OF_BILLS "Racuni"
 
+const std::string ACCOUNT_FILE_NAME = "accountfile.txt";
+
 #define WHITE RGB(255, 255, 255)
 #define BLACK RGB(0, 0, 0)
 #define BLUE RGB(0, 0, 255)
