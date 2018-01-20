@@ -6,6 +6,8 @@
 #include"Account.h"
 #include"Pattern.h"
 
+const int DEFAULT_OPTION = 10;
+
 class Menu
 {
 	Account* accountP;

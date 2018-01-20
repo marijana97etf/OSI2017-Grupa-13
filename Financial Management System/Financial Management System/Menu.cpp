@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 
-Menu::Menu(Account &account):accountP(&account)
+Menu::Menu(Account &account):accountP(&account),currOption(DEFAULT_OPTION)
 {}
 
 void Menu::setOption(std::istream &input,std::ostream & output)
@@ -15,7 +15,7 @@ void Menu::setOption(std::istream &input,std::ostream & output)
 	}
 	catch (std::invalid_argument &ex)
 	{
-		output <<std::endl<< "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
+		output << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
 		Sleep(2000);
 	}
 }
@@ -34,7 +34,7 @@ void Menu::executeOption()
 			case 6:accountP->getSystemCurrency(); break;
 			case 0: break;
 			case -1:accountP->exitSystem(); break;
-			default: std::cout<<std::endl << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl; break;
+			default: std::cout<< "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl; break;
 		}
 	}
 	else
