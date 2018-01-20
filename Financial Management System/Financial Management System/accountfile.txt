@@ -1,8 +1,4 @@
   Username             PIN      Type    
   --------------------------------------
-  David               |1234    |admin
-  Nikola              |2345    |admin
-  Sasa                |3456    |admin
-  Sinisa              |4567    |admin
+  Admin               |1234    |admin
   Risto               |5678    |analyst
-  Kristijan           |2002    |analyst

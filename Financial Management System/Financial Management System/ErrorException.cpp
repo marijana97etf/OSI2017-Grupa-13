@@ -11,8 +11,6 @@ void ErrorException::processException()
 	std::string temp = file.substr(file.length() - 4, 4);
 	std::ofstream error(file.substr(0, file.length() - 4) + "_error" + temp, std::ios::app | std::ios::out);//ako se ne moze dodati onda napravi novi fajl
 	error << message << std::endl;
-	std::ofstream logErrorOut(LOGERROR, std::ios::app | std::ios::out );
-	logErrorOut << file << std::endl;
 }
 
 ErrorException::~ErrorException()
