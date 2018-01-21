@@ -1,6 +1,8 @@
 #pragma once
 #include "Account.h"
 #include "Bill.h"
+#include<exception>
+
 class Analyst : public Account
 {
 public:
