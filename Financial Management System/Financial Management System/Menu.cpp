@@ -8,13 +8,15 @@ void Menu::setOption(std::istream &input,std::ostream & output)
 {
 	bool check = true;
 	std::string option;
+	output << "--------------------------------------------------------" << std::endl;
 	output << "Unos: ";
 	getline(input, option);
 	if (option.length() == 1 || option.length() == 2)
 	{
-		if (option.length() == 2 && option[0] == '-')
-			if (!isdigit(option[1]))
-				check = false;
+		if (option.length() == 2 && option[0] == '-' && !isdigit(option[1]))
+			check = false;
+		else if (option.length() == 2 && option[0] != '-')
+			check = false;
 		if (option.length() == 1 && !isdigit(option[0]))
 			check = false;
 	}

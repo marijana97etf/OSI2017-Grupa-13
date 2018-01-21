@@ -15,8 +15,13 @@ void changeBackgroundColor(short index)
 		{
 			do
 			{
+				std::string choose;
 				std::cout << "Unesite broj boje koja je razlicita od boje teksta: ";
-				std::cin >> index;
+				getline(std::cin, choose);
+				if ((choose.length() == 2 && isdigit(choose[0]) && isdigit(choose[1])) || (choose.length() == 1 && isdigit(choose[0])))
+					index = (short)std::stoi(choose);
+				else
+					index = value[1];
 			} while (value[1] == index);
 		}
 		value[0] = index;
@@ -54,8 +59,13 @@ void changeTextColor(short index)
 		{
 			do
 			{
+				std::string choose;
 				std::cout << "Unesite broj boje koja je razlicita od boje pozadine: ";
-				std::cin >> index;
+				getline(std::cin, choose);
+				if ((choose.length() == 2 && isdigit(choose[0]) && isdigit(choose[1])) || (choose.length() == 1 && isdigit(choose[0])))
+					index = (short)std::stoi(choose);
+				else
+					index = value[0];
 			} while (value[0] == index);
 		}
 		value[1] = index;
@@ -110,21 +120,25 @@ void systemConfiguration()
 {
 	SetConsoleTitle("Financial Management System");
 	CreateDirectory(FILE_OF_BILLS, NULL);
-	short index1, index2;
+	short index1, index2, index3;
 	std::ifstream input(CONFIG);
 	if (input.is_open())
 	{
 		input >> index1;
 		input >> index2;
-		if (index1 == index2 || (index1 < 1 || index1 > 11) || (index2 < 1 || index2 > 11))
+		input >> index3;
+		if (index1 == index2 || (index1 < 1 || index1 > 11) || (index2 < 1 || index2 > 11) || (index3 < 5 || index3 > 72))
 		{
 			index1 = 2;
 			index2 = 10;
+			index3 = 16;
+			std::ofstream output(CONFIG, std::ios::in);
+			output << index1 << " " << index2 << " " << index3 << '\0';
+			output.close();
 		}
 		changeBackgroundColor(index1);
 		changeTextColor(index2);
-		input >> index1;
-		changeFontSize(index1);
+		changeFontSize(index3);
 		system("COLOR 01");
 		input.close();
 	}

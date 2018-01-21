@@ -22,7 +22,6 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 		int choose = 10;//default_option
 		std::string option;
 		do
-		try
 		{
 			system("CLS");
 			std::cout << "Izaberite valutu sistema: " << std::endl;
@@ -32,15 +31,12 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 			std::cout << "[4] (RSD) Srpski dinar" << std::endl;
 			std::cout << "[5] (HRK) Hrvatska kuna" << std::endl;
 			std::cout << "Unesite broj: ";
-			std::cin >> option; getchar();
-			choose = std::stoi(option, nullptr, 10);
-		}
-		catch (std::invalid_argument &ex)
-		{
-			std::cout << "Greska u unosu." << std::endl << "Potrebno je unijeti jednu od cifara u [] zagradama za odabir odgovarajuce opcije ." << std::endl;
-			Sleep(2000);
-		}
-		while (choose < 1 || choose > 5);
+			getline(std::cin, option);
+			if (option.length() == 1 && (option == "1" || option == "2" || option == "3" || option == "4" || option == "5"))
+				choose = std::stoi(option, nullptr, 10);
+			else
+				choose = 0;
+		} while (choose < 1 || choose > 5);
 		currency = currencies[choose - 1];
 		output << currencies[choose - 1];
 		output.close();
@@ -292,7 +288,11 @@ void Admin::changeInterface()
 				std::cout << "[10] Siva" << std::endl;
 				std::cout << "[11] Roza" << std::endl;
 				std::cout << "Unesite broj: ";
-				std::cin >> option; getchar();
+				getline(std::cin, choose);
+				if ((choose.length() == 2 && isdigit(choose[0]) && isdigit(choose[1])) || (choose.length() == 1 && isdigit(choose[0])))
+					option = (short)std::stoi(choose);
+				else
+					option = 0;
 			} while (option < 1 || option > 11);
 			changeBackgroundColor(option);
 			check = true;
@@ -324,7 +324,11 @@ void Admin::changeInterface()
 				std::cout << "[10] Siva" << std::endl;
 				std::cout << "[11] Roza" << std::endl;
 				std::cout << "Unesite broj: ";
-				std::cin >> option; getchar();
+				getline(std::cin, choose);
+				if ((choose.length() == 2 && isdigit(choose[0]) && isdigit(choose[1])) || (choose.length() == 1 && isdigit(choose[0])))
+					option = (short)std::stoi(choose);
+				else
+					option = 0;
 			} while (option < 1 || option > 11);
 			changeTextColor(option);
 			check = true;
@@ -344,10 +348,14 @@ void Admin::changeInterface()
 			{
 				system("CLS");
 				std::cout << "Unesite velicinu fonta (Preporuka: Izaberite velicinu fonta vecu od 14.): ";
-				std::cin >> option; getchar();
-				changeFontSize(option);
+				getline(std::cin, choose);
+				if ((choose.length() == 2 && isdigit(choose[0]) && isdigit(choose[1])) || (choose.length() == 1 && isdigit(choose[0])))
+					option = (short)std::stoi(choose);
+				else
+					option = 0;
 				check = true;
 			} while (option < 5 || option > 72);
+			changeFontSize(option);
 		}
 		else if (choose == "Ne" || choose == "NE" || choose == "ne" || choose == "nE")
 			check = true;
