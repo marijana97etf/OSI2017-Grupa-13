@@ -462,7 +462,7 @@ bool isProcessedBill(const std::string file)
 		std::string bill;
 		while (!inputFileLog.eof())
 		{
-			inputFileLog >> bill;
+			getline(inputFileLog, bill);
 			if (bill == file)
 			{
 				inputFileLog.close();
@@ -476,7 +476,7 @@ bool isProcessedBill(const std::string file)
 		std::string bill;
 		while (!inputFileLogError.eof())
 		{
-			inputFileLogError >> bill;
+			getline(inputFileLogError, bill);
 			if (bill == file)
 			{
 				inputFileLogError.close();

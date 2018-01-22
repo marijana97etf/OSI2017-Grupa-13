@@ -1,2 +1,1 @@
-Neodgovarajuci format.
-Neodgovarajuci format.
+U racunu se nalazi neodgovarajuci tip podatka.

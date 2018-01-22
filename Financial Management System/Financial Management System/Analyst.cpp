@@ -17,23 +17,25 @@ Analyst::Analyst(const std::string& username, const std::string& pin, const std:
 		{
 			bool format[5] = {};
 			std::ofstream logOut(LOG,std::ios::app | std::ios::out);
-			if ( (format[0] = checkFormat1(vec[i])) || (format[1] = checkFormat2(vec[i])) ||  (format[2] = checkFormat3(vec[i])) || (format[3] = checkFormat4(vec[i])) || (format[4] = checkFormat5(vec[i])))
-			try
+			if ((format[0] = checkFormat1(vec[i])) || (format[1] = checkFormat2(vec[i])) || (format[2] = checkFormat3(vec[i])) || (format[3] = checkFormat4(vec[i])) || (format[4] = checkFormat5(vec[i])))
 			{
-				int j;
-				for (j = 0; !format[j] ; j++);
-				Bill bill(vec[i], j+1 );
-				if (!bill.Validate())//dodao sam ovde da bi se bacao izuzetak o gresci
-					continue;
-				bill.exportForCustomer();
-				bill.exportForMonth();
-				bill.exportForProduct();
-				logOut << vec[i] << std::endl;
-			}
-			catch (std::invalid_argument &in)
-			{
-				ErrorException ex(vec[i], "Neodgovarajuci format.");
-				ex.processException();
+				try
+				{
+					int j;
+					for (j = 0; !format[j]; j++);
+					Bill bill(vec[i], j + 1);
+					if (!bill.Validate())//dodao sam ovde da bi se bacao izuzetak o gresci
+						continue;
+					bill.exportForCustomer();
+					bill.exportForMonth();
+					bill.exportForProduct();
+					logOut << vec[i] << std::endl;
+				}
+				catch (std::invalid_argument &in)
+				{
+					ErrorException ex(vec[i], "U racunu se nalazi neodgovarajuci tip podatka.");
+					ex.processException();
+				}
 			}
 			else
 			{
