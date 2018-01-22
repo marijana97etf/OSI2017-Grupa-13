@@ -75,6 +75,11 @@ void Admin::addAccount()
 			std::cout << "Prezime: "; std::cin >> tmpsurname; getchar();
 		} while (isNotLegit(tmpsurname, 'U'));
 		tmpusername = tmpname + "_" + tmpsurname;
+		if (tmpusername.length() > MAX_LENGTH_OF_NAME)
+		{
+			std::cout << "Greska. Novi username je duzi od 20 karaktera.\n";
+			return;
+		}
 	} while (nameExists(tmpusername));
 	count = 0;
 	do
