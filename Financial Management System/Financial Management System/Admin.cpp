@@ -169,20 +169,44 @@ bool Admin::deleteAccount()
 	std::string temp;
 	do
 	{
-		std::cout << "Unesite ime naloga koji treba obrisati: ";
 		do
 		{
+			std::cout << "Unesite ime naloga koji treba obrisati: ";
 			if (warningFunction(count++))
 				return false;
-			std::cin >> name; getchar();
+			getline(std::cin, name);
+			if (!isNoSpace(name))
+			{
+				std::cout << "Ime ne smije sadrzati razmak." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+			else if (isNotLegit(name, 'U'))
+			{
+				std::cout << "Ime ne smije sadrzati broj." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
 		} while (isNotLegit(name, 'U'));
 		count = 0;
-		std::cout << "Unesite prezime naloga koji treba obrisati: ";
 		do
 		{
+			std::cout << "Unesite prezime naloga koji treba obrisati: ";
 			if (warningFunction(count++))
 				return false;
-			std::cin >> surname; getchar();
+			getline(std::cin, surname);
+			if (!isNoSpace(surname))
+			{
+				std::cout << "Prezime ne smije sadrzati razmak." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+			else if (isNotLegit(surname, 'U'))
+			{
+				std::cout << "Prezime ne smije sadrzati broj." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
 		} while (isNotLegit(surname, 'U'));
 		username = name + "_" + surname;
 		if (username == this->username)
