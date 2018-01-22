@@ -46,7 +46,7 @@ Admin::Admin(const std::string &username, const std::string &pin, const std::str
 void Admin::addAccount()
 {
 	system("CLS");
-	std::string tmpusername, tmp_pin;
+	std::string tmpusername = "", tmp_pin, tmpname, tmpsurname;
 	char type;
 	int count = 0;
 	char c;
@@ -59,12 +59,23 @@ void Admin::addAccount()
 	}
 	std::fstream account_file(ACCOUNT_FILE_NAME, std::ios_base::app);
 	std::cout << "Unesite podatke o novom nalogu:\n";
-	do
-	{
-		if (warningFunction(count++))
-			return;
-		std::cout << "Username: "; std::cin >> tmpusername; getchar();
-	} while (isNotLegit(tmpusername, 'U') || nameExists(tmpusername));
+	do {
+		tmpusername.clear();
+		do
+		{
+			if (warningFunction(count++))
+				return;
+			std::cout << "Ime: "; std::cin >> tmpname; getchar();
+		} while (isNotLegit(tmpname, 'U'));
+		count = 0;
+		do
+		{
+			if (warningFunction(count++))
+				return;
+			std::cout << "Prezime: "; std::cin >> tmpsurname; getchar();
+		} while (isNotLegit(tmpsurname, 'U'));
+		tmpusername = tmpname + "_" + tmpsurname;
+	} while (nameExists(tmpusername));
 	count = 0;
 	do
 	{
@@ -92,19 +103,28 @@ bool Admin::deleteAccount()
 {
 	system("CLS");
 	if (isAccountFileEmpty() || isAccountFileWithoutAccounts()) return false;
-	std::string username, testline;
+	std::string username = "", testline, name, surname;
 	int count = 0;
 	char c = 'X';
 	std::string temp;
 	do
 	{
-		std::cout << "Unesite username naloga koji treba obrisati: ";
+		std::cout << "Unesite ime naloga koji treba obrisati: ";
 		do
 		{
 			if (warningFunction(count++))
 				return false;
-			std::cin >> username; getchar();
-		} while (isNotLegit(username, 'U'));
+			std::cin >> name; getchar();
+		} while (isNotLegit(name, 'U'));
+		count = 0;
+		std::cout << "Unesite prezime naloga koji treba obrisati: ";
+		do
+		{
+			if (warningFunction(count++))
+				return false;
+			std::cin >> surname; getchar();
+		} while (isNotLegit(surname, 'U'));
+		username = name + "_" + surname;
 		if (username == this->username)
 		{
 			std::cout << "Nemoguce je obrisati nalog koji trenutno koristite!" << std::endl;
@@ -155,7 +175,7 @@ bool Admin::deleteAccount()
 			Sleep(1000);
 			return true;
 		}
-		std::cout << " Ime korisnika koje ste uneli ne postoji\n";
+		std::cout << " Username korisnika koje ste uneli ne postoji\n";
 		std::cout << " Da li zelite unesete ponovo : [D]a, [N]e.\n UPOZORENJE!\n Unosenje bilo kog karaktera osim navedih ce se protumaciti\n kao komanda za izlazak\n iz procesa unosenja naloga!: ";
 		std::cin >> temp; getchar();
 		if (temp == "D")
@@ -179,29 +199,37 @@ bool Admin::changeAccount()
 {
 	system("CLS");
 	if (isAccountFileEmpty() || isAccountFileWithoutAccounts()) return false;
-	std::string username, textdiff;
+	std::string username, textdiff, name, surname, newusername;
 	int count = 0;
 	char c = 'X';
 	std::string temp;
 	do
 	{
-		std::cout << "Unesite username naloga koji treba promjeniti: ";
+		std::cout << "Unesite ime naloga koji treba promjeniti: ";
 		do
 		{
 			if (warningFunction(count++))
 				return false;
-			std::cin >> username; getchar();
-		} while (isNotLegit(username, 'U'));
+			std::cin >> name; getchar();
+		} while (isNotLegit(name, 'U'));
 		count = 0;
+		std::cout << "Unesite prezime naloga koji treba promjeniti: ";
+		do
+		{
+			if (warningFunction(count++))
+				return false;
+			std::cin >> surname; getchar();
+		} while (isNotLegit(surname, 'U'));
+		username = name + "_" + surname;
 		if (nameExists(username))
 		{
-			std::cout << "Unesite sta zelite izmjeniti: [U]sername, [P]IN, [T]ip korisnika: ";
+			std::cout << "Unesite sta zelite izmjeniti: [I]me, p[R]ezime, [P]IN, [T]ip korisnika: ";
 			do
 			{
 				if (warningFunction(count++))
 					return false;
 				std::cin >> c; getchar();
-			} while (c != 'P' && c != 'U' && c != 'T');
+			} while (c != 'P' && c != 'I' && c != 'T' && c != 'R');
 			if (c == 'P')
 			{
 				do
@@ -213,16 +241,39 @@ bool Admin::changeAccount()
 				} while (isNotLegit(textdiff, 'P'));
 				insert(pullFromText(username), username, textdiff, 'P');
 			}
-			if (c == 'U')
+			if (c == 'I')
 			{
 				do
 				{
-					std::cout << "Unesite novi username: ";
+					std::cout << "Unesite novo ime: ";
 					if (warningFunction(count++))
 						return false;
 					std::cin >> textdiff; getchar();
 				} while (isNotLegit(textdiff, 'U'));
-				insert(pullFromText(username), username, textdiff, 'U');
+				newusername = textdiff + "_" + surname;
+				if (newusername.length() > MAX_LENGTH_OF_NAME)
+				{
+					std::cout << "Greska. Novi username je duzi od 20 karaktera.\n";
+						return false;
+				}
+				insert(pullFromText(username), username, newusername, 'U');
+			}
+			if (c == 'R')
+			{
+				do
+				{
+					std::cout << "Unesite novo prezime: ";
+					if (warningFunction(count++))
+						return false;
+					std::cin >> textdiff; getchar();
+				} while (isNotLegit(textdiff, 'U'));
+				newusername = name + "_" + textdiff;
+				if (newusername.length() > MAX_LENGTH_OF_NAME)
+				{
+					std::cout << "Greska. Novi username je duzi od 20 karaktera.\n";
+					return false;
+				}
+				insert(pullFromText(username), username, newusername, 'U');
 			}
 			if (c == 'T')
 			{

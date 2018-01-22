@@ -160,7 +160,7 @@ void systemConfiguration()
 		output.open(ACCOUNT_FILE_NAME);
 		output << "  Username             PIN      Type    " << std::endl;
 		output << "  --------------------------------------" << std::endl;
-		output << "  Admin               |1234    |admin";
+		output << "  Admin_Admin         |1234    |admin";
 	}
 	output.close();
 }

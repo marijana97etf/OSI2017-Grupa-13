@@ -22,9 +22,12 @@ int main()
 		std::cout << " |____/ \\___/|_.__/|_|  \\___/   \\__,_|\\___/|___/_|_|" << std::endl;
 		std::cout << "----------------------------------------------------" << std::endl;
 		std::cout << "                       LOGIN                        " << std::endl;
-		std::string name, pin;
+		std::string username, pin, name, surname ;
 		std::cout << "Unesite ime: ";
 		getline(std::cin, name);
+		std::cout << "Unesite prezime: ";
+		getline(std::cin, surname);
+		username = name + "_" + surname;
 		std::cout << "Unesite pin: ";
 		getline(std::cin, pin);
 		if (Admin::isNotLegit(pin, 'P'))
@@ -34,12 +37,12 @@ int main()
 		}
 		else
 		{
-			Account acc(name, pin);
+			Account acc(username, pin);
 			if (acc.checkTypeOfUser() == IS_ADMIN)
 			{
 				std::cout << "Prijavljeni ste kao: " << "Administrator" << std::endl;
 				Sleep(1000);
-				Admin ad(name, pin, NAME_OF_ADMIN);
+				Admin ad(username, pin, NAME_OF_ADMIN);
 				Menu menu(ad);
 				while (1)
 				{
@@ -63,7 +66,7 @@ int main()
 				{
 					std::cout << "Prijavljeni ste kao: " << "Analiticar" << std::endl;
 					Sleep(1000);
-					Analyst an(name, pin, NAME_OF_ANALYST);
+					Analyst an(username, pin, NAME_OF_ANALYST);
 					Menu menu(an);
 					while (1)
 					{
@@ -84,7 +87,7 @@ int main()
 				}
 				else
 				{
-					std::cout << "Korisnik sa unesenim imenom i pinom ne postoji na sistemu." << std::endl;
+					std::cout << "Korisnik sa unesenim imenom, prezimenom i pinom ne postoji na sistemu." << std::endl;
 					std::cout << "Prijavite se ponovo." << std::endl << "Nova prijava zapocinje uskoro" << std::endl;
 					Sleep(3000);
 				}
