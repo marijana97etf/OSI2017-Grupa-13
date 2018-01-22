@@ -37,5 +37,6 @@ private:
 	const std::vector<std::string> explode(const std::string& s, const char& c);//funkicja koja razbija string u vektor stringova
 	void insert(const std::vector<std::string>, std::string&, std::string&, char);//funkcija koja umece zeljenu izmjenu korisnickog naloga u fajl sa korisnickim nalozima
 	bool warningFunction(int);// funkcija za ispis upozorenja tokom unosenja podataka
+	bool isNoSpace(const std::string);// funkcija koja provjerava ima li razmak u string-u
 };
 

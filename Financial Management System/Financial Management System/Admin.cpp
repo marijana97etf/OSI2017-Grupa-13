@@ -47,7 +47,7 @@ void Admin::addAccount()
 {
 	system("CLS");
 	std::string tmpusername = "", tmp_pin, tmpname, tmpsurname;
-	char type;
+	std::string type;
 	int count = 0;
 	char c;
 	if (isAccountFileEmpty())
@@ -59,41 +59,96 @@ void Admin::addAccount()
 	}
 	std::fstream account_file(ACCOUNT_FILE_NAME, std::ios_base::app);
 	std::cout << "Unesite podatke o novom nalogu:\n";
+	bool check;
 	do {
+		check = true;
 		tmpusername.clear();
 		do
 		{
 			if (warningFunction(count++))
 				return;
-			std::cout << "Ime: "; std::cin >> tmpname; getchar();
-		} while (isNotLegit(tmpname, 'U'));
+			std::cout << "Ime: ";
+			getline(std::cin, tmpname);
+			if (!isNoSpace(tmpname))
+			{
+				std::cout << "Ime ne smije sadrzati razmak." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+			else if (isNotLegit(tmpname, 'U'))
+			{
+				std::cout << "Ime ne smije sadrzati broj." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+		} while (!isNoSpace(tmpname) || isNotLegit(tmpname, 'U'));
 		count = 0;
 		do
 		{
 			if (warningFunction(count++))
 				return;
-			std::cout << "Prezime: "; std::cin >> tmpsurname; getchar();
-		} while (isNotLegit(tmpsurname, 'U'));
+			std::cout << "Prezime: ";
+			getline(std::cin, tmpsurname);
+			if (!isNoSpace(tmpsurname))
+			{
+				std::cout << "Prezime ne smije sadrzati razmak." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+			else if (isNotLegit(tmpsurname, 'U'))
+			{
+				std::cout << "Prezime ne smije sadrzati broj." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+		} while (!isNoSpace(tmpsurname) || isNotLegit(tmpsurname, 'U'));
 		tmpusername = tmpname + "_" + tmpsurname;
-	} while (nameExists(tmpusername));
+		check = nameExists(tmpusername);
+		if (check)
+		{
+			std::cout << "Nalog sa unesenim imenom i prezimenom vec postoji." << std::endl;
+			Sleep(1500);
+			system("CLS");
+		}
+	} while (check);
 	count = 0;
 	do
 	{
 		if (warningFunction(count++))
 			return;
-		std::cout << "PIN: "; std::cin >> tmp_pin; getchar();
+		std::cout << "PIN: ";
+		getline(std::cin, tmp_pin);
+		if (!isNoSpace(tmp_pin))
+		{
+			std::cout << "PIN ne smije sadrzati razmak." << std::endl;
+			Sleep(1500);
+			system("CLS");
+		}
+		else if (isNotLegit(tmp_pin, 'P'))
+		{
+			std::cout << "PIN mora biti cetverocifren." << std::endl;
+			Sleep(1500);
+			system("CLS");
+		}
 	} while (isNotLegit(tmp_pin, 'P'));
 	count = 0;
 	do
 	{
 		if (warningFunction(count++))
 			return;
-		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar: "; std::cin >> type; getchar();
-	} while (type != 'D' && type != 'N');
+		std::cout << "Unesite tip korisnika a[D]ministrator, a[N]aliticar: ";
+		getline(std::cin, type);
+		if (type.length() != 1 || (type != "D" && type != "N"))
+		{
+			std::cout << "Pogresna opcija." << std::endl;
+			Sleep(1500);
+			system("CLS");
+		}
+	} while (type != "D" && type != "N");
 
 	format(tmpusername, 'U');
 	format(tmp_pin, 'P');
-	account_file << std::endl << tmpusername << tmp_pin << ((type == 'D') ? "admin" : "analyst");
+	account_file << std::endl << tmpusername << tmp_pin << ((type == "D") ? "admin" : "analyst");
 	account_file.close();
 	std::cout << "Nalog je uspjesno dodan." << std::endl;
 	Sleep(1000);
@@ -586,3 +641,9 @@ bool Admin::warningFunction(int count)
 	return false;
 }
 
+bool Admin::isNoSpace(const std::string string)
+{
+	if (string.find(" ", 0) != std::string::npos)
+		return false;
+	return true;
+}
