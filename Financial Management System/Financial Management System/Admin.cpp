@@ -103,6 +103,11 @@ void Admin::addAccount()
 			}
 		} while (!isNoSpace(tmpsurname) || isNotLegit(tmpsurname, 'U'));
 		tmpusername = tmpname + "_" + tmpsurname;
+		if (tmpusername.length() > MAX_LENGTH_OF_NAME)
+		{
+			std::cout << "Greska. Novi username je duzi od 20 karaktera.\n";
+			return;
+		}
 		check = nameExists(tmpusername);
 		if (check)
 		{
