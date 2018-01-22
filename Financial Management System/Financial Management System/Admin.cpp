@@ -285,81 +285,166 @@ bool Admin::changeAccount()
 	if (isAccountFileEmpty() || isAccountFileWithoutAccounts()) return false;
 	std::string username, textdiff, name, surname, newusername;
 	int count = 0;
-	char c = 'X';
+	std::string c = "X";
 	std::string temp;
 	do
 	{
-		std::cout << "Unesite ime naloga koji treba promjeniti: ";
 		do
 		{
+			std::cout << "Unesite ime naloga koji treba promjeniti: ";
 			if (warningFunction(count++))
 				return false;
-			std::cin >> name; getchar();
+			getline(std::cin, name);
+			if (!isNoSpace(name))
+			{
+				std::cout << "Ime ne smije sadrzati razmak." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+			else if (isNotLegit(name, 'U'))
+			{
+				std::cout << "Ime ne smije sadrzati broj." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
 		} while (isNotLegit(name, 'U'));
 		count = 0;
-		std::cout << "Unesite prezime naloga koji treba promjeniti: ";
 		do
 		{
+			std::cout << "Unesite prezime naloga koji treba promjeniti: ";
 			if (warningFunction(count++))
 				return false;
-			std::cin >> surname; getchar();
+			getline(std::cin, surname);
+			if (!isNoSpace(surname))
+			{
+				std::cout << "Prezime ne smije sadrzati razmak." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
+			else if (isNotLegit(surname, 'U'))
+			{
+				std::cout << "Prezime ne smije sadrzati broj." << std::endl;
+				Sleep(1500);
+				system("CLS");
+			}
 		} while (isNotLegit(surname, 'U'));
 		username = name + "_" + surname;
+		count = 0;
 		if (nameExists(username))
 		{
-			std::cout << "Unesite sta zelite izmjeniti: [I]me, p[R]ezime, [P]IN, [T]ip korisnika: ";
 			do
 			{
+				std::cout << "Unesite sta zelite izmjeniti: [I]me, p[R]ezime, [P]IN, [T]ip korisnika: ";
 				if (warningFunction(count++))
 					return false;
-				std::cin >> c; getchar();
-			} while (c != 'P' && c != 'I' && c != 'T' && c != 'R');
-			if (c == 'P')
+				getline(std::cin, c);
+				if (c.length() != 1 || (c != "P" && c != "I" && c != "T" && c != "R"))
+				{
+					std::cout << "Pogresna opcija." << std::endl;
+					Sleep(1500);
+					system("CLS");
+				}
+			} while (c != "P" && c != "I" && c != "T" && c != "R");
+			count = 0;
+			if (c == "P")
 			{
 				do
 				{
 					std::cout << "Unesite novi PIN: ";
 					if (warningFunction(count++))
 						return false;
-					std::cin >> textdiff; getchar();
+					getline(std::cin, textdiff);
+					if (!isNoSpace(textdiff))
+					{
+						std::cout << "PIN ne smije sadrzati razmak." << std::endl;
+						Sleep(1500);
+						system("CLS");
+					}
+					else if (isNotLegit(textdiff, 'P'))
+					{
+						std::cout << "PIN mora biti cetverocifren." << std::endl;
+						Sleep(1500);
+						system("CLS");
+					}
 				} while (isNotLegit(textdiff, 'P'));
 				insert(pullFromText(username), username, textdiff, 'P');
 			}
-			if (c == 'I')
+			count = 0;
+			if (c == "I")
 			{
 				do
 				{
 					std::cout << "Unesite novo ime: ";
 					if (warningFunction(count++))
 						return false;
-					std::cin >> textdiff; getchar();
+					getline(std::cin, textdiff);
+					if (!isNoSpace(textdiff))
+					{
+						std::cout << "Ime ne smije sadrzati razmak." << std::endl;
+						Sleep(1500);
+						system("CLS");
+					}
+					else if (isNotLegit(textdiff, 'U'))
+					{
+						std::cout << "Ime ne smije sadrzati broj." << std::endl;
+						Sleep(1500);
+						system("CLS");
+					}
 				} while (isNotLegit(textdiff, 'U'));
 				newusername = textdiff + "_" + surname;
 				if (newusername.length() > MAX_LENGTH_OF_NAME)
 				{
 					std::cout << "Greska. Novi username je duzi od 20 karaktera.\n";
-						return false;
+					Sleep(1000);
+					return false;
+				}
+				if (nameExists(newusername))
+				{
+					std::cout << "Username vec postoji.\n";
+					Sleep(1000);
+					return false;
 				}
 				insert(pullFromText(username), username, newusername, 'U');
 			}
-			if (c == 'R')
+			count = 0;
+			if (c == "R")
 			{
 				do
 				{
 					std::cout << "Unesite novo prezime: ";
 					if (warningFunction(count++))
 						return false;
-					std::cin >> textdiff; getchar();
+					getline(std::cin, textdiff);
+					if (!isNoSpace(textdiff))
+					{
+						std::cout << "Prezime ne smije sadrzati razmak." << std::endl;
+						Sleep(1500);
+						system("CLS");
+					}
+					else if (isNotLegit(textdiff, 'U'))
+					{
+						std::cout << "Prezime ne smije sadrzati broj." << std::endl;
+						Sleep(1500);
+						system("CLS");
+					}
 				} while (isNotLegit(textdiff, 'U'));
 				newusername = name + "_" + textdiff;
 				if (newusername.length() > MAX_LENGTH_OF_NAME)
 				{
 					std::cout << "Greska. Novi username je duzi od 20 karaktera.\n";
+					Sleep(1000);
+					return false;
+				}
+				if (nameExists(newusername))
+				{
+					std::cout << "Username vec postoji.\n";
+					Sleep(1000);
 					return false;
 				}
 				insert(pullFromText(username), username, newusername, 'U');
 			}
-			if (c == 'T')
+			count = 0;
+			if (c == "T")
 			{
 				if (username == this->username)
 				{
@@ -372,13 +457,19 @@ bool Admin::changeAccount()
 					std::cout << "Unesite novi tip korisnika a[D]ministrator, [A]naliticar: ";
 					if (warningFunction(count++))
 						return false;
-					std::cin >> c; getchar();
-				} while (c != 'A' && c != 'D');
-				std::string type = (c == 'D') ? "admin" : "analyst";
-				if (c == 'A')
-					insert(pullFromText(username), username, type, c);
+					getline(std::cin, c);
+					if (c.length() != 1 || (c != "D" && c != "A"))
+					{
+						std::cout << "Pogresna opcija." << std::endl;
+						Sleep(1500);
+						system("CLS");
+					}
+				} while (c != "D" && c != "A");
+				std::string type = (c == "D") ? "admin" : "analyst";
+				if (c == "A")
+					insert(pullFromText(username), username, type, c[0]);
 				else
-					insert(pullFromText(username), username, type, c);
+					insert(pullFromText(username), username, type, c[0]);
 
 			}
 			std::cout << "Nalog je uspjesno izmjenjen." << std::endl;
