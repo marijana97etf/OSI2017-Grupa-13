@@ -4,3 +4,4 @@
   Andrej_Kosic        |1441    |analyst
   Admin_Admin         |1234    |admin
   Andrej_Misun        |1111    |admin
+  Sasa_Sukalo         |1234    |analyst

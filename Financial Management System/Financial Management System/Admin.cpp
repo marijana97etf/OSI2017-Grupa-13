@@ -223,7 +223,8 @@ bool Admin::deleteAccount()
 		while (!in.eof())
 		{
 			getline(in, line);
-			if (line.substr(2, username.length()) == username)
+			std::string temp = line.substr(2, line.find(" ", 2) - 2);
+			if (temp == username)
 			{
 				check = true;
 				checkNewLine = true;
@@ -232,7 +233,7 @@ bool Admin::deleteAccount()
 			{
 				out << std::endl;
 			}
-			if (line.substr(2, username.length()) == username)
+			if (temp == username)
 			{
 				checkNewLine = false;
 			}
